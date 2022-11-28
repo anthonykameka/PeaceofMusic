@@ -1,0 +1,168 @@
+import React from 'react'
+import styled from 'styled-components';
+import { NavLink } from 'react-router-dom';
+import LoginButton from './LoginButton';
+import LogoutButton from './LogoutButton';
+import { useNavigate } from 'react-router-dom';
+import Modal, {ModalProvider} from "styled-react-modal";
+import FocusLock from "react-focus-lock"
+import { useState, useContext } from 'react';
+import {getSong} from"genius-lyrics-api";
+import { MusicContext } from './MusicContext';
+import logo from '../assets/logosmall2.png'
+import { BsJournals } from "react-icons/bs"
+import {GiMusicalScore} from "react-icons/gi"
+import { CurrentUserContext } from './CurrentUserContext';
+
+const Header = () => {
+//CONTEXT VARIABLES
+
+const {
+  currentUser // current logged in user (from MONGODB)
+} = useContext(CurrentUserContext)
+
+  const {
+    setRefreshSongs, refreshSongs //dependency for the getSongs fetch. Adding song will cause dependent data to refresh
+  } = useContext(MusicContext)
+
+
+
+
+  const [songSearch, setSongSearch] = useState(null) // initialize
+  const [artistSearch, setArtistSearch] = useState(null) // initialize.
+  const [song, setSong] = useState(null) // initialize
+
+
+  const navigate = useNavigate();
+  const [isOpen, setIsOpen] = useState(false); // initialize modal state
+   //function to toggle modal
+  const toggleModal = () => {
+
+    setIsOpen(!isOpen)
+}
+
+        // go to song list from our database
+
+  const handleSongs = () => {
+    navigate("/songs")
+  }
+// handle AddSong
+  const handleAddSong = () => {
+    toggleModal()
+
+  }
+
+  const handleSearch = (ev) => { 
+    ev.preventDefault();
+    //these options are required for GENIUS API/NPM package // use inputs to search api
+    const options = {
+      apiKey: "mPaybTjlCGUYikeRswTWOEU57Pf-vXKk6WrAttu0ue344TFuamLsUzn7p9GgXe3p",
+      title: songSearch,
+      artist: artistSearch,
+      optimizeQuery:true
+  }
+
+  console.log(options)
+
+    getSong(options).then((song) => {
+      console.log(song)
+      setSong(song)
+      fetch("/api/add-song" , { 
+          method: "POST",
+          headers: {
+              "Accept": "application/json",
+              "Content-type": "application/json"
+          },
+          body: JSON.stringify({song})
+      })
+      .then(res => res.json())
+      .then(res => {
+          console.log(res)
+          if (res.status === 200) {
+            setRefreshSongs(refreshSongs+1)
+          }
+      })
+    })
+
+    toggleModal()
+  }
+
+  const handleLogoClick = (ev) => {
+    ev.preventDefault();
+    navigate("/profile")
+  }
+
+  const handleJournalClick = (ev) => {
+    ev.preventDefault();
+    navigate(`/journal/${currentUser?.username.slice(1)}`)
+  }
+
+  const handleMusicClick = (ev) => {
+    ev.preventDefault();
+    navigate(`/transcribe/${currentUser?.username.slice(1)}`)
+  }
+
+
+  return (
+    <Wrapper>
+        <Nav>
+        <Logo src={logo} onClick={handleLogoClick}></Logo>
+        <BsJournals onClick={handleJournalClick} style={{"margin-top": "10px"}}size={25}/>
+        <GiMusicalScore onClick={handleMusicClick}style={{"margin-top": "10px"}}size={25}/>
+        <LoginButton/>
+        <LogoutButton/>
+        <Songs onClick={handleSongs}>songs</Songs>
+        <AddSong onClick={handleAddSong}>add song</AddSong>
+        <Modal
+            isOpen={isOpen}
+            onEscapeKeydown={toggleModal}
+            role="dialog"
+            aria-modal={true}
+            aria-labelledby="modal-label"
+            >
+          <FocusLock>
+            <Form>
+            <Label>Song Name</Label>
+            <SongInput onChange={(e)=> setSongSearch(e.target.value)}></SongInput>
+            <Label>Artist Name</Label>
+            <ArtistInput onChange={(e)=> setArtistSearch(e.target.value)}></ArtistInput>
+            <Submit onClick={handleSearch}>Search</Submit>
+            </Form>
+          </FocusLock>
+
+        </Modal>
+        </Nav>
+    </Wrapper>
+  )
+}
+
+const Logo = styled.img`
+width: 75px;
+`
+const Submit = styled.button``
+const Form = styled.form``
+
+const AddSong = styled.button`
+`
+
+const Label = styled.label`
+`
+
+const ArtistInput = styled.input`
+`
+
+const SongInput = styled.input`
+`
+
+const Wrapper = styled.div`
+height: 200px;
+
+background-color: var(--color-purple);
+`
+
+const Songs = styled.button`
+`
+
+const Nav = styled.nav``
+
+export default Header;
