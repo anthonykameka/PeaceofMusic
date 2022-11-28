@@ -43,7 +43,8 @@ const addSong = async (req, res) => {
     client.close();
     
     } 
-}         
+}
+
 
 const getSongs = async (req, res) => {
     const client = new MongoClient(MONGO_URI, options);
@@ -83,8 +84,26 @@ const getSong = async (req, res) => {
     }
 }
 
+const getArtists = async (req, res) => {
+    const client = new MongoClient(MONGO_URI, options);
+    try {
+    await client.connect();
+        const db = client.db("peaceofmusic");
+        console.log("connected")
+        const songs = await db.collection("songs").find().toArray();
+        console.log(songs)
+        res.status(200).json({ status: 200, data: songs })
+    } catch (err) {
+        res.status(404).json({ status: 404, data: "Not Found" });
+    } finally {
+    client.close();
+    }
+}
+        
+
 module.exports = {
     addSong,
     getSongs,
     getSong,
+    getArtists,
 }

@@ -103,6 +103,11 @@ const {
   }
 
 
+  const handleArtistsClick = (ev) => {
+    ev.preventDefault();
+    navigate(`/artists`)
+  }
+
   return (
     <Wrapper>
         <Nav>
@@ -111,6 +116,7 @@ const {
         <GiMusicalScore onClick={handleMusicClick}style={{"margin-top": "10px"}}size={25}/>
         <LoginButton/>
         <LogoutButton/>
+        <Artists onClick={handleArtistsClick}>Artists</Artists>
         <Songs onClick={handleSongs}>songs</Songs>
         <AddSong onClick={handleAddSong}>add song</AddSong>
         <Modal
@@ -135,6 +141,8 @@ const {
     </Wrapper>
   )
 }
+
+const Artists = styled.button``
 
 const Logo = styled.img`
 width: 75px;

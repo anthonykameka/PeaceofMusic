@@ -26,7 +26,7 @@ const HomePage = () => {
 
     const [thisUser, setThisUser] = useState(null)
 
-    console.log(user)
+   // console.log(currentUser)
 
 
     useEffect(() => {

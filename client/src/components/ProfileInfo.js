@@ -32,7 +32,7 @@ const ProfileInfo = () => {
 
     let profilePictureSrc = pomme1
     /////////////////////
-    console.log(currentUser)
+    // console.log(currentUser)
 
     ///EDIT USERNAME///
 
@@ -126,7 +126,7 @@ const ProfileInfo = () => {
         displayEditButtonText = "Edit"
     }
 
-    console.log(currentUser.displayname)
+    //console.log(currentUser.displayname)
 
 
     return (

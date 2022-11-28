@@ -24,6 +24,7 @@ const {
   addSong,
   getSongs,
   getSong,
+  getArtists,
 } = require("./musichandlers")
 
 
@@ -58,6 +59,7 @@ app.use(express.static("public"))
   app.post("/api/add-song", addSong)
   app.get("/api/get-songs", getSongs)
   app.get("/api/get-song/:id", getSong)
+  app.get("/api/get-artists", getArtists)
 
 
 

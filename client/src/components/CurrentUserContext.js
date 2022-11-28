@@ -12,7 +12,7 @@ export const CurrentUserProvider = ({ children }) => {
     const [currentUser, setCurrentUser] = usePersistedState(null)
     
     const authUser = user
-    console.log(user)
+    // console.log(user)
 
 
     //Get all users
@@ -29,10 +29,12 @@ export const CurrentUserProvider = ({ children }) => {
                 })
                 .then(res => res.json())
                 .then(res => {
-                    if (res.status === 402) {
+                    console.log(res)
+                    if (res.status === 400) {
                         fetch(`/api/get-user/${user.sub}`)
                         .then(res => res.json())
                         .then(res => {
+                            console.log(res)
                             setCurrentUser(res.data)
                         })
                     }

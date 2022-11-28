@@ -10,7 +10,7 @@ const SongCard = ({song}) => {
     navigate(`/songs/${song._id}`)
   }
 
-    console.log(song)
+    // console.log(song)
   return (
     <SongItem onClick={handleSongClick}>
         <SongBox>
