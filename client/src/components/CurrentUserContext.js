@@ -10,6 +10,7 @@ export const CurrentUserProvider = ({ children }) => {
 
     const [allUsers, setAllUsers] = useState(null);
     const [currentUser, setCurrentUser] = usePersistedState(null)
+    const [refreshUser, setRefreshUser] = useState(0)
     
     const authUser = user
     // console.log(user)
@@ -36,15 +37,29 @@ export const CurrentUserProvider = ({ children }) => {
                         .then(res => {
                             console.log(res)
                             setCurrentUser(res.data)
+                            console.log(res.data.active)
+                            if (res.data.active === false) {
+                                console.log("test")
+                                fetch(`/api/activate-user/${res.data._id}`,
+                                {
+                                    method: "PATCH",
+                                })
+                                .then(res => res.json())
+                                .then(res => {
+                                    console.log(res)
+    
+                                })
+                            }
                         })
                     }
                     if (res.status === 200) {
                         setCurrentUser(res.data)
+
                     }
 
                 } )
                      
-    }, [user])
+    }, [user, setRefreshUser, refreshUser])
 
     useEffect(() => {
         fetch("/api/get-users")
@@ -63,8 +78,10 @@ export const CurrentUserProvider = ({ children }) => {
     return (
         <CurrentUserContext.Provider
             value={{
-                authUser,
-                currentUser,
+                authUser, //auth0 info where required
+                currentUser, // current user details
+                refreshUser, // used to refreshUser after an action
+                setRefreshUser, // used to refreshUser after an action
             }}
         >
             {children}

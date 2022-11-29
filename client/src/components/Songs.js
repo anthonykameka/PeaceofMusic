@@ -1,27 +1,38 @@
-import React, { useContext } from 'react'
+import React from 'react'
+import { useContext } from 'react'
 import { MusicContext } from './MusicContext'
-import SongCard from "./SongCard"
+import ArtistCard from "./ArtistCard"
 import styled from 'styled-components'
-const Songs = () => {
 
-    const {
-        songs
-    } = useContext(MusicContext)
+function Songs() {
+
+  const {
+    artists,
+    artistsData
+  } = useContext(MusicContext)
+
+
+console.log(artistsData)
+
 
   return (
-    <SongList>
-        {
-            songs.map(song => {
-                return (
-                    <SongCard song={song}/>
-                )
-            })
-        }
-    </SongList>
+    <ArtistList>
+      {
+        artistsData.map(artist => {
+          const artistName = artist.artistName
+        
+
+
+          return (
+            <ArtistCard artist={artistName} data={artist}/>
+          )
+        })
+      }
+    </ArtistList>
   )
 }
 
-const SongList = styled.ul`
+const ArtistList = styled.ul`
 `
 
 export default Songs

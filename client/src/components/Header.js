@@ -18,7 +18,10 @@ const Header = () => {
 //CONTEXT VARIABLES
 
 const {
-  currentUser // current logged in user (from MONGODB)
+  currentUser, // current logged in user (from MONGODB)
+  setRefreshUser,
+  refreshUser,
+  
 } = useContext(CurrentUserContext)
 
   const {
@@ -62,24 +65,27 @@ const {
       optimizeQuery:true
   }
 
-  console.log(options)
+  // console.log(options)
+  console.log(currentUser)
+  
 
     getSong(options).then((song) => {
-      console.log(song)
-      setSong(song)
+      
+      const thisSong = {...song, addedBy: currentUser._id}// retain user information to keep track on who is adding // stats tend to engage the user
       fetch("/api/add-song" , { 
           method: "POST",
           headers: {
               "Accept": "application/json",
               "Content-type": "application/json"
           },
-          body: JSON.stringify({song})
+          body: JSON.stringify({thisSong})
       })
       .then(res => res.json())
       .then(res => {
           console.log(res)
           if (res.status === 200) {
             setRefreshSongs(refreshSongs+1)
+            setRefreshUser(refreshUser+1)
           }
       })
     })
@@ -108,6 +114,11 @@ const {
     navigate(`/artists`)
   }
 
+  const handleCancelClick = (ev) => {
+    ev.preventDefault();
+    toggleModal()
+  }
+
   return (
     <Wrapper>
         <Nav>
@@ -119,12 +130,14 @@ const {
         <Artists onClick={handleArtistsClick}>Artists</Artists>
         <Songs onClick={handleSongs}>songs</Songs>
         <AddSong onClick={handleAddSong}>add song</AddSong>
+        <EditSong>edit song</EditSong>
         <Modal
             isOpen={isOpen}
             onEscapeKeydown={toggleModal}
             role="dialog"
             aria-modal={true}
             aria-labelledby="modal-label"
+            transparent={true}
             >
           <FocusLock>
             <Form>
@@ -133,6 +146,7 @@ const {
             <Label>Artist Name</Label>
             <ArtistInput onChange={(e)=> setArtistSearch(e.target.value)}></ArtistInput>
             <Submit onClick={handleSearch}>Search</Submit>
+            <Cancel onClick ={handleCancelClick}>Cancel</Cancel>
             </Form>
           </FocusLock>
 
@@ -142,13 +156,18 @@ const {
   )
 }
 
+const Cancel = styled.button``
+
+const EditSong = styled.button``
+
 const Artists = styled.button``
 
 const Logo = styled.img`
 width: 75px;
 `
 const Submit = styled.button``
-const Form = styled.form``
+const Form = styled.form`
+`
 
 const AddSong = styled.button`
 `
@@ -165,7 +184,7 @@ const SongInput = styled.input`
 const Wrapper = styled.div`
 height: 200px;
 
-background-color: var(--color-purple);
+background-color: var(--color-deepteal);
 `
 
 const Songs = styled.button`

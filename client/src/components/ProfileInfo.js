@@ -9,6 +9,10 @@ import pomme4 from "../assets/pommes/pomme4.png"
 import pomme5 from "../assets/pommes/pomme5.png"
 import pomme6 from "../assets/pommes/pomme6.png"
 import EditProfile from './EditProfile';
+import FocusLock from "react-focus-lock"
+import Modal from "styled-react-modal"
+import { useNavigate } from 'react-router-dom';
+import { useAuth0 } from '@auth0/auth0-react';
 
 const ProfileInfo = () => {
 
@@ -126,7 +130,57 @@ const ProfileInfo = () => {
         displayEditButtonText = "Edit"
     }
 
-    //console.log(currentUser.displayname)
+    ///DELETE FUNCTION + DELETE MODAL ///
+    const { logout } = useAuth0();
+
+    const navigate = useNavigate();
+    const [isOpen, setIsOpen] = useState(false); // initialize modal state
+    const [deleteConfirmed, setDeleteConfirmed] = useState(false)
+   //function to toggle modal
+    const toggleModal = () => {
+
+    setIsOpen(!isOpen)
+    }
+
+    const handleDeleteProfile = (ev) => {
+        ev.preventDefault();
+        console.log("deleting")
+        toggleModal();
+    }
+    
+    const handleCancel = (ev) => {
+        ev.preventDefault();
+        toggleModal();
+        setDeleteConfirmed(false)
+        navigate("/home")
+    }
+
+    
+
+    const handleYesChange = (ev) => {
+        ev.preventDefault()
+        setDeleteConfirmed(ev.target.checked);
+    }
+
+    const handleDeactivation = (ev) => {
+        ev.preventDefault();
+        if (deleteConfirmed) {
+            deactivateUser();
+        }
+    }
+
+    const deactivateUser = async (req, res) => {
+        await fetch(`/api/deactivate-user/${currentUser._id}`,
+        {
+            method: "PATCH",
+
+        })
+        .then(res => res.json())
+        .then(res => {
+            console.log(res);
+            logout();
+        })
+    }
 
 
     return (
@@ -165,17 +219,81 @@ const ProfileInfo = () => {
                                 <Tag>{tag}</Tag>
                             )
                         }))
-                        : <h1>Edit Roles</h1>
+                        : <div style={{display: "none"}}></div>
                     }
                 </RolesBox>
             </TopContent>
+            <MiddleContent>
+                <Contributions>
+                    <ContributionsTitle>Contributions: </ContributionsTitle>
+                    <SongsAdded>Songs Added: {currentUser.adds}</SongsAdded>
+                    <Annotations>Annotations: {currentUser.annotations}</Annotations>
+                    <Comments> Comments: {currentUser.comments} </Comments>
+                    <Edits> Edits: {currentUser.edits} </Edits>
+                </Contributions>
+                <AccountStatus>Account Status: {currentUser.role}</AccountStatus>
+            </MiddleContent>
             <BottomContent>
+                <DeleteProfile onClick={handleDeleteProfile}>Delete Profile</DeleteProfile>
                 <ProfilePic src={pomme4} />
             </BottomContent>
+            <Modal
+                isOpen={isOpen}
+                onEscapeKeydown={toggleModal}
+                role="dialog"
+                aria-modal={true}
+                aria-labelledby="modal-label"
+                >
+            <FocusLock>
+                <Form>
+                    <h1>Are you sure you want to deactivate your profile?</h1>
+                <Label>Yes</Label>
+               <Yes onChange={(ev) => handleYesChange(ev)} type="checkbox"/>
+               <Cancel onClick={handleCancel}>Cancel</Cancel>
+               <Deactivate onClick={handleDeactivation}>Deactivate profile.. </Deactivate>
+                </Form>
+            </FocusLock>
+
+        </Modal>
 
         </Wrapper>
     )
 }
+
+const AccountStatus = styled.p``
+
+const Annotations = styled.p`
+`
+
+const Comments = styled.p`
+`
+const Edits = styled.p`
+`
+
+const MiddleContent = styled.div`
+`
+
+const Contributions = styled.div`
+`
+const ContributionsTitle = styled.h1`
+`
+const SongsAdded = styled.p`
+`
+
+const Form = styled.form`
+`
+
+const Yes = styled.input``
+
+const Cancel = styled.button``
+const Label = styled.label``
+
+const Deactivate = styled.button`
+`
+
+const DeleteProfile = styled.button`
+width: 20%;
+margin-bottom: 10px;`
 
 const RolesBox = styled.div`
 
@@ -218,6 +336,8 @@ justify-content: center;
 position: absolute;
 bottom: 0;
 width: 100%;
+flex-direction: column;
+align-items: center;
 `
 
 const TopContent = styled.div`
@@ -229,7 +349,7 @@ flex-direction: column;
 const Wrapper = styled.div`
     display:flex;
     flex-direction: column;
-
+    border-left: 1px dotted rgba(0, 0, 0,  0.2);
     width: 30vw;
     height: 70vh;
     position: relative;
@@ -239,6 +359,7 @@ const ProfilePic = styled.img`
 border-radius: 100%;
 width: 200px;
 height: auto;
+margin-bottom: 20px;
 `
 
 export default ProfileInfo

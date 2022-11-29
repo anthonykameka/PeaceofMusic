@@ -75,13 +75,13 @@ const HomePage = () => {
     margin-left: auto;
     width: 100%;
     justify-content: end;
-    background-color: var(--color-seagreen);
+    background-color: var(--color-orange);
 
     `
 
 
     const Wrapper = styled.div`
-    width: 95vw;
+    width: 100vw;
     display:flex;
     flex-direction: column;
 

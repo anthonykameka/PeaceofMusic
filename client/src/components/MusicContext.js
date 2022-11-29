@@ -23,6 +23,12 @@ export const MusicContext = createContext();
             }))
         })
 
+        newArray.forEach(artistCatalogue => {
+            artistCatalogue.artistName = artistCatalogue[0].artistName
+        })
+
+
+
         setArtistsData(newArray)
 
         }
@@ -40,7 +46,7 @@ export const MusicContext = createContext();
             
         })
         
-    }, [refreshSongs])
+    }, [refreshSongs, setRefreshSongs])
 
     // console.log(refreshSongs)
 

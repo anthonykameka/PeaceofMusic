@@ -37,6 +37,7 @@ font-weight: bold;
 `
 const SongBox = styled.div`
 display:flex;`
+
 const AlbumArt = styled.img`
 width: 100px;`
 

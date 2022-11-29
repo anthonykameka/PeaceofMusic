@@ -47,6 +47,7 @@ const updateUserName = async (req, res) => {
         res.status(404).json({ status: 404, data: "Not Found" });
     } finally {
     client.close();
+    console.log("disconnected from database.")
     }
 }
 
@@ -69,6 +70,7 @@ const updateDisplayName = async (req, res) => {
         res.status(404).json({ status: 404, data: "Not Found" });
     } finally {
     client.close();
+    console.log("disconnected from database.")
     }
 }
 
@@ -87,6 +89,48 @@ const getUser = async (req, res) => {
         res.status(404).json({ status: 404, data: "Not Found" });
     } finally {
     client.close();
+    console.log("disconnected from database.")
+    }
+}
+
+
+const deleteUser = async (req, res) => {
+    const client = new MongoClient(MONGO_URI, options)
+    const id = req.params.id
+    try {
+        await client.connect();
+        const db = client.db("peaceofmusic");
+        console.log("connected")
+        await db.collection("users").deleteOne({_id: id})
+        res.status(200).json({status: 200, data: id, message: "success. user deleted"})
+       
+    } catch (err) {
+        res.status(404).json({ status: 404, data: "Not Found" });
+    } finally {
+    client.close();
+    console.log("disconnected from database.")
+    }
+}
+
+const matchUser = async (req, res) => {
+    const client = new MongoClient(MONGO_URI, options)
+    
+    try {
+        await client.connect();
+        const db = client.db("peaceofmusic");
+        console.log("connected")
+        console.log(req.params)
+        const id = req.params.id
+        console.log(id)
+        const thisUser = await db.collection("users").findOne({_id: id})
+        console.log(thisUser)
+        thisUser && res.status(200).json({status: 200, data: thisUser, message: "success"})
+        !thisUser && res.status(403).json({status: 403, data: thisUser, message: "this user does not exist"})
+    } catch (err) {
+        res.status(404).json({ status: 404, data: "Not Found" });
+    } finally {
+    client.close();
+    console.log("disconnected from database.")
     }
 }
 
@@ -104,6 +148,7 @@ const getUsers = async (req, res) => {
         res.status(404).json({ status: 404, data: "Not Found" });
     } finally {
     client.close();
+    console.log("disconnected from database.")
     }
 };
 
@@ -121,6 +166,7 @@ const addUser = async (req, res) => {
 
     const newUserInfo= {
         _id: id,
+        active: true,
         username:username,
         displayname: null,
         updated_at: updated_at,
@@ -133,17 +179,16 @@ const addUser = async (req, res) => {
         long_bio: null,
         handle: null,
         profile_picture_src: null,
-        site_role: "basic",
+        role: "basic",
         tags: null,
         following: null,
         follows: null,
-        pommes: null,
-        favs: null,
-        contributions: {
-            annotations: null,
-            transcriptions: null,
-            comments: null,
-        },
+        setList: null,
+        annotations: 0,
+        poms: 0,
+        comments: 0,
+        edits: 0,
+        adds: 0,
     }
 
     //console.log(newUserInfo)
@@ -167,10 +212,56 @@ const addUser = async (req, res) => {
         res.status(404).json({ status: 404, message: "user already exists" });
     } finally {
     client.close();
-    
+    console.log("disconnected from database.")
     }   
 }
 
+// disactivate user so their info is not lost forever
+const deactivateUser = async (req, res) => {
+    const client = new MongoClient(MONGO_URI, options)
+    const _id = req.params.id
+
+    console.log(req.params)
+
+    try {
+        await client.connect();
+        const db = client.db("peaceofmusic");
+        console.log("connected")
+        const thisUser = await db.collection("users").findOne({_id: _id})
+    
+        await db.collection("users").updateOne({_id: _id}, {$set:{"active":false}} )
+        res.status(200).json({status: 200, message: "account deactivated", data: thisUser})
+
+    } catch (err) {
+        res.status(404).json({ status: 404, data: "Not Found" });
+    } finally {
+    client.close();
+    console.log("disconnected from database.")
+    }
+}
+
+const activateUser = async (req, res) => {
+    const client = new MongoClient(MONGO_URI, options)
+    const _id = req.params.id
+
+    console.log(req.params)
+
+    try {
+        await client.connect();
+        const db = client.db("peaceofmusic");
+        console.log("connected")
+        const thisUser = await db.collection("users").findOne({_id: _id})
+    
+        await db.collection("users").updateOne({_id: _id}, {$set:{"active":true}} )
+        res.status(200).json({status: 200, message: "account activated", data: thisUser})
+
+    } catch (err) {
+        res.status(404).json({ status: 404, data: "Not Found" });
+    } finally {
+    client.close();
+    console.log("disconnected from database.")
+    }
+}
 
 
 
@@ -179,6 +270,11 @@ module.exports = {
     getUsers,
     addUser,
     getUser,
+    deleteUser,
+    deactivateUser,
+    activateUser,
+    matchUser,
     updateUserName,
     updateDisplayName,
+    
 }
