@@ -188,11 +188,12 @@ const addUser = async (req, res) => {
         tags: null,
         following: null,
         follows: null,
-        songs: {
+        ownSongs: {
             private: [],
             public: {
                 approved: [],
                 pending: [],
+                declined: [],
             }
         },
         setLists: {
@@ -203,27 +204,34 @@ const addUser = async (req, res) => {
             meanings: {
                 approved: [],
                 pending: [],
+                declined: [],
             },
             theories: {
                 approved: [],
                 pending: [],
+                declined: [],
             }
         },
         poms: {
             pending: [],
             approved: [],
+            declined: [],
             private: [],
             workInProgress: [],
         },
         comments: {
             pending: [],
             approved: [],
+            declined: [],
         },
         edits: {
             pending: [],
             approved: [],
+            declined: [],
         },
         adds: 0,
+        notifications: [],
+        messages: [],
     }
 
     //console.log(newUserInfo)

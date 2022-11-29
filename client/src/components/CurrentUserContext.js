@@ -70,9 +70,11 @@ export const CurrentUserProvider = ({ children }) => {
 
 
 
-
-    console.log(currentUser)
-
+    // review approval
+    let reviewer = false;
+    if (currentUser?.role === "founder" || currentUser?.role === "admin" || currentUser?.role === "moderator") {
+        reviewer = true;
+    }
 
 
     return (
@@ -82,6 +84,7 @@ export const CurrentUserProvider = ({ children }) => {
                 currentUser, // current user details
                 refreshUser, // used to refreshUser after an action
                 setRefreshUser, // used to refreshUser after an action
+                reviewer, // reviewer status depending on site role
             }}
         >
             {children}

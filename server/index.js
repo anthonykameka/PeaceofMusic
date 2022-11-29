@@ -32,6 +32,7 @@ const {
   getArtists,
   deleteSong,
   addEdit,
+  getEdits,
 } = require("./musichandlers")
 
 app.use(bodyParser.json({ limit: '10mb' }));
@@ -72,6 +73,7 @@ app.use(express.static("public"))
   app.get("/api/get-song/:id", getSong)
   app.get("/api/get-artists", getArtists)
   app.get("/api/match-user/:id", matchUser)
+  app.get("/api/get-edits", getEdits)
   app.delete("/api/delete-user/:id", deleteUser)
   app.delete("/api/delete-song/:id", deleteSong)
 

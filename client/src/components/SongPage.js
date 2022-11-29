@@ -92,6 +92,7 @@ const SongPage = () => {
     const [editedTitle, setEditedTitle] = useState(null)
     const [editedArtist, setEditedArtist] = useState(null)
     const [editedLyrics, setEditedLyrics] = useState(null)
+    const [editorComments, setEditorComments] = useState(null)
    //function to toggle modal
     const toggleModal = () => {
 
@@ -108,8 +109,9 @@ const SongPage = () => {
     const edit = {editedTitle: editedTitle,
                   editedArtist: editedArtist,
                   editedLyrics: editedLyrics,
+                  editorComment: editorComments,
                   editedBy: currentUser._id,
-                  songId: songId
+                  targetId: songId
                 }
 
     fetch(`/add-edit`,  
@@ -190,10 +192,20 @@ const SongPage = () => {
           <FocusLock>
             <FormWrapper>
               <Form>
-                <Label>Song Title</Label>
-                <EditedSongTitle defaultValue={song.songTitle} onChange={(e)=> setEditedTitle(e.target.value)}></EditedSongTitle>
-                <Label>Artist Name</Label>
-                <EditedArtist defaultValue={song.artistName} onChange={(e)=> setEditedArtist(e.target.value)}></EditedArtist>
+                <TopWrapper>
+                  <SubTopWrapper>
+                    <Label>Song Title</Label>
+                    <EditedSongTitle defaultValue={song.songTitle} onChange={(e)=> setEditedTitle(e.target.value)}></EditedSongTitle>
+                    <Label>Artist Name</Label>
+                    <EditedArtist defaultValue={song.artistName} onChange={(e)=> setEditedArtist(e.target.value)}></EditedArtist>
+                  </SubTopWrapper>
+                  <Comment>
+                    <Label>Editor Comments</Label>
+                    <TextArea placeholder={"briefly explain changes. required for lyrics change"} onChange={(e)=> setEditorComments(e.target.value)}/>
+
+
+                    </Comment>
+                </TopWrapper>
                 <Label>Lyrics</Label>
                 <EditedLyrics onChange={(e)=> setEditedLyrics(e.target.value)}>
                   {song.thisSong.lyrics}
@@ -212,6 +224,26 @@ const SongPage = () => {
     </Wrapper>
   )
 }
+
+const Comment = styled.div`
+display:flex;
+flex-direction: column;
+margin-left: 20px;
+`
+
+const TextArea = styled.textarea`
+height: 50px;
+
+`
+
+const SubTopWrapper = styled.div`
+display: flex;
+flex-direction: column;
+`
+
+const TopWrapper = styled.div`
+display:flex;
+`
 
 const EditedLyrics = styled.textarea`
 height: 700px;

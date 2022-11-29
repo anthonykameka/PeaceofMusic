@@ -13,6 +13,7 @@ import logo from '../assets/logosmall2.png'
 import { BsJournals } from "react-icons/bs"
 import {GiMusicalScore} from "react-icons/gi"
 import { CurrentUserContext } from './CurrentUserContext';
+import UserPanel from './UserPanel';
 
 const Header = () => {
 //CONTEXT VARIABLES
@@ -121,6 +122,7 @@ const {
 
   return (
     <Wrapper>
+      <UserPanel/>
         <Nav>
         <Logo src={logo} onClick={handleLogoClick}></Logo>
         <BsJournals onClick={handleJournalClick} style={{"margin-top": "10px"}}size={25}/>
@@ -152,6 +154,7 @@ const {
 
         </Modal>
         </Nav>
+        
     </Wrapper>
   )
 }
@@ -183,6 +186,7 @@ const SongInput = styled.input`
 
 const Wrapper = styled.div`
 height: 200px;
+display: flex;
 
 background-color: var(--color-deepteal);
 `

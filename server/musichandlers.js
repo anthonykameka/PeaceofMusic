@@ -21,7 +21,9 @@ const addSong = async (req, res) => {
     }
 
     //initialize some values for the database
-
+    if (!rawSong.thisSong.title.includes("by")) {
+        return res.status(444).json({status:444, message:"Can't find the song online. Try again"})
+    }
     let title = rawSong.thisSong.title
     let slicedTitle = title.split("by")
     let songTitle = slicedTitle[0].trim();
@@ -38,17 +40,20 @@ const addSong = async (req, res) => {
         mostRecent : null,
         pending : [],
         approved : [],
+        declined: [],
     } // keep track of past edits
     rawSong.annotations = {
         annotations: {
             pending: [],
             approved: [],
+            declined: [],
         },
         
     }
     rawSong.comments = {
         pending: [],
         approved: [],
+        declined: [],
     };
 
     rawSong.poms = {
@@ -198,21 +203,101 @@ const addEdit = async (req, res) => {
     const client = new MongoClient(MONGO_URI, options)
     const edit = req.body
     console.log(edit)
-    const pendingEdit = {
-        ...edit,  
-        pending: true, // set pending edit for future moderation.
-        approved: false  // approval of edit?
-    }
-
+    
     try {
         await client.connect();
         const db = client.db("peaceofmusic");
         console.log("connected")
-        const thisSong = await db.collection("songs").findOne({_id: edit.songId}) // find the song
-        console.log(thisSong)
-        await db.collection("songs").updateOne({})
+        const thisSong = await db.collection("songs").findOne({_id: edit.targetId}) // find the song
+        // console.log(thisSong)//
 
 
+
+        const pendingEdit = {
+            ...edit,
+            _id: uuidv4(),
+            type: "song", 
+            pending: true, // set pending edit for future moderation.
+            approved: false,  // approval of edit?
+            declined: null, // was this edit declined?
+            submitTime: new Date(),
+            reviewTime: null,
+            reviewedBy: null,
+            reviewComments: null,
+            editDetails: {
+                editedTitle: edit.editedTitle,
+                editedArtist: edit.editedArtist,
+                editedLyrics: edit.editedLyrics
+            },
+            currentDetails: {
+                artist: thisSong.artistName
+                
+            }
+            
+        }
+    
+        // console.log(pendingEdit)
+        const miniEditDetails = {
+            _id: pendingEdit._id,
+            date: pendingEdit.submitTime
+        }
+    
+        // console.log(pendingEdit.editedBy)
+
+
+
+        // await db.collection("edits").insertOne(pendingEdit)
+        await db.collection("users").updateOne(
+            {
+                _id: pendingEdit.editedBy
+            }, 
+            {
+                $push: {
+                        "edits.pending": miniEditDetails
+                    }
+            }
+        )
+        await db.collection("songs").updateOne(
+        
+            {
+                "_id": pendingEdit.targetId
+            },
+            {
+                $push: {
+                    "edits.pending": miniEditDetails
+                }
+            }
+        )
+
+        res.status(200).json({status: 200, data: pendingEdit, message: "edit submission received."})
+
+
+    } catch (err) {
+        res.status(404).json({ status: 404, data: "Error in this operation" });
+    } finally {
+    client.close();
+    console.log("disconnected from database.")
+    }
+}
+
+// const reviewEdit = async (req, res) => {
+
+//     const client = new MongoClient(MONGO_URI, options)
+//     const review = req.body
+
+
+
+// }
+
+const getEdits = async (req, res) => {
+    const client = new MongoClient(MONGO_URI, options);
+    try {
+    await client.connect();
+        const db = client.db("peaceofmusic");
+        console.log("connected")
+        const edits = await db.collection("edits").find().toArray();
+        console.log(edits)
+        res.status(200).json({ status: 200, data: edits })
     } catch (err) {
         res.status(404).json({ status: 404, data: "Not Found" });
     } finally {
@@ -221,6 +306,12 @@ const addEdit = async (req, res) => {
     }
 }
 
+
+
+
+
+
+// "flight": reservation.flight, "seats": {"$elemMatch": {"id": reservation.seat}} for future reference
 
 // const addArtist = async (req, res) => {
 //     const client = new MongoClient(MONGO_URI, options);
@@ -232,7 +323,7 @@ const addEdit = async (req, res) => {
 //     } catch (err) {
 //         res.status(404).json({ status: 404, data: "Not Found" });
 //     } finally {
-//     client.close();
+//     client.close(); 
 //     }
 // }
 
@@ -245,5 +336,6 @@ module.exports = {
     deleteSong,
     getArtists,
     addEdit,
+    getEdits,
     // addArtist,
 }
