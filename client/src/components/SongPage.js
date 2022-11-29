@@ -182,9 +182,9 @@ const SongPage = () => {
             <FormWrapper>
               <Form>
                 <Label>Song Title</Label>
-                <EditedSongTitle defaultvalue={song.songTitle} onChange={(e)=> setEditedTitle(e.target.value)}></EditedSongTitle>
+                <EditedSongTitle defaultValue={song.songTitle} onChange={(e)=> setEditedTitle(e.target.value)}></EditedSongTitle>
                 <Label>Artist Name</Label>
-                <EditedArtist defaultvalue={song.artistName} onChange={(e)=> setEditedArtist(e.target.value)}></EditedArtist>
+                <EditedArtist defaultValue={song.artistName} onChange={(e)=> setEditedArtist(e.target.value)}></EditedArtist>
                 <Label>Lyrics</Label>
                 <EditedLyrics onChange={(e)=> setEditedLyrics(e.target.value)}>
                   {song.thisSong.lyrics}

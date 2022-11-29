@@ -16,7 +16,7 @@ const addSong = async (req, res) => {
     const client = new MongoClient(MONGO_URI, options);
     let rawSong = req.body // data received
     console.log(rawSong)
-    if (!rawSong.thisSong.title) { // if cant find song online, it will not function
+    if (!rawSong.thisSong) { // if cant find song online, it will not function
         return res.status(444).json({status:444, message:"Can't find the song online. Try again"})
     }
 
@@ -167,6 +167,14 @@ const addEdit = async (req, res) => {
     const client = new MongoClient(MONGO_URI, options)
     const edit = req.body
     console.log(edit)
+    const editedTitle = edit.editedTitle
+    const editedArtist = edit.editedArtist
+    const editedLyrics = edit.editedLyrics
+    const editedBy = edit.editedBy
+    const songId = edit.songId
+
+    
+
     try {
         await client.connect();
         const db = client.db("peaceofmusic");
