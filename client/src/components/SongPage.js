@@ -32,6 +32,7 @@ const SongPage = () => {
     const [userWhoAdded, setUserWhoAdded] = useState(null)
     const [dateAdded, setDateAdded] = useState(null)
     const [userActive, setUserActive] = useState(true)
+    console.log(song)
 
     useEffect(() => {
         fetch(`/api/get-song/${_id.id}`)
@@ -143,7 +144,7 @@ const SongPage = () => {
 
   }
 
-  
+  console.log(song)
 
 
   return (
@@ -156,7 +157,7 @@ const SongPage = () => {
         <SongInfoBox>
         <SongInfoSubBox>
           <AlbumCover src={song.thisSong.albumArt}/>
-          <Title>{song.thisSong.title}</Title>
+          <Title>{song?.thisSong.title}</Title>
           
           <DateAdded>Date added: {dateAdded} </DateAdded>
           {

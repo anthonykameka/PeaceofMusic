@@ -10,14 +10,13 @@ const SongCard = ({song}) => {
     navigate(`/songs/${song._id}`)
   }
 
-    // console.log(song)
   return (
     <SongItem onClick={handleSongClick}>
         <SongBox>
-            <AlbumArt src={song.song.albumArt}/>
+            <AlbumArt src={song?.thisSong.albumArt}/>
             <InfoBox>
-                <ArtistName>{song.artistName}</ArtistName>
-                <SongName>{song.songTitle}</SongName>
+                <ArtistName>{song?.artistName}</ArtistName>
+                <SongName>{song?.songTitle}</SongName>
             </InfoBox>
         </SongBox>
     </SongItem>
