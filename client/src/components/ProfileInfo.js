@@ -8,7 +8,6 @@ import pomme3 from "../assets/pommes/pomme3.png"
 import pomme4 from "../assets/pommes/pomme4.png"
 import pomme5 from "../assets/pommes/pomme5.png"
 import pomme6 from "../assets/pommes/pomme6.png"
-import EditProfile from './EditProfile';
 import FocusLock from "react-focus-lock"
 import Modal from "styled-react-modal"
 import { useNavigate } from 'react-router-dom';
@@ -227,9 +226,40 @@ const ProfileInfo = () => {
                 <Contributions>
                     <ContributionsTitle>Contributions: </ContributionsTitle>
                     <SongsAdded>Songs Added: {currentUser.adds}</SongsAdded>
-                    <Annotations>Annotations: {currentUser.annotations}</Annotations>
-                    <Comments> Comments: {currentUser.comments} </Comments>
-                    <Edits> Edits: {currentUser.edits} </Edits>
+                    <Annotations>
+                        Annotations: 
+                        {
+                        currentUser.annotations.meanings.length + currentUser.annotations.theories.length > 0
+                        ? currentUser.annotations.meanings.length + currentUser.annotations.theories.length
+                        : 0
+                        }
+                    </Annotations>
+                    <Edits>
+                        edits: 
+                        {
+                        currentUser.edits.approved.length + currentUser.edits.approved.length > 0
+                        ? currentUser.edits.approved.length + currentUser.edits.approved.length
+                        : 0
+                        }
+                    </Edits>
+                    <Comments>
+                        comments: 
+                        {
+                        currentUser.comments.approved.length + currentUser.comments.approved.length > 0
+                        ? currentUser.comments.approved.length + currentUser.comments.approved.length
+                        : 0
+                        }
+                    </Comments>
+                    <Poms>
+                        poms: 
+                        {
+                        currentUser.poms.approved.length + currentUser.poms.approved.length > 0
+                        ? currentUser.poms.approved.length + currentUser.poms.approved.length
+                        : 0
+                        }
+                    </Poms>
+
+
                 </Contributions>
                 <AccountStatus>Account Status: {currentUser.role}</AccountStatus>
             </MiddleContent>
@@ -259,6 +289,9 @@ const ProfileInfo = () => {
         </Wrapper>
     )
 }
+
+const Poms = styled.p`
+`
 
 const AccountStatus = styled.p``
 

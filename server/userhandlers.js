@@ -176,6 +176,11 @@ const addUser = async (req, res) => {
         auth0_sub: auth0_sub,
         short_bio: null,
         age: null,
+        location: {
+            city: null,
+            region: null,
+            country: null,
+        },
         long_bio: null,
         handle: null,
         profile_picture_src: null,
@@ -183,11 +188,41 @@ const addUser = async (req, res) => {
         tags: null,
         following: null,
         follows: null,
-        setList: null,
-        annotations: 0,
-        poms: 0,
-        comments: 0,
-        edits: 0,
+        songs: {
+            private: [],
+            public: {
+                approved: [],
+                pending: [],
+            }
+        },
+        setLists: {
+            private: [],
+            public: []
+        },
+        annotations: {
+            meanings: {
+                approved: [],
+                pending: [],
+            },
+            theories: {
+                approved: [],
+                pending: [],
+            }
+        },
+        poms: {
+            pending: [],
+            approved: [],
+            private: [],
+            workInProgress: [],
+        },
+        comments: {
+            pending: [],
+            approved: [],
+        },
+        edits: {
+            pending: [],
+            approved: [],
+        },
         adds: 0,
     }
 

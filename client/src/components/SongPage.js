@@ -134,6 +134,15 @@ const SongPage = () => {
     toggleModal();
   }
 
+  const handleAddedByClick = (ev) => {
+    ev.preventDefault();
+    // console.log(userWhoAdded)
+    navigate(`/profile/${userWhoAdded._id}`)
+
+  }
+
+  
+
 
   return (
     <Wrapper>
@@ -150,8 +159,8 @@ const SongPage = () => {
           <DateAdded>Date added: {dateAdded} </DateAdded>
           {
             userActive?
-            <AddedBy>by: {userWhoAdded?.username}</AddedBy>
-            : <AddedBy>by: Deactivated User</AddedBy>
+            <AddedBy onClick={handleAddedByClick}>by: {userWhoAdded?.username}</AddedBy>
+            : <AddedBy >by: Deactivated User</AddedBy>
           }
           
         </SongInfoSubBox>

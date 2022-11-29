@@ -34,16 +34,47 @@ const addSong = async (req, res) => {
     rawSong.dateAdded = new Date(); // date right now
     rawSong.virgin = true; // edit status. if never edited = true . will help with renders.
     rawSong.editPending = false; // are there edits waiting for approval
-    rawSong.edits = [] // keep track of past edits
-    rawSong.contributions = {
-        annotations: 0,
-        poms: 0,
-
+    rawSong.edits = {
+        mostRecent : null,
+        pending : [],
+        approved : [],
+    } // keep track of past edits
+    rawSong.annotations = {
+        annotations: {
+            pending: [],
+            approved: [],
+        },
+        
     }
-    rawSong.comments = [];
+    rawSong.comments = {
+        pending: [],
+        approved: [],
+    };
+
+    rawSong.poms = {
+        pending: [],
+        approved: [],
+    }
+    rawSong.youTubeUrl = null;
+    rawSong.spotifyUrl = null;
+    rawSong.albumId = null;
+    rawSong.albumTitle = null;
+    rawSong.albumRelease = null;
 
 
-    const thisArtist = {_id: rawSong.artistId, artistName: artistName}
+    const thisArtist = {
+                        _id: rawSong.artistId,
+                        artistName: artistName,
+                        bio: null, albums: [], 
+                        spotifyUrl: null, 
+                        lastFmUrl:null, 
+                        artistPhotos: [], 
+                        edits: 
+                            { 
+                                pending: [],
+                                approved: []
+                            }
+                        }
     try {
         await client.connect();
         const db = client.db("peaceofmusic");
@@ -167,18 +198,19 @@ const addEdit = async (req, res) => {
     const client = new MongoClient(MONGO_URI, options)
     const edit = req.body
     console.log(edit)
-    const editedTitle = edit.editedTitle
-    const editedArtist = edit.editedArtist
-    const editedLyrics = edit.editedLyrics
-    const editedBy = edit.editedBy
-    const songId = edit.songId
-
-    
+    const pendingEdit = {
+        ...edit,  
+        pending: true, // set pending edit for future moderation.
+        approved: false  // approval of edit?
+    }
 
     try {
         await client.connect();
         const db = client.db("peaceofmusic");
         console.log("connected")
+        const thisSong = await db.collection("songs").findOne({_id: edit.songId}) // find the song
+        console.log(thisSong)
+        await db.collection("songs").updateOne({})
 
 
     } catch (err) {
