@@ -306,6 +306,24 @@ const getEdits = async (req, res) => {
     }
 }
 
+const getEdit = async (req, res) => {
+    const client = new MongoClient(MONGO_URI, options);
+    const id = req.params.id
+    try {
+    await client.connect();
+        const db = client.db("peaceofmusic");
+        console.log("connected")
+        const edit = await db.collection("edits").findOne({_id: id})
+        console.log(edit)
+        res.status(200).json({ status: 200, data: edit })
+    } catch (err) {
+        res.status(404).json({ status: 404, data: "Not Found" });
+    } finally {
+    client.close();
+    console.log("disconnected from database.")
+    }
+}
+
 
 
 
@@ -337,5 +355,6 @@ module.exports = {
     getArtists,
     addEdit,
     getEdits,
+    getEdit,
     // addArtist,
 }

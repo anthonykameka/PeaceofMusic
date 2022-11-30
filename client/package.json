@@ -15,6 +15,7 @@
     "@tombatossals/react-chords": "^0.2.10",
     "components": "^0.1.0",
     "date-fns": "^2.29.3",
+    "diff": "^5.1.0",
     "draft-js": "^0.11.7",
     "genius-lyrics-api": "^3.2.0",
     "react": "^18.2.0",

@@ -59,12 +59,19 @@ export default createGlobalStyle`
         font-size: 1.5em;
         font-family: 'Source Sans Pro', sans-serif; 
     }
+    h2 {
+        font-size: 1em;
+        font-family: 'Source Sans Pro', sans-serif; 
+    }
 
     p {
         font-family: 'Source Sans Pro', sans-serif;
     }
 
     button {
+        font-family: 'Source Sans Pro', sans-serif;
+    }
+    input {
         font-family: 'Source Sans Pro', sans-serif;
     }
 

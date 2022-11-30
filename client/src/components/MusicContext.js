@@ -14,9 +14,6 @@ export const MusicContext = createContext();
     const [artistsData, setArtistsData] = useState(null)
 
     const songsByArtists = (songArray, artistArray) => {
-        // console.log(songArray)
-        // console.log(artistArray)
-
         const newArray = artistArray.map(artist => {
             return songArray.filter((song => {
                 return artist === song.artistName
@@ -26,14 +23,9 @@ export const MusicContext = createContext();
         newArray.forEach(artistCatalogue => {
             artistCatalogue.artistName = artistCatalogue[0].artistName
         })
-
-
-
         setArtistsData(newArray)
 
         }
-
-
 
     useEffect(() => {
         fetch("/api/get-songs")
@@ -47,12 +39,18 @@ export const MusicContext = createContext();
         })
         
     }, [refreshSongs, setRefreshSongs])
+ 
+        // this function is used to getSong, everywherever required.
 
+        const getSong = (songId) => {
 
-    // console.log(refreshSongs)
+           return fetch(`/api/get-song/${songId}`)
+            .then(res => res.json())
 
-    // songs && console.log(songs)
-    
+        }
+
+        
+
 
 
     return (
@@ -63,6 +61,7 @@ export const MusicContext = createContext();
                 artistsData, // array of unique artists
                 setRefreshSongs,
                 refreshSongs,
+                getSong,
             }}
         >
             {children}
