@@ -127,6 +127,7 @@ const SongPage = () => {
     .then(res => res.json())
     .then(res => {
       console.log(res)
+      toggleModal();
     })
 
     // toggleModal()

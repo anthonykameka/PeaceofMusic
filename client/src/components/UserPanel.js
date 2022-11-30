@@ -23,7 +23,8 @@ const UserPanel = () => {
         fetch("/api/get-edits")
         .then(res => res.json())
         .then(res => {
-            setPendingEdits(res.data)
+            console.log(res)
+            setPendingEdits(res.data.filter(edit => edit.pending === true)   )// check pending edits
             setPendingActive(!pendingActive)
         })
         
@@ -53,6 +54,7 @@ const UserPanel = () => {
             <p>I am a loading wheel...</p>
             :
             <>
+            <UserPanelBox>
             <ProfilePicture src={pomme}/>
             <DisplayName>{currentUser.displayname} </DisplayName>
             {
@@ -68,6 +70,7 @@ const UserPanel = () => {
                     <PendingEdits onClick={handlePendingEditClick}>{pendingEdits?.length}</PendingEdits>
                 </PendingList>
             }
+            </UserPanelBox>
             {
                 !pendingEditActive?
                 <div></div>
@@ -91,6 +94,9 @@ const UserPanel = () => {
     </Wrapper>
   )
 }
+
+const UserPanelBox = styled.div`
+display:flex;`
 const PendingEdit = styled.div``
 const EditTitle = styled.p`
 `
@@ -104,19 +110,24 @@ const PendingList = styled.ul`
 `
 
 const Pending = styled.button`
+height: 40px;
 `
 
 const DisplayName = styled.h1`
+margin-top: 7px;
 `
 
 const ProfilePicture = styled.img`
 width: 100px;
+height: 100px;
 border-radius: 100%;
 `
 
 const Wrapper = styled.div`
 background-color: var(--color-purple);
 height: 70%;
+display: flex;
+align-items: center;
 `
 
 export default UserPanel

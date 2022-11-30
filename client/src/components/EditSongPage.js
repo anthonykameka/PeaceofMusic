@@ -9,11 +9,11 @@ import Diff from "./Diff"
 
 const EditSongPage = () => {
 
-    const navigate = useNavigate();
+    const navigate = useNavigate(); // declare navigate hook
 
     const {
       currentUser,
-    } = useContext(CurrentUserContext)
+    } = useContext(CurrentUserContext) // getcurrent user details
   
     const {
       refreshSongs,// to refresh song list after edit or deletion
@@ -21,7 +21,7 @@ const EditSongPage = () => {
       getSong, //getSong function fetching
     } = useContext(MusicContext)
 
-    const _id = useParams()// _id
+    const _id = useParams()// 
     const editId = _id.id // editId
 
 
@@ -35,15 +35,15 @@ const EditSongPage = () => {
             setEditDetails(res.data) // get edit details
             getSong(res.data.targetId)
             .then(res => {
-                setOrigDetails(res.data)
+                setOrigDetails(res.data) 
             }) // get current song details 
         })
 
     }, [])
     
-    console.log(editDetails)
+    // console.log(editDetails)
 
-    console.log(origDetails)
+    // console.log(origDetails)
 
     ////// role and priviledges //
     let canEdit = false;
@@ -60,34 +60,54 @@ const EditSongPage = () => {
         canApprove = true;
       }
 
-      /////// approval /////
+      /////// approval system /////
 
-      const [approvalActive, setApprovalActive] = useState(false);
-      const [approvalConfirmed, setApprovalConfirmed] = useState(false)
-      const [declineConfirmed, setDeclineConfirmed] = useState(false)
-      const [declineActive, setDeclineActive] = useState(false);
-      const [reviewerCommentActive, setReviewerCommentActive] = useState(false)
-      const [reviewComment, setReviewComment] = useState(null);
-      const [savedReviewComment, setSavedReviewComment] = useState(null);
+      const [approvalActive, setApprovalActive] = useState(false); // active toggle for approval button
+      const [approvalConfirmed, setApprovalConfirmed] = useState(false) // toggle when reviewer has chosen to confirm the edit
+      const [declineConfirmed, setDeclineConfirmed] = useState(false) // toggle when reviewer has chosent to decline the edit
+      const [declineActive, setDeclineActive] = useState(false); // active toggle for decline button
+      const [reviewerCommentActive, setReviewerCommentActive] = useState(false) // ^^ for reviewer comments button
+      const [reviewComment, setReviewComment] = useState(null); // keep track of reviewer comments
+      const [savedReviewComment, setSavedReviewComment] = useState(null); // save reviewer comments until leaves page
 
-      const handleApproveEdit = (ev) => {
+      /// handlers/// lots of similar names// apologies//
+      //button states 
+
+      const handleApproveEdit = (ev) => { //toggle approval button
         ev.preventDefault();
-        console.log("test")
         setApprovalActive(!approvalActive)
       }
 
+// process to submit approval of review to server
       const handleConfirmEdit = (ev) => {
         ev.preventDefault();
-        console.log("test")
+
         setApprovalActive(!approvalActive)
         if (approvalConfirmed) {
-            //patch to server
-            fetch(`/api/`)
+            // if approval confirmed, send following object . go to backend to see what is done from here.
+            const approval = {
+                editId: editId,
+                reviewerId: currentUser._id,
+                approved: true,
+                reviewComments: reviewComment,
+                targetId: editDetails.targetId
+
+            }
+            //patch to server// use same endpoint as decline, as the info is very similar.
+            fetch(`/api/review-edit/`,
+            {
+                method: "PATCH",
+                headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(approval)
+            })
             
         }
         
       }
-
+// process to decline the edit after review to server
       const handleDeclineConfirmed = (ev) => {
         ev.preventDefault();
         setDeclineConfirmed(ev.target.checked)
@@ -95,10 +115,20 @@ const EditSongPage = () => {
         setDeclineActive(!declineActive)
     }
 
+    //onchange for listening to confirm checkbox
+
       const handleAcceptChange = (ev) => {
         ev.preventDefault();
         setApprovalConfirmed(ev.target.checked)
       }
+
+          //onchange for listening to confirm checkbox
+        const handleDeclineChange = (ev) => {
+        ev.preventDefault();
+        setDeclineConfirmed(ev.target.checked)
+      }
+
+      // cancel button for approval
     
     const handleCancelEdit = (ev) => {
         ev.preventDefault();
@@ -107,37 +137,37 @@ const EditSongPage = () => {
 
     }
 
-    const handleDeclineEdit = (ev) => {
-        ev.preventDefault();
-        console.log("decline")
-        setDeclineActive(!declineActive)
-    }
+    // cancel button for decline
 
-    const handleDeclineChange = (ev) => {
-        ev.preventDefault();
-        setDeclineConfirmed(ev.target.checked)
-      }
-
-      const handleCancelDecline = (ev) => {
+    const handleCancelDecline = (ev) => {
         ev.preventDefault();
         setDeclineConfirmed(false)
         setDeclineActive(!declineActive)
 
     }
 
-    const handleReviewerComment = (ev) => {
-        ev.preventDefault();
-        setReviewerCommentActive(!reviewerCommentActive);
-        
-        console.log(handleReviewComment())
 
+    // Decline button toggle
+
+    const handleDeclineEdit = (ev) => {
+        ev.preventDefault();
+        setDeclineActive(!declineActive)
     }
 
+    // reviewer comments handlers, toggles the pop up
+    const handleReviewerComment = (ev) => {
+        ev.preventDefault();
+        setReviewerCommentActive(!reviewerCommentActive); // setReviewer toggle
+    
+        handleReviewComment() // calling the handleReviewComment function that is immediately below
+
+    }
+// listener for the input for reviewer comment. save it in state if > 0
     const handleReviewComment = () => {
         console.log("test")
 
         if (reviewComment.length > 0) {
-            setSavedReviewComment(reviewComment)
+            setSavedReviewComment(reviewComment) 
         }
         else {
             setSavedReviewComment(null)
@@ -152,19 +182,19 @@ const EditSongPage = () => {
   return (
     <Wrapper>
         {
-            !origDetails
+            !origDetails // Conditional render based on fetch that occurs
             ? <p>loading...</p>
             :
             <>
             <SongInfoBox>
                 <SongInfoSubBox>
-                    <AlbumCover src={origDetails.thisSong.albumArt}/>
+                    <AlbumCover src={origDetails.thisSong.albumArt}/> 
                         <Title><span className ="title">"{origDetails.songTitle}" </span> <span className="by"> - </span>{origDetails.artistName}</Title>
                         <DateAdded>last edit: 
                             {
-                                origDetails.virgin?
+                                origDetails.virgin? // has this song ever been edited?
                                 <span>N/A</span>
-                                : <span>most recent date</span>
+                                : <span>most recent date</span> // TO DO** if notvirgin, show most recent edit
 
                             }
                         </DateAdded>
@@ -174,17 +204,27 @@ const EditSongPage = () => {
             <LyricsMainWrapper>
                 <LyricsWrapper>
                     <Lyrics>
-                                {origDetails.thisSong.lyrics}
+                                {origDetails.thisSong.lyrics} // current lyrics 
                     </Lyrics>
                 </LyricsWrapper>
                 <EditWrapper>
                     <EditSubWrapper>
                         {
-                            !editDetails.editedTitle?
+                           <h1>Status: </h1> 
+                        }
+                        
+                        {
+                            // series of 3 similar portions, depending on what the fields the edits have occured in.
+                            // DIFF is a function  that  from Diff.js that uses diff js npm.
+                            // this compares two strings and checks for difference// and allows you to style accordingly.
+                            // an ideal shortcut for an editor at scale.
+                        
+                            !editDetails.editedTitle? 
                             <div></div>
                             :
                             <EditTitleWrapper>
                                 <p> Edited song title: </p>
+                                
                                 <Diff string1={origDetails.songTitle} string2={editDetails.editedTitle} />
                             </EditTitleWrapper>
 
@@ -213,11 +253,11 @@ const EditSongPage = () => {
                             :
                         <EditorComments>
                             <p> Editor comment:
-                            <span>{editDetails.editorComment}</span></p>
+                            <span>{editDetails.editorComment}</span></p> 
                         </EditorComments>
                         }
                         {
-
+                            // is there a saved comment by the reviewer? if so, show **see**
                             !savedReviewComment
                             ? <></>
                             :
@@ -230,6 +270,7 @@ const EditSongPage = () => {
                     </EditSubWrapper>
                     <ApprovalBox>
                         {
+                            // using user role, show edit reviewer righs
                             !canApprove || approvalActive || declineActive
                             ? <div></div>
                             :
@@ -239,6 +280,7 @@ const EditSongPage = () => {
                             <button onClick={handleDeclineEdit}>Decline Edit</button>
                             
                                 {
+                                    // switch the button name from add to save
                                     !reviewerCommentActive
                                     ? <button onClick={handleReviewerComment}>Add Comment</button>
                                     : <button onClick={handleReviewerComment}>Save Comment</button>
@@ -247,6 +289,7 @@ const EditSongPage = () => {
                             </> 
                         }
                         {
+                            // if approval mode is toggle do the following. listen to checkbox and show buttons
                             !approvalActive
                             ?<div></div>
 
@@ -263,7 +306,7 @@ const EditSongPage = () => {
                             </>
 
                         }
-                        {
+                        {   // if decline mode is toggle do the following. listen to checkbox and show buttons
                             !declineActive
                             ?<div></div>
                             :
@@ -279,7 +322,7 @@ const EditSongPage = () => {
                 !reviewerCommentActive
                 ?<div></div>
                 :
-
+                    //reviewer comment box    
             <ReviewerComment>
                 <ReviewCommentBox>
                     <h2>Reviewer Comments:</h2>

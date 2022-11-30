@@ -20,7 +20,7 @@ const addSong = async (req, res) => {
         return res.status(444).json({status:444, message:"Can't find the song online. Try again"})
     }
 
-    //initialize some values for the database
+    //initialize SONG DATA STRUCTURE
     if (!rawSong.thisSong.title.includes("by")) {
         return res.status(444).json({status:444, message:"Can't find the song online. Try again"})
     }
@@ -66,7 +66,7 @@ const addSong = async (req, res) => {
     rawSong.albumTitle = null;
     rawSong.albumRelease = null;
 
-
+    // initialize artist for DB when a new song is added
     const thisArtist = {
                         _id: rawSong.artistId,
                         artistName: artistName,
@@ -230,7 +230,9 @@ const addEdit = async (req, res) => {
                 editedLyrics: edit.editedLyrics
             },
             currentDetails: {
-                artist: thisSong.artistName
+                currentArtist: thisSong.artistName,
+                currentTitle: thisSong.songTitle,
+                currentLyrics: thisSong.thisSong.lyrics,
                 
             }
             
@@ -246,7 +248,7 @@ const addEdit = async (req, res) => {
 
 
 
-        // await db.collection("edits").insertOne(pendingEdit)
+        await db.collection("edits").insertOne(pendingEdit)
         await db.collection("users").updateOne(
             {
                 _id: pendingEdit.editedBy
@@ -257,6 +259,8 @@ const addEdit = async (req, res) => {
                     }
             }
         )
+
+        
         await db.collection("songs").updateOne(
         
             {
@@ -265,6 +269,9 @@ const addEdit = async (req, res) => {
             {
                 $push: {
                     "edits.pending": miniEditDetails
+                },
+                $set: {
+                    editPending: true
                 }
             }
         )
@@ -324,6 +331,149 @@ const getEdit = async (req, res) => {
     }
 }
 
+const reviewEdit = async (req, res) => {
+    const client = new MongoClient(MONGO_URI, options);
+    const details = req.body
+    const editId = req.body.editId
+    const reviewerId = req.body.reviewerId
+    const approved = req.body.approved
+    const reviewComments = req.body.reviewComments
+    const songId = req.body.targetId
+
+    try {
+    await client.connect();
+        const db = client.db("peaceofmusic");
+        console.log("connected")
+        const edit = await db.collection("edits").findOne({_id: editId})
+        console.log(edit)
+        
+        if( approved ) {
+            const reviewTime = new Date()
+            await db.collection("edits").updateOne(
+                {
+                    _id: editId
+                },
+                {
+                    $set: {
+                        approved: true,
+                        pending: false,
+                        reviewTime: reviewTime,
+                        reviewedBy: reviewerId,
+                        reviewComments: reviewComments,
+
+                    }
+                }
+            )
+
+            const review = {
+                _id: edit._id,
+                date: reviewTime
+
+    
+            }
+            // reviewer edit
+            await db.collection("users").updateOne(
+                {
+                    _id: reviewerId
+                },
+                {
+                    $push: {
+                        "reviews.approved": review
+                    }
+                }
+            )
+    
+
+            // push edit into approved array
+            await db.collection("songs").updateOne(
+                {
+                    _id: songId
+                },
+                {
+                    $set: {
+                        virgin: false,
+
+                        },
+                    $push: {
+                        "edits.approved":review
+                    }
+                }
+            )
+            await db.collection("songs").updateOne(
+                {
+                    _id:songId
+                },
+                {
+                    $pull: {
+                        "edits.pending": {_id: editId}
+                    }
+                }
+            )
+
+                if (edit.editDetails.editedTitle) {
+                    await db.collection("songs").updateOne(
+                        {
+                            _id: songId
+                        },
+                        {
+                            $set: {
+                                songTitle: edit.editDetails.editedTitle
+                            }
+                        }
+                    )
+                }
+
+                if (edit.editDetails.editedArtist) {
+                    await db.collection("songs").updateOne(
+                        {
+                            _id: songId
+                        },
+                        {
+                            $set: {
+                                artistName: edit.editDetails.editedArtist
+                            }
+                        }
+                    )
+                }
+
+                if (edit.editDetails.editedLyrics) {
+                    await db.collection("songs").updateOne(
+                        {
+                            _id: songId
+                        },
+                        {
+                            $set: {
+                               "songTitle.lyrics": edit.editDetails.editedLyrics
+                            }
+                        }
+                    )
+                }
+                // check pending
+                const songAfterApproval = await db.collection("songs").findOne({_id: songId}) 
+                if (songAfterApproval.edits.pending.length === 0) {
+                    await db.collection("songs").updateOne(
+                        {
+                            _id: songId
+                        },
+                        {
+                            $set: {
+                                editPending: false
+                            }
+                        }
+                    )
+                }
+        }
+
+        
+        res.status(200).json({ status: 200, data: details })
+    } catch (err) {
+        res.status(404).json({ status: 404, data: "Not Found" });
+    } finally {
+    client.close();
+    console.log("disconnected from database.")
+    }
+}
+
 
 
 
@@ -356,5 +506,6 @@ module.exports = {
     addEdit,
     getEdits,
     getEdit,
+    reviewEdit,
     // addArtist,
 }

@@ -229,6 +229,10 @@ const addUser = async (req, res) => {
             approved: [],
             declined: [],
         },
+        reviews: {
+            approved: [],
+            declined: [],
+        },
         adds: 0,
         notifications: [],
         messages: [],

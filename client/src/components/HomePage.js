@@ -76,6 +76,7 @@ const HomePage = () => {
     width: 100%;
     justify-content: end;
     background-color: var(--color-orange);
+    overflow: auto;
 
     `
 

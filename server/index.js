@@ -34,6 +34,7 @@ const {
   addEdit,
   getEdits,
   getEdit,
+  reviewEdit,
 } = require("./musichandlers")
 
 app.use(bodyParser.json({ limit: '10mb' }));
@@ -68,6 +69,7 @@ app.use(express.static("public"))
   app.patch("/api/deactivate-user/:id", deactivateUser)
   app.patch("/api/activate-user/:id", activateUser)
   app.patch("/add-edit", addEdit)
+  app.patch("/api/review-edit", reviewEdit)
   app.get("/api/get-chords", getChords)
   app.post("/api/add-song", addSong)
   app.get("/api/get-songs", getSongs)
@@ -78,6 +80,7 @@ app.use(express.static("public"))
   app.get("/api/get-edit/:id", getEdit)
   app.delete("/api/delete-user/:id", deleteUser)
   app.delete("/api/delete-song/:id", deleteSong)
+
 
 
 

@@ -384,7 +384,7 @@ const Wrapper = styled.div`
     flex-direction: column;
     border-left: 1px dotted rgba(0, 0, 0,  0.2);
     width: 30vw;
-    height: 70vh;
+    height: calc(100vh - 200px);
     position: relative;
 `
 
