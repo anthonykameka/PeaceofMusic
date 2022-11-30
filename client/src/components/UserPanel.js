@@ -56,6 +56,7 @@ const UserPanel = () => {
             <>
             <UserPanelBox>
             <ProfilePicture src={pomme}/>
+            <NameAndActions>
             <DisplayName>{currentUser.displayname} </DisplayName>
             {
                reviewer?
@@ -70,6 +71,7 @@ const UserPanel = () => {
                     <PendingEdits onClick={handlePendingEditClick}>{pendingEdits?.length}</PendingEdits>
                 </PendingList>
             }
+            </NameAndActions>
             </UserPanelBox>
             {
                 !pendingEditActive?
@@ -95,6 +97,12 @@ const UserPanel = () => {
   )
 }
 
+const NameAndActions = styled.div`
+height: 80%
+;
+`
+
+
 const UserPanelBox = styled.div`
 display:flex;`
 const PendingEdit = styled.div``
@@ -110,7 +118,8 @@ const PendingList = styled.ul`
 `
 
 const Pending = styled.button`
-height: 40px;
+height: 30px;
+margin-top: 30px;
 `
 
 const DisplayName = styled.h1`
@@ -128,6 +137,10 @@ background-color: var(--color-purple);
 height: 70%;
 display: flex;
 align-items: center;
+padding: 0 30px;
+border-radius: 35px;
+position: absolute;
+right: 50px
 `
 
 export default UserPanel

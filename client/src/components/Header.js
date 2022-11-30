@@ -9,7 +9,8 @@ import FocusLock from "react-focus-lock"
 import { useState, useContext } from 'react';
 import {getSong} from"genius-lyrics-api";
 import { MusicContext } from './MusicContext';
-import logo from '../assets/logosmall2.png'
+import logo from '../assets/logo1.png'
+import logoText from '../assets/logotext.png'
 import { BsJournals } from "react-icons/bs"
 import {GiMusicalScore} from "react-icons/gi"
 import { CurrentUserContext } from './CurrentUserContext';
@@ -122,9 +123,10 @@ const {
 
   return (
     <Wrapper>
-      <UserPanel/>
+      {/* <Logo src={logo} onClick={handleLogoClick}></Logo> */}
+      <LogoText onClick={handleLogoClick} src={logoText}/>
         <Nav>
-        <Logo src={logo} onClick={handleLogoClick}></Logo>
+        
         <BsJournals onClick={handleJournalClick} style={{"margin-top": "10px"}}size={25}/>
         <GiMusicalScore onClick={handleMusicClick}style={{"margin-top": "10px"}}size={25}/>
         <LoginButton/>
@@ -154,10 +156,12 @@ const {
 
         </Modal>
         </Nav>
-        
+        <UserPanel/>
     </Wrapper>
   )
 }
+
+const LogoText = styled.img``
 
 const Cancel = styled.button``
 
@@ -166,7 +170,7 @@ const EditSong = styled.button``
 const Artists = styled.button``
 
 const Logo = styled.img`
-width: 75px;
+width: 200px;
 `
 const Submit = styled.button``
 const Form = styled.form`
@@ -187,7 +191,8 @@ const SongInput = styled.input`
 const Wrapper = styled.div`
 height: 200px;
 display: flex;
-
+align-items: center;
+position: relative;
 background-color: var(--color-deepteal);
 `
 

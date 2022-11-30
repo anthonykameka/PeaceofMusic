@@ -310,8 +310,8 @@ margin-top: 10px;
 
 const SongInfoSubBox = styled.div`
 background-color: var(--color-orange);
-width: 300px;
-height: 300px;
+width: 350px;
+height: 350px;
 display:flex;
 flex-direction: column;
 align-items: center;

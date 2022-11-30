@@ -21,7 +21,10 @@ const ProfileInfo = () => {
 
     const {
         currentUser,
+        refreshUser,
+        setRefreshUser,
     } = useContext(CurrentUserContext)
+
 
         //default profile picture randomizer
 ///////////////////////////////////////
@@ -72,6 +75,7 @@ const ProfileInfo = () => {
             .then(res => {
                 if (res.status ===200){
                     setUserNameDisplay(newUserName)
+                    setRefreshUser(refreshUser+1)
                 }
                 if (res.status === 402){
                     console.log("already exists")
@@ -114,6 +118,7 @@ const ProfileInfo = () => {
             .then(res => {
                 if (res.status ===200){
                     setDisplayNameDisplay(newDisplayName)
+                    setRefreshUser(refreshUser+1)
                 }
                 if (res.status === 402){
                     console.log("already exists")
@@ -164,6 +169,7 @@ const ProfileInfo = () => {
     const handleDeactivation = (ev) => {
         ev.preventDefault();
         if (deleteConfirmed) {
+            setRefreshUser(refreshUser+1)
             deactivateUser();
         }
     }
