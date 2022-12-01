@@ -7,6 +7,7 @@ import { MusicContext } from './MusicContext'
 import Modal from 'styled-react-modal'
 import FocusLock from "react-focus-lock"
 import { EditorBlock } from 'draft-js'
+import SongPoms from './SongPoms'
 
 const SongPage = () => {
 
@@ -61,11 +62,11 @@ const SongPage = () => {
     let canSubmit = true;
     let canApprove = false;
     canApprove = false;
-    if (currentUser.role === "admin" || currentUser.role === "founder" ){
+    if (currentUser?.role === "admin" || currentUser?.role === "founder" ){
       canDelete = true;
       canApprove = true;
     }
-    if (currentUser.role === "moderator")  {
+    if (currentUser?.role === "moderator")  {
       canEdit = true;
       canApprove = true;
     }
@@ -184,6 +185,10 @@ const SongPage = () => {
       <LyricsWrapper>
         <Lyrics>{song.thisSong.lyrics}</Lyrics>
       </LyricsWrapper>
+
+      <PomWrapper>
+        <SongPoms song={song}/>
+      </PomWrapper>
       <Modal
         isOpen={isOpen}
         onEscapeKeydown={toggleModal}
@@ -226,6 +231,9 @@ const SongPage = () => {
     </Wrapper>
   )
 }
+
+const PomWrapper = styled.div`
+`
 
 const Comment = styled.div`
 display:flex;

@@ -1,9 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
-import { useContext, useState } from 'react'
+import { useContext, useState, useEffect } from 'react'
 import { CurrentUserContext } from './CurrentUserContext'
 import pomme from "../assets/pommes/pomme4.png"
 import { useNavigate } from 'react-router-dom'
+import { MusicContext } from './MusicContext'
 
 
 const UserPanel = () => {
@@ -12,6 +13,11 @@ const UserPanel = () => {
         currentUser,
         reviewer,
     } = useContext(CurrentUserContext)
+
+    const {
+        refreshEdits,
+        setRefreshEdits,
+    } = useContext(MusicContext)
 
     const [pendingEdits, setPendingEdits] = useState(null)
     const [pendingActive, setPendingActive] = useState(false)
@@ -24,11 +30,22 @@ const UserPanel = () => {
         .then(res => res.json())
         .then(res => {
             console.log(res)
-            setPendingEdits(res.data.filter(edit => edit.pending === true)   )// check pending edits
+            setPendingEdits(res.data.filter(edit => edit.status === "pending")   )// check pending edits
             setPendingActive(!pendingActive)
         })
         
     }
+
+    useEffect(() => {
+
+        fetch("/api/get-edits")
+        .then(res => res.json())
+        .then(res => {
+            console.log(res)
+            setPendingEdits(res.data.filter(edit => edit.status === "pending")   )// check pending edits
+            setPendingActive(!pendingActive)
+        })
+    }, [refreshEdits])
 
     // console.log(pendingEdits)
 
@@ -46,6 +63,7 @@ const UserPanel = () => {
         navigate(`/edits/song/${edit._id}`)
         
     }
+    
 
   return (
     <Wrapper>
@@ -68,7 +86,7 @@ const UserPanel = () => {
                 <div></div>
                 :
                 <PendingList>
-                    <PendingEdits onClick={handlePendingEditClick}>{pendingEdits?.length}</PendingEdits>
+                    <PendingEdits onClick={handlePendingEditClick}>edits: {pendingEdits?.length}</PendingEdits>
                 </PendingList>
             }
             </NameAndActions>
@@ -82,7 +100,7 @@ const UserPanel = () => {
                         pendingEdits.map(edit => {
                             return (
                                 <PendingEdit>
-                                    <EditTitle onClick={() => {handleGoToEditPage(edit)}}>{edit.editedTitle}</EditTitle>
+                                    <EditTitle onClick={() => {handleGoToEditPage(edit)}}>{edit._id.slice(0, 6)}...</EditTitle>
                                 </PendingEdit>
                             )
                         })

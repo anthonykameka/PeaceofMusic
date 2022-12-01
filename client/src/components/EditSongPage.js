@@ -19,6 +19,8 @@ const EditSongPage = () => {
       refreshSongs,// to refresh song list after edit or deletion
       setRefreshSongs,// to refresh song list after edit or deletion
       getSong, //getSong function fetching
+      refreshEdits,
+      setRefreshEdits,
     } = useContext(MusicContext)
 
     const _id = useParams()// 
@@ -39,11 +41,11 @@ const EditSongPage = () => {
             }) // get current song details 
         })
 
-    }, [])
+    }, [refreshEdits, setRefreshEdits])
     
-    // console.log(editDetails)
+    //  console.log(editDetails)
 
-    // console.log(origDetails)
+     //console.log(origDetails)
 
     ////// role and priviledges //
     let canEdit = false;
@@ -88,7 +90,7 @@ const EditSongPage = () => {
             const approval = {
                 editId: editId,
                 reviewerId: currentUser._id,
-                approved: true,
+                status: "approved",
                 reviewComments: reviewComment,
                 targetId: editDetails.targetId
 
@@ -103,7 +105,7 @@ const EditSongPage = () => {
                 },
                 body: JSON.stringify(approval)
             })
-            
+            setRefreshEdits(refreshEdits + 1)
         }
         
       }
@@ -113,6 +115,31 @@ const EditSongPage = () => {
         setDeclineConfirmed(ev.target.checked)
         console.log("test")
         setDeclineActive(!declineActive)
+        if (declineConfirmed) {
+            const decline = {
+                editId: editId,
+                reviewerId: currentUser._id,
+                status: "declined",
+                reviewComments: reviewComment,
+                targetId: editDetails.targetId
+
+            }
+
+            fetch(`/api/review-edit/`,
+            {
+                method: "PATCH",
+                headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(decline)
+            })
+
+            setRefreshEdits(refreshEdits + 1)
+            setRefreshSongs(refreshSongs + 1)
+        }
+
+
     }
 
     //onchange for listening to confirm checkbox
@@ -174,9 +201,10 @@ const EditSongPage = () => {
 
         }
     }
-
-
-
+ let pending = false
+ if (editDetails?.status === "pending") {
+    pending = true
+ }
 
 
   return (
@@ -202,15 +230,27 @@ const EditSongPage = () => {
                 </SongInfoSubBox>
             </SongInfoBox>
             <LyricsMainWrapper>
-                <LyricsWrapper>
-                    <Lyrics>
-                                {origDetails.thisSong.lyrics} // current lyrics 
-                    </Lyrics>
-                </LyricsWrapper>
+                {
+                    !editDetails.editedLyrics
+                    ?
+                    <LyricsWrapper>
+                        <Lyrics>
+                                    {origDetails.thisSong.lyrics} // current lyrics 
+                                    
+                        </Lyrics>
+                    
+                    </LyricsWrapper>
+                    :
+                    <EditLyricsWrapper>
+                        <p> Edited lyrics: </p>
+                        <Diff string1={editDetails.currentDetails.currentLyrics} string2={editDetails.editedLyrics} />
+                    </EditLyricsWrapper>
+                }
+                <StatusAndReviewerComments>
                 <EditWrapper>
                     <EditSubWrapper>
                         {
-                           <h1>Status: </h1> 
+                           <h1>Status: {editDetails?.status}</h1> 
                         }
                         
                         {
@@ -220,42 +260,36 @@ const EditSongPage = () => {
                             // an ideal shortcut for an editor at scale.
                         
                             !editDetails.editedTitle? 
-                            <div></div>
+                            <EditTitleWrapper>SONGTITLE: no change</EditTitleWrapper>
                             :
                             <EditTitleWrapper>
                                 <p> Edited song title: </p>
                                 
-                                <Diff string1={origDetails.songTitle} string2={editDetails.editedTitle} />
+                                <Diff string1={editDetails.currentDetails.currentTitle} string2={editDetails.editedTitle} />
                             </EditTitleWrapper>
 
                         }
                         {
                             !editDetails.editedArtist?
-                            <div></div>
+                            <EditArtistWrapper>ARTIST NAME: no change</EditArtistWrapper>
                             :
                             <EditArtistWrapper>
                                 <p> Edited artist name: </p>
-                                <Diff string1={origDetails.artistName} string2={editDetails.editedArtist} />
+                                <Diff string1={editDetails.currentDetails.currentArtist} string2={editDetails.editedArtist} />
                             </EditArtistWrapper>
                         }
-                                                {
-                            !editDetails.editedLyrics?
-                            <div></div>
-                            :
-                            <EditLyricsWrapper>
-                                <p> Edited lyrics: </p>
-                                <Diff string1={origDetails.thisSong.lyrics} string2={editDetails.editedLyrics} />
-                            </EditLyricsWrapper>
-                        }
                         {
-                            !editDetails.editorComment?
-                            <div></div>
+                            !editDetails.editorComment
+                            ?<div></div>
                             :
-                        <EditorComments>
-                            <p> Editor comment:
-                            <span>{editDetails.editorComment}</span></p> 
-                        </EditorComments>
+                            <EditorComments>
+                                <p> Editor comment:
+                                <span>{editDetails.editorComment}</span></p> 
+                            </EditorComments>
                         }
+
+
+
                         {
                             // is there a saved comment by the reviewer? if so, show **see**
                             !savedReviewComment
@@ -268,6 +302,11 @@ const EditSongPage = () => {
                         
                        
                     </EditSubWrapper>
+                    {
+                        !pending
+                        ? <></>
+                        :
+                    
                     <ApprovalBox>
                         {
                             // using user role, show edit reviewer righs
@@ -317,6 +356,7 @@ const EditSongPage = () => {
                             </>
                         }
                     </ApprovalBox>
+                    }
                 </EditWrapper>
                 {
                 !reviewerCommentActive
@@ -332,8 +372,10 @@ const EditSongPage = () => {
 
                 </ReviewCommentBox>
             </ReviewerComment>
+            
 
             }
+            </StatusAndReviewerComments>
             </LyricsMainWrapper>
 
             </>
@@ -346,6 +388,9 @@ const EditSongPage = () => {
   )
 }
 
+const StatusAndReviewerComments = styled.div`
+display:flex;
+flex-direction:column;`
 const SeeReviewerComment = styled.div`
 color: red;
 position: absolute;
@@ -359,11 +404,14 @@ height: 75%;
 width: 75%;
 background-color: white;
 padding: 20px;
+
 `
 
-const ReviewComment = styled.input`
+const ReviewComment = styled.textarea`
 background: none;
+width: 90%;
 border: none;
+height: 80%;
 &:focus {
 background: none;
 border: none;
@@ -372,15 +420,13 @@ outline: none;
 `
 
 const ReviewerComment = styled.div`
-position: absolute;
+position: relative;
 margin-top:20px;
-bottom: 100px;
-right: 200px;
 border-radius: 40px;
 
 background-color: var(--color-purple);
 height: 300px;
-width: 300px;
+width: 500px;
 display: flex;
 justify-content: center;
 align-items: center;
@@ -424,7 +470,8 @@ span {
 `
 
 const EditLyricsWrapper = styled.div`
-`
+white-space: pre-wrap;`
+
 
 const EditArtistWrapper = styled.div`
 display:flex;
@@ -444,9 +491,10 @@ const EditSubWrapper = styled.div`
 background-color: white;
 width: 80%;
 margin: auto;
-height: 80%;
+height: 60%;
 position: relative;
 border-radius: 40px;
+padding: 20px;
 
 
 `
@@ -477,6 +525,7 @@ display: flex;
 flex-direction: column;
 border-radius: 40px;
 margin-top: 20px;
+height: 500px;
 
 
 `

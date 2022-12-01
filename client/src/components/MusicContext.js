@@ -12,6 +12,7 @@ export const MusicContext = createContext();
     const [refreshSongs, setRefreshSongs] = useState(0)
     const [artists, setArtists] = useState(null)
     const [artistsData, setArtistsData] = useState(null)
+    const [refreshEdits, setRefreshEdits] = useState(0)
 
     const songsByArtists = (songArray, artistArray) => {
         const newArray = artistArray.map(artist => {
@@ -49,7 +50,6 @@ export const MusicContext = createContext();
 
         }
 
-        
 
 
 
@@ -62,6 +62,8 @@ export const MusicContext = createContext();
                 setRefreshSongs,
                 refreshSongs,
                 getSong,
+                refreshEdits,
+                setRefreshEdits,
             }}
         >
             {children}

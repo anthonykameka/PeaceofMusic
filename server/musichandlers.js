@@ -217,9 +217,7 @@ const addEdit = async (req, res) => {
             ...edit,
             _id: uuidv4(),
             type: "song", 
-            pending: true, // set pending edit for future moderation.
-            approved: false,  // approval of edit?
-            declined: null, // was this edit declined?
+            status: "pending",
             submitTime: new Date(),
             reviewTime: null,
             reviewedBy: null,
@@ -241,7 +239,8 @@ const addEdit = async (req, res) => {
         // console.log(pendingEdit)
         const miniEditDetails = {
             _id: pendingEdit._id,
-            date: pendingEdit.submitTime
+            date: pendingEdit.submitTime,
+            status: pendingEdit.status,
         }
     
         // console.log(pendingEdit.editedBy)
@@ -336,7 +335,7 @@ const reviewEdit = async (req, res) => {
     const details = req.body
     const editId = req.body.editId
     const reviewerId = req.body.reviewerId
-    const approved = req.body.approved
+    const status = req.body.status
     const reviewComments = req.body.reviewComments
     const songId = req.body.targetId
 
@@ -346,8 +345,8 @@ const reviewEdit = async (req, res) => {
         console.log("connected")
         const edit = await db.collection("edits").findOne({_id: editId})
         console.log(edit)
-        
-        if( approved ) {
+        /// IF EDIT IS APPROVED ////
+        if(status === "approved" ) {
             const reviewTime = new Date()
             await db.collection("edits").updateOne(
                 {
@@ -355,8 +354,7 @@ const reviewEdit = async (req, res) => {
                 },
                 {
                     $set: {
-                        approved: true,
-                        pending: false,
+                        status: "approved",
                         reviewTime: reviewTime,
                         reviewedBy: reviewerId,
                         reviewComments: reviewComments,
@@ -367,9 +365,8 @@ const reviewEdit = async (req, res) => {
 
             const review = {
                 _id: edit._id,
-                date: reviewTime
-
-    
+                date: reviewTime,
+                status: "approved"
             }
             // reviewer edit
             await db.collection("users").updateOne(
@@ -381,6 +378,23 @@ const reviewEdit = async (req, res) => {
                         "reviews.approved": review
                     }
                 }
+            )
+
+            // editor edit //
+            await db.collection("users").updateOne(
+                {
+                    _id: edit.editedBy
+                },
+                {
+                    $push: {
+                        "edits.approved": review
+                    },
+                    
+                    $pull: {
+                        "edits.pending": {_id: editId}
+                    }
+                }
+
             )
     
 
@@ -402,6 +416,11 @@ const reviewEdit = async (req, res) => {
             await db.collection("songs").updateOne(
                 {
                     _id:songId
+                },
+                {
+                    $set: {
+                        "edits.mostRecent": {_id: editId}
+                    }
                 },
                 {
                     $pull: {
@@ -430,7 +449,8 @@ const reviewEdit = async (req, res) => {
                         },
                         {
                             $set: {
-                                artistName: edit.editDetails.editedArtist
+                                artistName: edit.editDetails.editedArtist,
+                                declined: true,
                             }
                         }
                     )
@@ -449,8 +469,94 @@ const reviewEdit = async (req, res) => {
                     )
                 }
                 // check pending
-                const songAfterApproval = await db.collection("songs").findOne({_id: songId}) 
-                if (songAfterApproval.edits.pending.length === 0) {
+        }
+        /////////// this completed review approval handler///
+
+        /// DECLINED HANDLER
+
+        if (status === "declined" ) {
+            const reviewTime = new Date()
+            await db.collection("edits").updateOne(
+                {
+                    _id: editId
+                },
+                {
+                    $set: {
+                        status: "declined",
+                        reviewTime: reviewTime,
+                        reviewedBy: reviewerId,
+                        reviewComments: reviewComments,
+
+                    }
+                }
+            )
+            const review = {
+                _id: edit._id,
+                date: reviewTime,
+                status: "declined",
+            }
+
+            // reviewer edit
+            await db.collection("users").updateOne(
+                {
+                    _id: reviewerId
+                },
+                {
+                    $push: {
+                        "reviews.declined": review
+                    }
+                }
+            )
+
+                        // editor edit //
+            await db.collection("users").updateOne(
+                {
+                    _id: edit.editedBy
+                },
+                {
+                    $push: {
+                        "edits.declined": review
+                    },
+                    
+                    $pull: {
+                        "edits.pending": {_id: editId}
+                    }
+                }
+        
+            )
+            
+
+             // push edit into approved array
+             await db.collection("songs").updateOne(
+                {
+                    _id: songId
+                },
+
+
+                {
+
+                    $push: {
+                        "edits.declined":review
+                    }
+                }
+            )
+            await db.collection("songs").updateOne(
+                {
+                    _id:songId
+                },
+                {
+                    $pull: {
+                        "edits.pending": {_id: editId}
+                    }
+                }
+            )
+
+        }
+
+        // for either approval, or decline, edit db pending length
+
+        const songAfterReview = await db.collection("songs").findOne({_id: songId}) 
+                if (songAfterReview.edits.pending.length === 0) {
                     await db.collection("songs").updateOne(
                         {
                             _id: songId
@@ -462,10 +568,9 @@ const reviewEdit = async (req, res) => {
                         }
                     )
                 }
-        }
 
         
-        res.status(200).json({ status: 200, data: details })
+    res.status(200).json({ status: 200, approved: approved, data: details })
     } catch (err) {
         res.status(404).json({ status: 404, data: "Not Found" });
     } finally {

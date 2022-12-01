@@ -10,6 +10,7 @@ export default createGlobalStyle`
         --color-purple: #C38D9E;
         --color-deepteal: #41B3A3;
         --color-seagreen: #8bc7ba;
+        --color-darkpurple: #B352B0;
 
 
         }
@@ -70,8 +71,30 @@ export default createGlobalStyle`
 
     button {
         font-family: 'Source Sans Pro', sans-serif;
+        
+        display: inline-block;
+        outline: none;
+        cursor: pointer;
+        font-weight: 600;
+        border-radius: 3px;
+        padding: 12px 24px;
+        border: 0;
+        color: #000021;
+        background: #1de9b6;
+        line-height: 1.15;
+        font-size: 16px;
+        :hover {
+            transition: all .1s ease;
+            box-shadow: 0 0 0 0 #fff, 0 0 0 3px #1de9b6;
+        }
+                
     }
     input {
+        font-family: 'Source Sans Pro', sans-serif;
+        border-radius: 2%;
+    }
+
+    textarea {
         font-family: 'Source Sans Pro', sans-serif;
     }
 

@@ -16,6 +16,8 @@ import Transcribe from "./Transcribe";
 import Songs from "./Songs"
 import SongPage from "./SongPage";
 import EditSongPage from "./EditSongPage";
+import EditsPage from "./EditsPage";
+import PeaceOfMusic from "./PeaceOfMusic";
 
 const App = () => {
 
@@ -34,6 +36,7 @@ const App = () => {
             :
             <Route element={<Layout />}>
               <Route path="/home" element={<HomePage/>} />
+              <Route path="/" element={<HomePage/>} />
               <Route path="/artists" element={<Artists/>} />
               <Route path="submit" element={<SubmissionForm/>} />
               <Route path="profile" element = {<ProfilePage/>} />
@@ -42,8 +45,11 @@ const App = () => {
               <Route path="/songs" element={<Songs/>} />
               <Route path="/songs/:id" element={<SongPage/>} />
               <Route path="/edits/song/:id" element={<EditSongPage/>} />
+              <Route path="/edits" element={<EditsPage/>}/>
               <Route path ="/artists" element={<Artists/>} />
+              <Route path ="/poms/:id" element={<PeaceOfMusic/>}/>
               <Route path="/transcribe/:id" element={<Transcribe/>} />
+              <Route path="/pom" element={<PeaceOfMusic/>} />
             </Route>
 
 

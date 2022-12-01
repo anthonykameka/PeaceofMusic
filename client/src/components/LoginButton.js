@@ -6,10 +6,10 @@ import React from "react";
 const LoginButton = () => {
 
   const navigate = useNavigate();
-  const { loginWithRedirect } = useAuth0();
+  const { loginWithRedirect, loginWithPopup } = useAuth0();
 
   const handleClick = () => {
-    loginWithRedirect()
+    loginWithPopup()
     navigate("/home")
   }
 
