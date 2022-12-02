@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { useNavigate } from 'react-router-dom';
 import Modal from "styled-react-modal";
 import FocusLock from "react-focus-lock"
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import {getSong} from "genius-lyrics-api";
 import { CurrentUserContext } from './CurrentUserContext';
 import { MusicContext } from './MusicContext';
@@ -36,9 +36,9 @@ const AddASong = () => {
     const [addingSong, setAddingSong] = useState(false)
     const [finishAdding, setFinishAdding] = useState(false)
     const [postedSong, setPostedSong] = useState(null)
-
-
-
+    const [notFound, setNotFound] = useState(false)
+    const [exists, setExists] = useState(false)
+    const [existsId, setExistsId] = useState(null)
 
 
 
@@ -63,11 +63,15 @@ const handleAddSong = () => {
   }
 
   const handleCancelClick = (ev) => {
+    setNotFound(false)
+    setExists(false)
     ev.preventDefault();
     toggleModal()
   }
 
   const handleSearch = (ev) => { 
+    setExists(false)
+    setNotFound(false)
     ev.preventDefault();
     setFinishAdding(false)
     //these options are required for GENIUS API/NPM package // use inputs to search api
@@ -84,6 +88,9 @@ const handleAddSong = () => {
 
     getSong(options).then((song) => {
       setSearchResult(song)
+      if (song===null) {
+        setNotFound(true)
+      }
 
       
     })
@@ -91,10 +98,12 @@ const handleAddSong = () => {
     // toggleModal()
   }
 
-  console.log(addingSong)
+
+console.log(notFound)
 
 
   const handleConfirmAdd = (ev) => {
+    setExists(false)
     ev.preventDefault();
     const thisSong = {...searchResult, addedBy: currentUser._id}// retain user information to keep track on who is adding // stats tend to engage the user
     
@@ -120,6 +129,10 @@ const handleAddSong = () => {
 
             document.getElementById("add-song-form").reset();
           }
+          if (res.status === 400) {
+            setExists(true)
+            setExistsId(res.data._id)
+          }
       })
       setAddingSong(false)
 
@@ -128,6 +141,14 @@ const handleClear = (ev) => {
   ev.preventDefault();
   setSearchResult(null)
   document.getElementById("add-song-form").reset();
+  setNotFound(false)
+  setExists(false)
+}
+
+const handleExists = (ev) => {
+  ev.preventDefault();
+  navigate(`/songs/${existsId}`)
+  toggleModal()
 }
 
 // console.log(postedSong)
@@ -146,22 +167,26 @@ const handleClear = (ev) => {
                 >
             <FocusLock>
                 <FormContainer>
+                <FormSubContainer>
                 <Form id="add-song-form">
+                  
                   <Titles>
                   <Title>Can't find the lyrics on our database?</Title>
-                  <SubTitle>Submit a song and artist and allow our advanced data mining technology to locate & retrieve the song from the ether...</SubTitle>
+                  <SubTitle>Search below...</SubTitle>
                   </Titles>
+                  <FormBoxAB>
                   <FormBoxA>
                     <SongAndArtist>
-                      <Label>Song</Label>
-                      <SongInput onChange={(e)=> setSongSearch(e.target.value)}></SongInput>
-                      <Label>Artist</Label>
-                      <ArtistInput onChange={(e)=> setArtistSearch(e.target.value)}></ArtistInput>
+                      <Song>
+                        <Label>Song</Label>
+                        <SongInput onChange={(e)=> setSongSearch(e.target.value)}></SongInput>
+                      </Song>
+                      <Artist>
+                        <Label>Artist</Label>
+                        <ArtistInput onChange={(e)=> setArtistSearch(e.target.value)}></ArtistInput>
+                      </Artist>
                     </SongAndArtist>
-                    <SearchAndCancel>
-                      <Submit onClick={handleSearch}>Search</Submit>
-                      
-                    </SearchAndCancel>
+
                   </FormBoxA>
                   {
                     searchResult?
@@ -171,12 +196,14 @@ const handleClear = (ev) => {
                       
                         <AlbumArt src={searchResult.albumArt}/>
                         <SongDetailsSubBox>
+                          <TitleConfirm>
                         <SongTitle>{searchResult.title}</SongTitle>
                         {
                         addingSong || !finishAdding?
-                          <Confirm onClick={handleConfirmAdd}>Confirm</Confirm>
+                          <Confirm className="yes" onClick={handleConfirmAdd}>Confirm</Confirm>
                           : <></>
                       }
+                        </TitleConfirm>
                         </SongDetailsSubBox>
                         </SongDetailsBox>
 
@@ -193,9 +220,25 @@ const handleClear = (ev) => {
                     </FormBoxB>
                     : <></>
                   }
-                 <Clear onClick={handleClear}>Clear</Clear>
-                 <Cancel onClick ={handleCancelClick}>Close</Cancel>
+                  </FormBoxAB>
+
+                      
+                 <ClearCancel>   
+                 <Search className='yes' onClick={handleSearch}>Search</Search>  
+                 <Clear className="no" onClick={handleClear}>Clear</Clear>
+                  <Cancel className="no" onClick ={handleCancelClick}>Close</Cancel>
+                 </ClearCancel>
+                 {
+                  notFound?<Error>Sorry! Song was not found... Enter song instead?</Error>
+                  : <></>
+                 }
+                 {
+                  exists?<Error>We already have this song in our database. <span onClick={handleExists}>go to song </span> </Error>
+                  : <></>
+                 }
+                 
                 </Form>
+                </FormSubContainer>
                 </FormContainer>
             </FocusLock>
 
@@ -203,6 +246,47 @@ const handleClear = (ev) => {
         </Wrapper>
   )
 }
+
+
+const TitleConfirm = styled.div`
+display: flex;
+flex-direction: column;
+
+`
+const FormBoxAB = styled.div`
+display: flex;
+width: 50%;
+`
+
+const Song = styled.div`
+display:flex;`
+
+const Artist = styled.div`
+display:flex;`
+
+const FormSubContainer = styled.div`
+background-color:  var(--color-deepteal);
+border: 1px solid black;
+height: 98%;
+width: 98%;
+border-radius: 40px;
+display:flex;
+justify-content: center;
+align-items: center;
+`
+
+const Error = styled.p`
+color: white;
+margin-top: 50px;
+margin-bottom: 10px;
+span {
+  text-decoration: underline;
+  color: var(--color-orange);
+  cursor: pointer;
+  
+  }
+
+`
 
 const SongDetailsSubBox = styled.div`
 display:flex;
@@ -213,6 +297,9 @@ const Success = styled.p`
 text-align: center;
 margin-top: 20px;
 margin-bottom: 10px;
+a {
+  color: var(--color-deepteal);
+}
 
 `
 const Fetching = styled.p`
@@ -221,13 +308,17 @@ margin-top: 20px;
 `
 
 const Clear = styled.button`
-background-color: var(--color-orange);
 `
 const SongTitle = styled.p`
-font-weight: bold;`
+font-weight: bold;
+
+
+`
 
 const AlbumArt = styled.img`
 height: 100px;
+margin-left: 20px;
+margin-right: 10px;
 `
 
 const SongDetailsBox = styled.div`
@@ -240,6 +331,10 @@ margin-top: 20px;
 const No = styled.button`
 `
 const Confirm = styled.button`
+width: 70px;
+display:flex;
+font-size: 10px;;
+margin-right: 30px !important;
 
 `
 
@@ -268,7 +363,7 @@ justify-content: space-between;
 `
 const SongAndArtist = styled.div`
 display:flex;
-flex-direction: column;
+flex-direction: column
 
 
 `
@@ -279,9 +374,14 @@ width: 50%;
 margin-top: 5%;
 
 border-radius: 3px;
-border-bottom: 1px solid lightgray;
+
 padding-bottom: 10px;
 /* background-color: white;; */
+
+
+
+
+
 
 `
 
@@ -295,19 +395,25 @@ const AddSong = styled.button`
 
 const Form = styled.form`
 border: 1px solid black;
-height: 98%;
-width: 98%;
+height: 93%;
+width: 85%;
 display: flex;
 flex-direction: column;
-background-color: var(--color-deepteal);
+background-color: var(--color-dark-grey);
 border-radius: 40px;
 align-items: center;
 input {
-  width: 100%;
+  width: 140px;
   background-color: transparent;
   margin-bottom: 10px;
   height: 30px;
   font-size: 17px;
+  margin-left: 10px;
+  color: white;
+  border-bottom: 1px solid white;
+  &:focus {
+    outline: none;
+  }
 
 }
 
@@ -315,32 +421,49 @@ input {
 `
 
 const FormContainer = styled.div`
-height: 55vh;
+height: 40vh;
 background-color: var(--color-darkpurple);
 border-radius: 40px;
 width: 500px;
 display: flex;
 justify-content: center;
 align-items: center;
+width: 40vw;
 
 `
 const Label = styled.label`
-text-align: center;
+display:flex;
+align-items: flex-end;
 margin-bottom: 9px;
 font-size: 20px;
 
 `
 
 const ArtistInput = styled.input`
+border: none;
+
 `
 
 const SongInput = styled.input`
+border: none;
 `
 
 const Cancel = styled.button`
-background-color: var(--color-orange);`
+
+`
+
+const ClearCancel = styled.div`
+display:flex;
+button {
+  margin-left: 20px;
+  height: 50px !important
+}
+`
 
 const EditSong = styled.button``
-const Submit = styled.button``
+const Search = styled.button`
+background-color: white;
+width: 100px;
+`
 
 export default AddASong

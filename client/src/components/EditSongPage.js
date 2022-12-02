@@ -274,7 +274,7 @@ const EditSongPage = () => {
                             <EditArtistWrapper>ARTIST NAME: no change</EditArtistWrapper>
                             :
                             <EditArtistWrapper>
-                                <p> Edited artist name: </p>
+                                <p>Edited artist name: </p>
                                 <Diff string1={editDetails.currentDetails.currentArtist} string2={editDetails.editedArtist} />
                             </EditArtistWrapper>
                         }
@@ -314,9 +314,9 @@ const EditSongPage = () => {
                             ? <div></div>
                             :
                             <>
-                            <Approve onClick={handleApproveEdit}> Approve Edit</Approve>
+                            <Approve onClick={handleApproveEdit}> Approve</Approve>
                             
-                            <button onClick={handleDeclineEdit}>Decline Edit</button>
+                            <button onClick={handleDeclineEdit}>Decline</button>
                             
                                 {
                                     // switch the button name from add to save
@@ -488,7 +488,7 @@ p {
 `
 
 const EditSubWrapper = styled.div`
-background-color: white;
+background-color: var(--color-purple);
 width: 80%;
 margin: auto;
 height: 60%;
@@ -520,7 +520,7 @@ display:flex;
 const EditWrapper = styled.div`
 
 width: 500px;
-background-color: var(--color-blue);
+background-color: var(--color-deepteal);
 display: flex;
 flex-direction: column;
 border-radius: 40px;

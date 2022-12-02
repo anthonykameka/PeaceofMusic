@@ -3,9 +3,8 @@ import styled from 'styled-components'
 const SubHeader = () => {
   return (
     <Wrapper>
+      <SetLists>SetLists</SetLists>
 
-    <Blog>Blog</Blog>
-    <Mentions>Mentions</Mentions>
     <Contributions>Contributions</Contributions>
     <Annotations>Annotations</Annotations>
     <Comments>Comments</Comments>
@@ -13,7 +12,7 @@ const SubHeader = () => {
   )
 }
 
-const Blog = styled.button`
+const SetLists = styled.button`
 `
 const Annotations = styled.button``
 const Comments = styled.button``
@@ -42,7 +41,7 @@ button {
   color: white;
   
   &:focus {
-    border-bottom: 2px solid black;
+    border-bottom: 2px solid var(--color-deepteal) !important;
 }
 
 `

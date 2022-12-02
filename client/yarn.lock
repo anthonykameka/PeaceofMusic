@@ -3702,6 +3702,11 @@ clsx@^1.0.4, clsx@^1.2.1:
   resolved "https://registry.yarnpkg.com/clsx/-/clsx-1.2.1.tgz#0ddc4a20a549b59c93a4116bb26f5294ca17dc12"
   integrity sha512-EcR6r5a8bj6pu3ycsa/E/cKVGuTgZJZdsyUYHOksG/UHIiKfjxzRxYJpyVBwYaQeOvghal9fcc4PidlgzugAQg==
 
+cmu-pronouncing-dictionary@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/cmu-pronouncing-dictionary/-/cmu-pronouncing-dictionary-1.0.3.tgz#49b99759c4fd393ce4c39555bf18d264326dff65"
+  integrity sha512-0gsC0ZiqrIiSDMK5f3NxHMkq1XoAs2KypHM1mjLiQNqN85YpCTl5GJfS+RPkNJ+7BsiHGY03KVElJZ6O1zMNhA==
+
 co@^4.6.0:
   version "4.6.0"
   resolved "https://registry.yarnpkg.com/co/-/co-4.6.0.tgz#6ea6bdf3d853ae54ccb8e47bfa0bf3f9031fb184"
@@ -3816,6 +3821,15 @@ compression@^1.7.4:
     on-headers "~1.0.2"
     safe-buffer "5.1.2"
     vary "~1.1.2"
+
+compromise@^14.8.0:
+  version "14.8.0"
+  resolved "https://registry.yarnpkg.com/compromise/-/compromise-14.8.0.tgz#01590ad9c6a55a5a73bc41c356f95ea73068e0da"
+  integrity sha512-BmIXNF6Gax/J92Uh2bNMbCkDLaU/m9tkSnm8Cj51+jsW8+FSsrYa6Ltg5woPIMTbuZNCzf1Jr6RadMbwWW1AWQ==
+  dependencies:
+    efrt "2.7.0"
+    grad-school "0.0.5"
+    suffix-thumb "4.0.2"
 
 concat-map@0.0.1:
   version "0.0.1"
@@ -4515,6 +4529,11 @@ dotenv@^10.0.0:
   resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-10.0.0.tgz#3d4227b8fb95f81096cdd2b66653fb2c7085ba81"
   integrity sha512-rlBi9d8jpv9Sf1klPjNfFAuWDjKLwTIJJ/VxtoTwIR6hnZxcEOQCZg2oIL3MWBYw5GpUDKOEnND7LXTbIpQ03Q==
 
+dotenv@^16.0.3:
+  version "16.0.3"
+  resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-16.0.3.tgz#115aec42bac5053db3c456db30cc243a5a836a07"
+  integrity sha512-7GO6HghkA5fYG9TYnNxi14/7K9f5occMlp3zXAuSxn7CKCxt9xbNWG7yF8hTCSUchlfWSe3uLmlPfigevRItzQ==
+
 draft-js@^0.11.7:
   version "0.11.7"
   resolved "https://registry.yarnpkg.com/draft-js/-/draft-js-0.11.7.tgz#be293aaa255c46d8a6647f3860aa4c178484a206"
@@ -4546,6 +4565,11 @@ ee-first@1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/ee-first/-/ee-first-1.1.1.tgz#590c61156b0ae2f4f0255732a158b266bc56b21d"
   integrity sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow==
+
+efrt@2.7.0:
+  version "2.7.0"
+  resolved "https://registry.yarnpkg.com/efrt/-/efrt-2.7.0.tgz#8b021e69f75cfeed3f81ee058aa0c78265793324"
+  integrity sha512-/RInbCy1d4P6Zdfa+TMVsf/ufZVotat5hCw3QXmWtjU+3pFEOvOQ7ibo3aIxyCJw2leIeAMjmPj+1SLJiCpdrQ==
 
 ejs@^3.1.6:
   version "3.1.8"
@@ -5106,6 +5130,11 @@ extend@~3.0.2:
   resolved "https://registry.yarnpkg.com/extend/-/extend-3.0.2.tgz#f8b1136b4071fbd8eb140aff858b1019ec2915fa"
   integrity sha512-fjquC59cD7CyW6urNXK0FBufkZcoiGG80wTuPujX590cB5Ttln20E2UB4S/WARVqhXffZl2LNgS+gQdPIIim/g==
 
+extractwords@^1.0.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/extractwords/-/extractwords-1.2.0.tgz#9fbac42573df7f83e11c8049ef1c88a9c26be65e"
+  integrity sha512-qq2bjOx1XfaB6F6KreQF5GhhM7ERdigDc5Ckm45uPtf2YHekGHlbkti8/TJzFXNW8dYsrD0q/5FQeBcby+EBEg==
+
 extsprintf@1.3.0:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/extsprintf/-/extsprintf-1.3.0.tgz#96918440e3041a7a414f8c52e3c574eb3c3e1e05"
@@ -5553,6 +5582,11 @@ graceful-fs@^4.1.2, graceful-fs@^4.1.6, graceful-fs@^4.2.0, graceful-fs@^4.2.4, 
   version "4.2.10"
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.2.10.tgz#147d3a006da4ca3ce14728c7aefc287c367d7a6c"
   integrity sha512-9ByhssR2fPVsNZj478qUUbKfmL0+t5BDVyjShtyZZLiK7ZDAArFFfopyOTj0M05wE2tJPisA4iTnnXl2YoPvOA==
+
+grad-school@0.0.5:
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/grad-school/-/grad-school-0.0.5.tgz#9e7b2084f3e137965c19b63ef0dfe49867194f43"
+  integrity sha512-rXunEHF9M9EkMydTBux7+IryYXEZinRk6g8OBOGDBzo/qWJjhTxy86i5q7lQYpCLHN8Sqv1XX3OIOc7ka2gtvQ==
 
 grapheme-splitter@^1.0.4:
   version "1.0.4"
@@ -7199,6 +7233,11 @@ media-typer@0.3.0:
   resolved "https://registry.yarnpkg.com/media-typer/-/media-typer-0.3.0.tgz#8710d7af0aa626f8fffa1ce00168545263255748"
   integrity sha512-dq+qelQ9akHpcOl/gUVRTxVIOkAJ1wR3QAvb4RsVjS8oVoFjDGTc679wJYmUmknUF5HwMLOgb5O+a3KxfWapPQ==
 
+medium-editor@^5.23.3:
+  version "5.23.3"
+  resolved "https://registry.yarnpkg.com/medium-editor/-/medium-editor-5.23.3.tgz#6fb638759ae2fc76c423feb056f346d9c518d3b7"
+  integrity sha512-he9/TdjX8f8MGdXGfCs8AllrYnqXJJvjNkDKmPg3aPW/uoIrlRqtkFthrwvmd+u4QyzEiadhCCM0EwTiRdUCJw==
+
 memfs@^3.1.2, memfs@^3.4.3:
   version "3.4.12"
   resolved "https://registry.yarnpkg.com/memfs/-/memfs-3.4.12.tgz#d00f8ad8dab132dc277c659dc85bfd14b07d03bd"
@@ -8527,7 +8566,7 @@ react-dev-utils@^12.0.1:
     strip-ansi "^6.0.1"
     text-table "^0.2.0"
 
-react-dom@^16.11.0:
+react-dom@^16.11.0, react-dom@^16.7.0:
   version "16.14.0"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.14.0.tgz#7ad838ec29a777fb3c75c3a190f661cf92ab8b89"
   integrity sha512-1gCeQXDLoIqMgqD3IO2Ah9bnf0w9kzhwN5q4FGnHZ67hBm9yePzB5JJAIQCc8x3pFnNlwFq4RidZggNAAkzWWw==
@@ -8572,6 +8611,14 @@ react-focus-lock@^2.9.2:
     react-clientside-effect "^1.2.6"
     use-callback-ref "^1.3.0"
     use-sidecar "^1.1.2"
+
+react-highlight-selection@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/react-highlight-selection/-/react-highlight-selection-1.0.2.tgz#54f7b112ae0c41544e6a50654fbf94ccfcb4451b"
+  integrity sha512-dhaJbjCYqIxMQ30GIYxF/fThKzmzqt+K4yWK+kJiDnqxM9HkhMMWCTAYqbpxxhgUo4m2vnTL7nCousnF2qc35w==
+  dependencies:
+    react "^16.7.0"
+    react-dom "^16.7.0"
 
 react-icons@^4.6.0:
   version "4.6.0"
@@ -8700,7 +8747,7 @@ react-youtube@^10.1.0:
     prop-types "15.8.1"
     youtube-player "5.5.2"
 
-react@^16.11.0:
+react@^16.11.0, react@^16.7.0:
   version "16.14.0"
   resolved "https://registry.yarnpkg.com/react/-/react-16.14.0.tgz#94d776ddd0aaa37da3eda8fc5b6b18a4c9a3114d"
   integrity sha512-0X2CImDkJGApiAlcf0ODKIneSwBPhqJawOa5wCtKbu7ZECrmS26NvtSILynQ66cgkT/RJ4LidJOc3bUESwmU8g==
@@ -9545,6 +9592,11 @@ stylis@4.1.3:
   resolved "https://registry.yarnpkg.com/stylis/-/stylis-4.1.3.tgz#fd2fbe79f5fed17c55269e16ed8da14c84d069f7"
   integrity sha512-GP6WDNWf+o403jrEp9c5jibKavrtLW+/qYGhFxFrG8maXhwTBI7gLLhiBb0o7uFccWN+EOS9aMO6cGHWAO07OA==
 
+suffix-thumb@4.0.2:
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/suffix-thumb/-/suffix-thumb-4.0.2.tgz#9303c1be8252bf79d9c57e5737d7d849d1f6abc9"
+  integrity sha512-CCvCAr7JyeQoO+/lyq3P2foZI/xJz5kpG3L6kg2CaOf9K2/gaM9ixy/JTuRwjEK38l306zE7vl3JoOZYmLQLlA==
+
 supports-color@^5.3.0, supports-color@^5.5.0:
   version "5.5.0"
   resolved "https://registry.yarnpkg.com/supports-color/-/supports-color-5.5.0.tgz#e2e69a44ac8772f78a1ec0b35b689df6530efc8f"
@@ -9615,6 +9667,14 @@ svgo@^2.7.0:
     csso "^4.2.0"
     picocolors "^1.0.0"
     stable "^0.1.8"
+
+syllables@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/syllables/-/syllables-1.0.0.tgz#f2c1115713ca9cd719a191df327e736b8fd56e72"
+  integrity sha512-Wzfo4STl63UZfi/H+ZIJfDomio/CjTjkkaMbFtIX7WUh9Aw7Qruwt/xfH5nhHrj/IeHEAF6mi0G6ziCyGz+Ksg==
+  dependencies:
+    cmu-pronouncing-dictionary "^1.0.3"
+    extractwords "^1.0.0"
 
 "symbol-tree@>= 3.1.0 < 4.0.0", symbol-tree@^3.2.4:
   version "3.2.4"

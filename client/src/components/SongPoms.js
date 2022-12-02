@@ -6,7 +6,7 @@ const SongPoms = ({ song }) => {
 const navigate = useNavigate()
 const handlePomClick = (ev) => {
     ev.preventDefault();
-    navigate("/pom")
+    navigate(`/pom/${song._id}`)
 }
 console.log(song)
 

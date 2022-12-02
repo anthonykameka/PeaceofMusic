@@ -75,7 +75,7 @@ const HomePage = () => {
     margin-left: auto;
     width: 100%;
     justify-content: end;
-    background-color: var(--color-orange);
+    background-color: var(--color-dark-grey);
     overflow: auto;
 
     `

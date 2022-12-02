@@ -11,6 +11,11 @@ export default createGlobalStyle`
         --color-deepteal: #41B3A3;
         --color-seagreen: #8bc7ba;
         --color-darkpurple: #B352B0;
+        --color-black: #18191a;
+        --color-darker-grey: #242526;
+        --color-dark-grey: #222222;
+        --color-grey: #b0b3b8;
+        --color-light-grey: #e4e6eb;
 
 
         }
@@ -80,22 +85,93 @@ export default createGlobalStyle`
         padding: 12px 24px;
         border: 0;
         color: #000021;
-        background: #1de9b6;
+        background: transparent;
         line-height: 1.15;
         font-size: 16px;
+        :focus {
+            
+        }
         :hover {
             transition: all .1s ease;
-            box-shadow: 0 0 0 0 #fff, 0 0 0 3px #1de9b6;
+            
         }
                 
     }
     input {
         font-family: 'Source Sans Pro', sans-serif;
         border-radius: 2%;
+        
     }
 
     textarea {
         font-family: 'Source Sans Pro', sans-serif;
     }
+
+    body {
+        color: white; ////////////// 
+        background-color: var(--color-dark-grey); ///////
+    }
+
+     .yes{
+
+    background-color: #36A9AE;
+    background-image: linear-gradient(#37ADB2, #329CA0);
+    border: 1px solid #2A8387;
+    border-radius: 4px;
+    box-shadow: rgba(0, 0, 0, 0.12) 0 1px 1px;
+    color: #FFFFFF;
+    cursor: pointer;
+    display: block;
+    margin: 0;
+    margin-top: 10px;
+    outline: 0;
+    padding: 11px 15px 12px;
+    text-align: center;
+    transition: box-shadow .05s ease-in-out,opacity .05s ease-in-out;
+    touch-action: manipulation;
+
+
+    &:hover {
+        box-shadow: rgba(255, 255, 255, 0.3) 0 0 2px inset, rgba(0, 0, 0, 0.4) 0 1px 2px;
+    text-decoration: none;
+    transition-duration: .15s, .15s;
+    }
+
+    &:active {
+        border: 1px solid white;
+    }
+        }
+
+
+        .no{
+
+        background-color: var(--color-orange);
+        background-image: linear-gradient(--color-orange, --color-purple);
+        border: 1px solid var(--color-dark-grey);
+        border-radius: 4px;
+        box-shadow: rgba(0, 0, 0, 0.12) 0 1px 1px;
+        color: var(--color-dark-grey);
+        cursor: pointer;
+        display: block;
+        margin: 0;
+        outline: 0;
+        padding: 11px 15px 12px;
+        text-align: center;
+        transition: box-shadow .05s ease-in-out,opacity .05s ease-in-out;
+        touch-action: manipulation;
+
+        margin-top: 10px;
+
+        &:hover {
+            box-shadow: rgba(255, 255, 255, 0.3) 0 0 2px inset, rgba(0, 0, 0, 0.4) 0 1px 2px;
+        text-decoration: none;
+        transition-duration: .15s, .15s;
+        }
+
+        &:active {
+            border: 1px solid white;
+        }
+            }
+
 
     `

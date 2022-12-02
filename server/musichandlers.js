@@ -108,7 +108,7 @@ const addSong = async (req, res) => {
             console.log("successfully updated")
             }
         if (thisSong) {
-            res.status(400).json({status: 400, message: "this song already exists", data:rawSong})
+            res.status(400).json({status: 400, message: "this song already exists", data:thisSong})
         }
     } catch (err) {
         res.status(404).json({ status: 404, message: "error in this operation" });

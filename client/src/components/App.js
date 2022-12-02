@@ -18,6 +18,7 @@ import SongPage from "./SongPage";
 import EditSongPage from "./EditSongPage";
 import EditsPage from "./EditsPage";
 import PeaceOfMusic from "./PeaceOfMusic";
+import Spotify from "./Spotify";
 
 const App = () => {
 
@@ -48,8 +49,9 @@ const App = () => {
               <Route path="/edits" element={<EditsPage/>}/>
               <Route path ="/artists" element={<Artists/>} />
               <Route path ="/poms/:id" element={<PeaceOfMusic/>}/>
+              <Route path ="/spotify" element={<Spotify/>} />
               <Route path="/transcribe/:id" element={<Transcribe/>} />
-              <Route path="/pom" element={<PeaceOfMusic/>} />
+              <Route path="/pom/:songId" element={<PeaceOfMusic/>} />
             </Route>
 
 
@@ -63,5 +65,7 @@ const App = () => {
 }
 
 const Main = styled.div``
+
+
 
 export default App;

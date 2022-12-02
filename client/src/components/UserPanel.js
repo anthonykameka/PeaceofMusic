@@ -63,6 +63,12 @@ const UserPanel = () => {
         navigate(`/edits/song/${edit._id}`)
         
     }
+
+    const handleGoToProfile = (ev) => {
+        ev.preventDefault();
+        navigate("/home")
+
+    }
     
 
   return (
@@ -73,7 +79,7 @@ const UserPanel = () => {
             :
             <>
             <UserPanelBox>
-            <ProfilePicture src={pomme}/>
+            <ProfilePicture  onClick={handleGoToProfile}src={pomme}/>
             <NameAndActions>
             <DisplayName>{currentUser.displayname} </DisplayName>
             {

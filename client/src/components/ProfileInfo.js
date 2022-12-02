@@ -191,7 +191,7 @@ const ProfileInfo = () => {
     return (
         <Wrapper>
             <TopContent>
-                <ClicktoEdit>Click to Edit</ClicktoEdit>
+                {/* <ClicktoEdit>Click to Edit</ClicktoEdit> */}
                 <DisplayNameLine>
                     <DisplayName>
                         {
@@ -310,6 +310,7 @@ const Edits = styled.p`
 `
 
 const MiddleContent = styled.div`
+margin-left: 5px;
 `
 
 const Contributions = styled.div`
@@ -345,11 +346,15 @@ color: var(--color-purple);
 margin-bottom: 5px;`
 
 const UserNameLine = styled.div`
-display:flex;`
+display:flex;
+width: 30%;`
 
 const DisplayNameLine = styled.div`
 display:flex;
-margin-bottom: 10px;`
+margin-bottom: 10px;
+width: 30%;
+
+`
 
 const DisplayName = styled.div`
 display:flex;
@@ -364,6 +369,9 @@ width: 80%;
 `
 
 const EditUser = styled.button`
+ &:hover{
+    color: var(--color-white)
+ }
 `
 
 const EditDisplay = styled.button``
@@ -377,6 +385,7 @@ bottom: 0;
 width: 100%;
 flex-direction: column;
 align-items: center;
+
 `
 
 const TopContent = styled.div`
@@ -392,6 +401,10 @@ const Wrapper = styled.div`
     width: 30vw;
     height: calc(100vh - 200px);
     position: relative;
+    background-color: var(--color-orange);
+    p, h1, h2{
+        color: black;
+    }
 `
 
 const ProfilePic = styled.img`

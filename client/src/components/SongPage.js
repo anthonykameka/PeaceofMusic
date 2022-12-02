@@ -159,19 +159,19 @@ const SongPage = () => {
         <SongInfoBox>
         <SongInfoSubBox>
           <AlbumCover src={song.thisSong.albumArt}/>
-          <Title>{song?.thisSong.title}</Title>
-          
+          <Title>{song?.songTitle}</Title>
+          <Title><span>{song?.artistName}</span></Title>
+          <DateBy>
           <DateAdded>Date added: {dateAdded} </DateAdded>
           {
             userActive?
             <AddedBy onClick={handleAddedByClick}>by: {userWhoAdded?.username}</AddedBy>
             : <AddedBy >by: Deactivated User</AddedBy>
           }
-          
-        </SongInfoSubBox>
-        <SongActions>
+          </DateBy>
+          <SongActions>
           {
-            canEdit?<EditSong onClick={handleEditSong}>Submit an Edit</EditSong>
+            canEdit?<EditSong onClick={handleEditSong}>Edit</EditSong>
             :<div></div>
           }
           {
@@ -181,8 +181,12 @@ const SongPage = () => {
           
           
         </SongActions>
+        </SongInfoSubBox>
+
       </SongInfoBox>
       <LyricsWrapper>
+        <Title>{song?.songTitle}</Title>
+          <Title><span>{song?.artistName}</span></Title>
         <Lyrics>{song.thisSong.lyrics}</Lyrics>
       </LyricsWrapper>
 
@@ -232,6 +236,14 @@ const SongPage = () => {
   )
 }
 
+const DateBy = styled.div`
+display:flex;
+position: absolute;
+bottom: 6px;
+flex-direction: column;
+left: 20px;
+`
+
 const PomWrapper = styled.div`
 `
 
@@ -278,7 +290,7 @@ padding: 20px;
 border-radius: 20px;
 width: 600px;
 height: 700px;
-background-color: white;
+background-color: var(--color-dark-grey);
 justify-content: center;
 align-items: center;
 button {
@@ -288,8 +300,11 @@ button {
 const Label = styled.label``
 const EditedSongTitle = styled.input``
 const EditedArtist = styled.input``
-const Submit = styled.button``
-const Cancel = styled.button``
+const Submit = styled.button`
+color: white;`
+const Cancel = styled.button`
+color: white;
+`
 
 
 const EditSong = styled.button`
@@ -298,7 +313,10 @@ const SongActions = styled.div`
 display:flex;
 width: 170px;
 margin-top: 20px;
+position: absolute;
 justify-content: space-between;
+bottom: 0;
+right: 1px;
 `
 const DeleteSong = styled.button`
 `
@@ -314,17 +332,25 @@ margin-top: 4px;
 const Title = styled.h1`
 font-size: 17px;
 margin-top: 10px;
+span {
+  font-style: italic;
+}
 `
 
 const SongInfoSubBox = styled.div`
 background-color: var(--color-orange);
 width: 350px;
-height: 350px;
+height: 380px;
+position: relative;
 display:flex;
 flex-direction: column;
 align-items: center;
 border-radius: 30px;
 justify-content: center;
+padding-bottom: 30px;
+p, h1{
+  color: black
+}
 `
 
 const SongInfoBox = styled.div`
@@ -341,12 +367,22 @@ border: 1px solid black;
 `
 
 const Lyrics = styled.p`
-white-space: pre-wrap;`
+white-space: pre-wrap;
+margin-top: 20px;
+line-height: 25px;
+
+word-wrap: break-word;
+
+
+`
 
 const LyricsWrapper = styled.div`
 width: 50vw;
 margin: auto;
+height: 500px;
+border:1px solid black
 
+columns: 200px 3;
 `
 const Wrapper = styled.div`
 display:flex;`

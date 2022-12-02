@@ -99,6 +99,13 @@ display:flex;
 justify-content: space-between;
 button {
   margin-left: 10px;
+  background-color: none !important;
+  &:hover {
+    color: white
+  }
+  &:focus {
+    color: white
+  }
 }
 `
 

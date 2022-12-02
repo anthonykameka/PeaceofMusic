@@ -70,7 +70,6 @@ const PomEditor = () => {
             <EditorContainer>
                 <Editor
                 ref={editor}
-                placeholder="Explore your mind..."
                 handleKeyCommand={handleKeyCommand}
                 editorState={editorState}
                 onChange={(editorState) => {
@@ -80,15 +79,26 @@ const PomEditor = () => {
                 }}
                 />
             </EditorContainer>
-            <Save>Save</Save>
+            <Save className="yes">Save</Save>
             </EditorWrapper>
         );
 }
 
 
-const Save = styled.button``
+const Save = styled.button`
+
+`
 const EditorWrapper = styled.div`
+height: 500px;
+
+
+.toolbar-icon {
+    color: black;
+}
 `
 
-const EditorContainer = styled.div``
+const EditorContainer = styled.div`
+height: 500px;
+
+`
 export default PomEditor

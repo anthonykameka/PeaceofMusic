@@ -9,7 +9,7 @@ const LoginButton = () => {
   const { loginWithRedirect, loginWithPopup } = useAuth0();
 
   const handleClick = () => {
-    loginWithPopup()
+    loginWithRedirect()
     navigate("/home")
   }
 
