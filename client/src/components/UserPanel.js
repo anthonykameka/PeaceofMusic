@@ -79,7 +79,7 @@ const UserPanel = () => {
             :
             <>
             <UserPanelBox>
-            <ProfilePicture  onClick={handleGoToProfile}src={pomme}/>
+            <ProfilePicture  onClick={handleGoToProfile}src={currentUser.profile_picture_src}/>
             <NameAndActions>
             <DisplayName>{currentUser.displayname} </DisplayName>
             {
@@ -157,7 +157,7 @@ border-radius: 100%;
 `
 
 const Wrapper = styled.div`
-background-color: var(--color-purple);
+background-color: var(--color-darkpurple);
 height: 70%;
 display: flex;
 align-items: center;

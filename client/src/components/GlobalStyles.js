@@ -114,12 +114,11 @@ export default createGlobalStyle`
 
      .yes{
 
-    background-color: #36A9AE;
+    background-color: var(--color-deepteal);
     background-image: linear-gradient(#37ADB2, #329CA0);
     border: 1px solid #2A8387;
     border-radius: 4px;
     box-shadow: rgba(0, 0, 0, 0.12) 0 1px 1px;
-    color: #FFFFFF;
     cursor: pointer;
     display: block;
     margin: 0;

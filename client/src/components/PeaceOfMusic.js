@@ -4,7 +4,7 @@ import GlobalStyles from './GlobalStyles'
 import { useParams } from 'react-router-dom'
 import { CurrentUserContext } from './CurrentUserContext'
 import PomEditor from './TextEditor/PomEditor'
-
+import SelectionHighlighter from "react-highlight-selection"
 
 const PeaceOfMusic = () => {
 

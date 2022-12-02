@@ -19,11 +19,12 @@ const {
   matchUser,
   updateUserName,
   updateDisplayName,
-} = require("./userhandlers")
+  updatePicture,
+} = require("./handlers/userhandlers")
 
 const { 
   getChords,
-} = require("./chordhandlers")
+} = require("./handlers/chordhandlers")
 
 const {
   addSong,
@@ -35,7 +36,13 @@ const {
   getEdits,
   getEdit,
   reviewEdit,
-} = require("./musichandlers")
+  updateAllSongs,
+  addView,
+} = require("./handlers/musichandlers")
+
+const {
+  getComments,
+} = require("./handlers/commenthandlers")
 
 app.use(bodyParser.json({ limit: '10mb' }));
 app.use(bodyParser.urlencoded({ extended: true, limit: '10mb' }));
@@ -60,26 +67,43 @@ app.use(express.static("public"))
 
 
 
-    /// ENDPOINTS
+    /// ENDPOINTS///
+
+    //USERS//
   app.get("/api/get-users", getUsers)
   app.get("/api/get-user/:auth0", getUser)
+  app.get("/api/match-user/:id", matchUser)
   app.post("/api/add-user", addUser)
   app.patch("/api/update-username", updateUserName )
   app.patch("/api/update-displayname", updateDisplayName)
   app.patch("/api/deactivate-user/:id", deactivateUser)
   app.patch("/api/activate-user/:id", activateUser)
+  app.patch("/api/update-picture", updatePicture)
+  app.delete("/api/delete-user/:id", deleteUser)
+
+
+  ///EDIT HANDLERS//
   app.patch("/add-edit", addEdit)
   app.patch("/api/review-edit", reviewEdit)
+  app.get("/api/get-edits", getEdits)
+  app.get("/api/get-edit/:id", getEdit)
+
+  //CHORD HANDLERS //
   app.get("/api/get-chords", getChords)
+
+  //SONG HANDLERS ///
   app.post("/api/add-song", addSong)
   app.get("/api/get-songs", getSongs)
   app.get("/api/get-song/:id", getSong)
   app.get("/api/get-artists", getArtists)
-  app.get("/api/match-user/:id", matchUser)
-  app.get("/api/get-edits", getEdits)
-  app.get("/api/get-edit/:id", getEdit)
-  app.delete("/api/delete-user/:id", deleteUser)
   app.delete("/api/delete-song/:id", deleteSong)
+  app.get("/api/update-songs", updateAllSongs) // used to update all songs when required
+  app.patch("/api/view-song/", addView)
+
+  //COMMENT HANDLERS //
+  app.get("/api/get-comments/:targetId", getComments)
+
+
 
 
 

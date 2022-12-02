@@ -60,7 +60,8 @@ flex-flow: wrap column;
 `
 
 const ArtistName = styled.p`
-font-weight: bold;`
+font-weight: bold;
+color: #bc35ca;;`
 
 const AlbumArt = styled.img`
 width: 100px;`

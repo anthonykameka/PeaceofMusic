@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 import LoginButton from './LoginButton';
 import LogoutButton from './LogoutButton';
 import { useNavigate } from 'react-router-dom';
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 
 import { MusicContext } from './MusicContext';
 import logo from '../assets/logo1.png'
@@ -68,6 +68,17 @@ const {
     navigate("/edits")
   }
 
+  /// function below is used to update all songs where required
+  const handleUpdateAll = (ev) => {
+    ev.preventDefault();
+    fetch("/api/update-songs")
+    .then(res => res.json())
+    .then(res => {
+        console.log(res)
+    })
+  }
+  
+
   return (
     <Wrapper>
       {/* <Logo src={logo} onClick={handleLogoClick}></Logo> */}
@@ -87,6 +98,7 @@ const {
         <GiMusicalScore onClick={handleMusicClick}style={{"margin-top": "10px"}}size={25}/>
         <LoginButton/>
         <LogoutButton/>
+        <Artists onClick={handleUpdateAll}>update all songs</Artists>
         
         </Nav>
         <UserPanel/>

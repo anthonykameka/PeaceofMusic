@@ -26,7 +26,7 @@ const Artists = () => {
   return (
     <ArtistList>
       {
-        artists.map(artist => {
+        artists?.map(artist => {
           return ( 
             <Artist><a onClick={handleArtistClick}>{artist}</a></Artist>
           )
@@ -37,8 +37,20 @@ const Artists = () => {
 }
 
 const Artist = styled.li`
+color: white;
+&:hover{
+  color: #bc35ca;
+  cursor: pointer;
+}
+
+font-size: 20px;
 `
 
-const ArtistList = styled.ul``
+const ArtistList = styled.ul`
+ columns: 3;
+ margin-top: 10px;
+ margin-bottom: 10px;
+ margin-left: 10px;
+`
 
 export default Artists

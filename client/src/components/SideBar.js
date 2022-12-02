@@ -40,15 +40,14 @@ const SideBar = () => {
 }
 
 const Wrapper = styled.div`
-position: absolute;
+position: relative;
 height: 100vh;
 z-index: 222;
 display: flex;
 flex-direction: column;
 align-items: center;
 width: 4vw;
-background-color: var(--color-orange);
-display:none;
+display: none;
 `
 
 const Logo = styled.img`

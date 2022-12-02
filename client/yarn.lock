@@ -1217,6 +1217,34 @@
   resolved "https://registry.yarnpkg.com/@csstools/selector-specificity/-/selector-specificity-2.0.2.tgz#1bfafe4b7ed0f3e4105837e056e0a89b108ebe36"
   integrity sha512-IkpVW/ehM1hWKln4fCA3NzJU8KwD+kIOvPZA4cqxoJHtE21CCzjyp+Kxbu0i5I4tBNOlXPL9mjwnWlL0VEG4Fg==
 
+"@draft-js-plugins/buttons@^4.0.0":
+  version "4.3.2"
+  resolved "https://registry.yarnpkg.com/@draft-js-plugins/buttons/-/buttons-4.3.2.tgz#053e3ca3be345034f22c4ba040f97cf1a41f3aef"
+  integrity sha512-KEBp37yCfJDZamAcUHJE0Q1gH2voqt+DMPvzmI2Th6Xz0El/cdcOoAAgX3JPqDzWfd4sc7dDhm/77r9HmO8wIA==
+  dependencies:
+    clsx "^1.2.1"
+
+"@draft-js-plugins/editor@^4.1.3":
+  version "4.1.3"
+  resolved "https://registry.yarnpkg.com/@draft-js-plugins/editor/-/editor-4.1.3.tgz#460d70d3b639d17f4e1f15b7d180b8c8698b1ec1"
+  integrity sha512-Mxr1GUFzN0VcVVP6XClvWS2o33Rh8ZG3l41h9l27hJoLRYVywpuzI6TXD0UFYDIHX50fz6n70sQCdoHmkBsfKQ==
+  dependencies:
+    immutable "~3.7.4"
+    prop-types "^15.8.1"
+
+"@draft-js-plugins/inline-toolbar@^4.2.0":
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/@draft-js-plugins/inline-toolbar/-/inline-toolbar-4.2.0.tgz#345b596675e36fe8c9a37affac171fe1f3940f12"
+  integrity sha512-A3BoWOhn1Q8RUX+7+032jU4Fr5efYUa+3YFvPzxLt7CCg6DRdh9zuXzJZnrlxo5LnRPhohAbXN2ioT8lsBA+cQ==
+  dependencies:
+    "@draft-js-plugins/buttons" "^4.0.0"
+    "@draft-js-plugins/utils" "^4.0.0"
+
+"@draft-js-plugins/utils@^4.0.0":
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/@draft-js-plugins/utils/-/utils-4.2.0.tgz#ee3c643c94d548fd9460541881a7554c5b077988"
+  integrity sha512-tQhf7a0S9ZDtOb0Mje5a+xTOT6LVDRv2LueEqqVdX4aI+oh0jjkAuP0oTiZBv6h7K9XSPgsQ08q9+kwHc3EyUg==
+
 "@emotion/babel-plugin@^11.10.5":
   version "11.10.5"
   resolved "https://registry.yarnpkg.com/@emotion/babel-plugin/-/babel-plugin-11.10.5.tgz#65fa6e1790ddc9e23cc22658a4c5dea423c55c3c"
@@ -7232,11 +7260,6 @@ media-typer@0.3.0:
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/media-typer/-/media-typer-0.3.0.tgz#8710d7af0aa626f8fffa1ce00168545263255748"
   integrity sha512-dq+qelQ9akHpcOl/gUVRTxVIOkAJ1wR3QAvb4RsVjS8oVoFjDGTc679wJYmUmknUF5HwMLOgb5O+a3KxfWapPQ==
-
-medium-editor@^5.23.3:
-  version "5.23.3"
-  resolved "https://registry.yarnpkg.com/medium-editor/-/medium-editor-5.23.3.tgz#6fb638759ae2fc76c423feb056f346d9c518d3b7"
-  integrity sha512-he9/TdjX8f8MGdXGfCs8AllrYnqXJJvjNkDKmPg3aPW/uoIrlRqtkFthrwvmd+u4QyzEiadhCCM0EwTiRdUCJw==
 
 memfs@^3.1.2, memfs@^3.4.3:
   version "3.4.12"

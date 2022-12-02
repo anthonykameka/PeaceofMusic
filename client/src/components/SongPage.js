@@ -8,6 +8,9 @@ import Modal from 'styled-react-modal'
 import FocusLock from "react-focus-lock"
 import { EditorBlock } from 'draft-js'
 import SongPoms from './SongPoms'
+import { AiFillEye } from "react-icons/ai";
+import CommentSection from './Comments/CommentSection'
+import loader from "../assets/pomloaders"
 
 const SongPage = () => {
 
@@ -36,6 +39,27 @@ const SongPage = () => {
     console.log(song)
 
     useEffect(() => {
+      fetch(`/api/view-song`,  
+     {
+       method: "PATCH",
+       headers: {
+           "Accept": "application/json",
+           "Content-Type": "application/json"
+       },
+       body: JSON.stringify({songId: songId})
+     })
+       .then(res => res.json())
+       .then(res => {
+         console.log(res)
+         setRefreshSongs(refreshSongs+1)
+       })
+    
+
+    }, [])
+    
+
+
+    useEffect(() => {
         fetch(`/api/get-song/${_id.id}`)
         .then(res => res.json())
         .then(res =>  {
@@ -54,7 +78,10 @@ const SongPage = () => {
       })
         })
         
-    }, [])
+       
+        
+    }, [refreshSongs])
+
 
 ////////////////////SITE ROLES TO ALLOW FOR EDITS//DELETING
     let canEdit = true;
@@ -149,15 +176,23 @@ const SongPage = () => {
   console.log(song)
 
 
+useEffect(() => {
+  
+
+}, [song])
+
+
+
   return (
     <Wrapper>
       {
         !song
-        ? <p>loading...</p>
+        ? <img src={loader}/>
         :
         <>
         <SongInfoBox>
         <SongInfoSubBox>
+          <Views>{song.views}<AiFillEye/></Views>
           <AlbumCover src={song.thisSong.albumArt}/>
           <Title>{song?.songTitle}</Title>
           <Title><span>{song?.artistName}</span></Title>
@@ -182,13 +217,21 @@ const SongPage = () => {
           
         </SongActions>
         </SongInfoSubBox>
-
+        
       </SongInfoBox>
+      <LyricsComments>
       <LyricsWrapper>
         <Title>{song?.songTitle}</Title>
           <Title><span>{song?.artistName}</span></Title>
         <Lyrics>{song.thisSong.lyrics}</Lyrics>
+        <CommentSection songId={songId}/>
       </LyricsWrapper>
+     
+      
+
+
+      </LyricsComments>
+
 
       <PomWrapper>
         <SongPoms song={song}/>
@@ -235,6 +278,21 @@ const SongPage = () => {
     </Wrapper>
   )
 }
+
+const LyricsComments = styled.div`
+
+display: flex;
+width: 50%;
+margin-left: 100px;
+`
+
+const Views = styled.div`
+position: absolute;
+top: 10px;
+right: 30px;
+display: flex;
+justify-content: center;
+`
 
 const DateBy = styled.div`
 display:flex;
@@ -338,7 +396,7 @@ span {
 `
 
 const SongInfoSubBox = styled.div`
-background-color: var(--color-orange);
+background-color: var(--color-darkpurple);
 width: 350px;
 height: 380px;
 position: relative;
@@ -359,6 +417,7 @@ flex-direction: column;
 align-items: center;
 margin-top: 100px;
 width: 500px;
+
 
 `
 const AlbumCover = styled.img`

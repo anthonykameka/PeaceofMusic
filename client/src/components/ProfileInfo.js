@@ -2,16 +2,11 @@ import React from 'react'
 import { useContext, useState, useRef } from 'react'
 import { CurrentUserContext } from './CurrentUserContext'
 import styled from "styled-components";
-import pomme1 from "../assets/pommes/pomme1.png"
-import pomme2 from "../assets/pommes/pomme2.png"
-import pomme3 from "../assets/pommes/pomme3.png"
-import pomme4 from "../assets/pommes/pomme4.png"
-import pomme5 from "../assets/pommes/pomme5.png"
-import pomme6 from "../assets/pommes/pomme6.png"
 import FocusLock from "react-focus-lock"
 import Modal from "styled-react-modal"
 import { useNavigate } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
+import { set } from 'date-fns';
 
 const ProfileInfo = () => {
 
@@ -33,10 +28,6 @@ const ProfileInfo = () => {
     }
     const randomInt = randomIntFromInterval(1, 6) // increase depending on photos in the assets
     //console.log(randomInt)
-
-    const pommes = [pomme1, pomme2, pomme3, pomme4, pomme5, pomme6]
-
-    let profilePictureSrc = pomme1
     /////////////////////
     // console.log(currentUser)
 
@@ -95,7 +86,8 @@ const ProfileInfo = () => {
     const [editDisplayName, setEditDisplayName] = useState(false)
     const [newDisplayName, setNewDisplayName] = useState(null)
     const [displayNameDisplay, setDisplayNameDisplay] = useState(currentUser.displayName)
-
+    const [editPicture, setEditPicture] = useState(false)
+    const [pictureSrc, setPictureSrc] = useState(null)
 
     let displayEditButtonText = "Edit"
 
@@ -126,6 +118,40 @@ const ProfileInfo = () => {
             })
         }
     }
+
+    const handlePicture = (ev) => {
+        ev.preventDefault();
+        setEditPicture(true)
+    }
+
+    const handlePictureChange = (ev) => {
+        ev.preventDefault();
+        setPictureSrc(ev.target.value)
+        console.log(ev.target.value)
+    }
+
+    const handlePatchPicture = (ev) => {
+        ev.preventDefault();
+        const src = {src: pictureSrc, _id: currentUser._id}
+        fetch("/api/update-picture/", 
+            {
+                method: "PATCH",
+                headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(src)
+            })
+            .then(res => res.json())
+            .then(res => {
+                if (res.status ===200){
+                    setRefreshUser(refreshUser+1)
+                }
+                
+            })
+        
+    }
+
 
     if (editDisplayName) {
         displayEditButtonText = "Done"
@@ -271,7 +297,17 @@ const ProfileInfo = () => {
             </MiddleContent>
             <BottomContent>
                 <DeleteProfile onClick={handleDeleteProfile}>Delete Profile</DeleteProfile>
-                <ProfilePic src={pomme4} />
+                {
+                    !editPicture?<UpdateProfile onClick={handlePicture}>Update Picture</UpdateProfile>
+                    : <>
+                    <input onChange={(ev) => handlePictureChange(ev)} ></input>
+                    <button onClick={handlePatchPicture}>confirm</button>
+                    </>
+                    // <><PictureInput onChange={(ev) => handlePictureChange}>copy URL of photo</PictureInput>
+                    // <UpdatePicture onClick={handlePatchPicture}>Update</UpdatePicture></>
+                }
+                
+                <ProfilePic src={currentUser.profile_picture_src} />
             </BottomContent>
             <Modal
                 isOpen={isOpen}
@@ -295,6 +331,12 @@ const ProfileInfo = () => {
         </Wrapper>
     )
 }
+
+const UpdatePicture = styled.button`
+`
+
+const PictureInput = styled.input`
+`
 
 const Poms = styled.p`
 `
@@ -334,6 +376,11 @@ const Deactivate = styled.button`
 const DeleteProfile = styled.button`
 width: 20%;
 margin-bottom: 10px;`
+
+const UpdateProfile = styled.button`
+width: 20%;
+margin-bottom: 10px;`
+
 
 const RolesBox = styled.div`
 
