@@ -10,7 +10,7 @@ import { EditorBlock } from 'draft-js'
 import SongPoms from './SongPoms'
 import { AiFillEye } from "react-icons/ai";
 import CommentSection from './Comments/CommentSection'
-import loader from "../assets/pomloaders"
+import { CircularProgress } from '@mui/material'
 
 const SongPage = () => {
 
@@ -181,13 +181,13 @@ useEffect(() => {
 
 }, [song])
 
-
+console.log(songId)
 
   return (
     <Wrapper>
       {
         !song
-        ? <img src={loader}/>
+        ? <CircularProgress/>
         :
         <>
         <SongInfoBox>
@@ -217,14 +217,14 @@ useEffect(() => {
           
         </SongActions>
         </SongInfoSubBox>
-        
+       
       </SongInfoBox>
       <LyricsComments>
       <LyricsWrapper>
         <Title>{song?.songTitle}</Title>
           <Title><span>{song?.artistName}</span></Title>
         <Lyrics>{song.thisSong.lyrics}</Lyrics>
-        <CommentSection songId={songId}/>
+       
       </LyricsWrapper>
      
       
@@ -236,6 +236,7 @@ useEffect(() => {
       <PomWrapper>
         <SongPoms song={song}/>
       </PomWrapper>
+      <CommentSection songId={songId}/>
       <Modal
         isOpen={isOpen}
         onEscapeKeydown={toggleModal}
@@ -390,6 +391,7 @@ margin-top: 4px;
 const Title = styled.h1`
 font-size: 17px;
 margin-top: 10px;
+color: white;
 span {
   font-style: italic;
 }
@@ -407,7 +409,7 @@ border-radius: 30px;
 justify-content: center;
 padding-bottom: 30px;
 p, h1{
-  color: black
+  color: white
 }
 `
 

@@ -70,7 +70,7 @@ const ArtistBox = styled.div`
 display:flex;`
 
 const ArtistItem = styled.li`
-border: 1px dotted var(--color-deepteal);
+
 min-height: 100px;`
 
 export default ArtistCard

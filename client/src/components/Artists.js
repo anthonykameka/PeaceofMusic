@@ -15,16 +15,20 @@ const Artists = () => {
 
   const handleArtistClick = (ev)=> {
     ev.preventDefault();
+  
     console.log(ev.target.innerText)
     const thisArtistData = artistsData.filter(artist => {
       return artist.artistName === ev.target.innerText
+
     })
 
     console.log(thisArtistData)
+    navigate(`/artist/${thisArtistData[0][0].artistId}`)
   }
 
   return (
     <ArtistList>
+      <AllArtists>ALL ARTISTS</AllArtists>
       {
         artists?.map(artist => {
           return ( 
@@ -36,8 +40,15 @@ const Artists = () => {
   )
 }
 
+const AllArtists = styled.p`
+  margin: 0;
+  color: var(--color-orange);
+  font-size: 50px;
+  padding: 0;`
+
 const Artist = styled.li`
 color: white;
+line-height: 25px;
 &:hover{
   color: #bc35ca;
   cursor: pointer;
@@ -48,9 +59,9 @@ font-size: 20px;
 
 const ArtistList = styled.ul`
  columns: 3;
- margin-top: 10px;
+ margin-top: 25px;
  margin-bottom: 10px;
- margin-left: 10px;
+ margin-left: 40px;
 `
 
 export default Artists

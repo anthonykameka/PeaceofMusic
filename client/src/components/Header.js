@@ -14,6 +14,7 @@ import {GiMusicalScore} from "react-icons/gi"
 import { CurrentUserContext } from './CurrentUserContext';
 import UserPanel from './UserPanel';
 import AddASong from './AddASong';
+import newLogo from "../assets/POMnewlogo.png"
 
 const Header = () => {
 //CONTEXT VARIABLES
@@ -82,10 +83,10 @@ const {
   return (
     <Wrapper>
       {/* <Logo src={logo} onClick={handleLogoClick}></Logo> */}
+      <NewLogo onClick={handleLogoClick} src={newLogo}/>
       <LeftBox>
-        <LogoText onClick={handleLogoClick} src={logoText}/>
-        <Buttons>
-        <AddASong/>
+      <Buttons>
+        
         <Artists onClick={handleArtistsClick}>Artists</Artists>
       <Songs onClick={handleSongs}>songs</Songs>
       <AllEdits onClick={handleEditsClick} > all edits</AllEdits>
@@ -94,13 +95,16 @@ const {
 
         <Nav>
         
-        <BsJournals onClick={handleJournalClick} style={{"margin-top": "10px"}}size={25}/>
-        <GiMusicalScore onClick={handleMusicClick}style={{"margin-top": "10px"}}size={25}/>
-        <LoginButton/>
-        <LogoutButton/>
-        <Artists onClick={handleUpdateAll}>update all songs</Artists>
+        {/* <BsJournals onClick={handleJournalClick} style={{"margin-top": "10px"}}size={25}/>
+        <GiMusicalScore onClick={handleMusicClick}style={{"margin-top": "10px"}}size={25}/> */}
+        {/* <LoginButton/>
+        <LogoutButton/> */}
+        {/* <Artists onClick={handleUpdateAll}>update all songs</Artists> */}
         
         </Nav>
+        
+        <AddASong/>
+
         <UserPanel/>
     </Wrapper>
   )
@@ -127,7 +131,9 @@ flex-direction: column;
 
 `
 const AllEdits = styled.button``
-const LogoText = styled.img``
+const NewLogo = styled.img`
+height: 200px;
+`
 
 
 
@@ -147,10 +153,19 @@ width: 200px;
 const Wrapper = styled.div`
 height: 200px;
 display: flex;
+justify-content: space-between;
 align-items: end;
 padding-bottom: 10px;
+border-bottom: 1px solid var(--color-darkpurple);
 position: relative;
-background-color: var(--color-deepteal);
+background-color: var(--color-darkgrey);
+button {
+  color: var(--color-deepteal);
+
+  &:hover {
+    color: var(--color-darkpurple)
+  }
+}
 `
 
 const Songs = styled.button`

@@ -19,6 +19,7 @@ import EditSongPage from "./EditSongPage";
 import EditsPage from "./EditsPage";
 import PeaceOfMusic from "./PeaceOfMusic";
 import Spotify from "./Spotify";
+import ArtistPage from "./ArtistPage"
 
 const App = () => {
 
@@ -39,8 +40,9 @@ const App = () => {
               <Route path="/home" element={<HomePage/>} />
               <Route path="/" element={<HomePage/>} />
               <Route path="/artists" element={<Artists/>} />
+              <Route path="/artist/:id" element={<ArtistPage/>} />
               <Route path="submit" element={<SubmissionForm/>} />
-              <Route path="profile" element = {<ProfilePage/>} />
+              <Route path="profile/:id" element = {<ProfilePage/>} />
               <Route path="/error" element={<ErrorPage/>} />
               <Route path="/journal/:id" element={<Journal/>} />
               <Route path="/songs" element={<Songs/>} />

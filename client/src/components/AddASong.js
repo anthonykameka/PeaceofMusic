@@ -336,11 +336,11 @@ font-size: 20px;
 
 
 const ResultMain = styled.div`
-
+border-left: 1px solid var(--color-darkpurple);
 padding-left: 20px;
 `
 const SearchMain = styled.div`
-border-right: 1px solid var(--color-darkpurple);
+
 input {
   
 

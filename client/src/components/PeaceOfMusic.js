@@ -13,6 +13,7 @@ const PeaceOfMusic = () => {
     const [splitWords, setSplitWords] = useState(null)
     const [splitLines, setSplitLines] = useState(null)
     const [keys, setKeys] = useState(null)
+    const [pickingChord, setPickingChord] = useState(false)
 
     const songId = useParams().songId;
 
@@ -101,6 +102,7 @@ const PeaceOfMusic = () => {
 
 const handleWordClick = (line, word) => {
     console.log(line, word)
+
 }
 
 console.log(keys)
@@ -115,9 +117,9 @@ const selectionHandler = (ev) => {
   return (
     <Wrapper >
         <SubHeader>
-            <Annotate onClick = {selectionHandler}>
+            {/* <Annotate onClick = {selectionHandler}>
             Add Annotation to your selection
-            </Annotate>
+            </Annotate> */}
         </SubHeader>
         <KeyBox><DoYou>Do you know the key of this song?</DoYou>
         
@@ -134,7 +136,7 @@ const selectionHandler = (ev) => {
         </KeySelector>
         </KeyBox>
         <LyricsWrapper>
-            <Edit onClick={handleEditClick}>Edit the lyrics or spacing? You may also add a character(s) ie: " - "  for instrumental sections where there are no word </Edit>
+            {/* <Edit onClick={handleEditClick}>Edit the lyrics or spacing? You may also add a character(s) ie: " - "  for instrumental sections where there are no word </Edit> */}
             <TitleBox> 
                 <Info>{}</Info>
 
@@ -169,11 +171,11 @@ const selectionHandler = (ev) => {
             
             </Lyrics>
         </LyricsWrapper>
-        <EditorWrapper>
+        {/* <EditorWrapper>
             <EditorSubWrapper>
                 <PomEditor/>
             </EditorSubWrapper>
-        </EditorWrapper>
+        </EditorWrapper> */}
         
     </Wrapper>
   )
@@ -217,7 +219,7 @@ const DoYou = styled.h2`
 const KeyBox = styled.div``
 
 const Word = styled.span`
-color: var(--color-deepteal);
+color: white;
 &:hover {
 color: var(--color-orange)
 }`

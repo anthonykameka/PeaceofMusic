@@ -1,6 +1,6 @@
     import styled from "styled-components"
     import logo from "../assets/logosmall2.png"
-    import background from "../assets/big-crowd.png"
+    import background from "../assets/POMbackground.png"
     import { GlobalStyles } from "./GlobalStyles"
     import LoginButton from "./LoginButton"
     import LogoutButton from "./LogoutButton"
@@ -10,7 +10,12 @@
 
         return (
         <Wrapper >
-            <Background style={{backgroundImage: `url(${background})`}}>
+                            <LogBox>
+                                <Login>Login</Login>
+                    <LoginButton/>
+
+                </LogBox>
+            <Background style={{backgroundImage: `url(${background})`, backgroundSize:"contain"}}>
             <WelcomeBox>
                 <Logo src={logo}/>
                 <Name>PEACE OF MUSIC</Name>
@@ -26,12 +31,19 @@
     }
 
     const LogBox = styled.div`
-    position: absolute;
-    bottom: 10px;
-    right: 20px;
-    width: 95%;
+    margin-left: auto;
+    bottom: 700px;
+    right: 1000px;
+    width: 200px;
     justify-content: space-between;
     display: flex;
+    align-items: center;
+    position: absolute;
+    `
+
+    const Login = styled.p`
+    font-size: 50px;
+    font-weight: bold;
     `
 
     const Name = styled.h1`
@@ -54,7 +66,7 @@
     `
 
     const WelcomeBox = styled.div`
-    display: flex;
+    display: none;
     justify-content: flex-start;
     border: 1px solid black;
     z-index: 222;
@@ -69,8 +81,8 @@
     
     `
     const Wrapper = styled.div`
-    height: 100vh;
-    width: 100vw;
+    height: 98vh;
+    width: 95vw;
     
 
     `

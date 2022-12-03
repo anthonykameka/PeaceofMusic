@@ -42,6 +42,7 @@ const {
 
 const {
   getComments,
+  postComment,
 } = require("./handlers/commenthandlers")
 
 app.use(bodyParser.json({ limit: '10mb' }));
@@ -102,7 +103,7 @@ app.use(express.static("public"))
 
   //COMMENT HANDLERS //
   app.get("/api/get-comments/:targetId", getComments)
-
+  app.post("/api/post-comment", postComment)
 
 
 

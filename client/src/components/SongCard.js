@@ -41,7 +41,7 @@ const AlbumArt = styled.img`
 width: 100px;`
 
 const SongItem = styled.li`
-border: 1px dotted black
+
 `
 
 export default SongCard

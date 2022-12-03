@@ -5,7 +5,7 @@ import { Auth0Provider } from "@auth0/auth0-react";
 import { CurrentUserProvider } from './components/CurrentUserContext';
 import {ModalProvider} from "styled-react-modal"
 import { MusicProvider } from './components/MusicContext';
-import { CommentProvider } from "./components/Comments/CommentContext"
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -18,9 +18,9 @@ root.render(
         <CurrentUserProvider>
           <ModalProvider>
             <MusicProvider>
-              <CommentProvider>
+    
             <App />
-            </CommentProvider>
+            
             </MusicProvider>
           </ModalProvider>
         </CurrentUserProvider>

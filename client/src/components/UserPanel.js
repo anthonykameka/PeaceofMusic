@@ -163,7 +163,7 @@ display: flex;
 align-items: center;
 padding: 0 30px;
 border-radius: 35px;
-position: absolute;
+position: relative;
 right: 50px
 `
 
