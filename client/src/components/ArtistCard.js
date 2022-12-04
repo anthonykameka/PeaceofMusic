@@ -21,7 +21,6 @@ const ArtistCard = ({artist, data}) => {
   const albumArtDisplay = data[0].thisSong.albumArt
 
 
-
   return (
     <ArtistItem>
         <ArtistBox>
@@ -45,6 +44,10 @@ const ArtistCard = ({artist, data}) => {
 const Song = styled.li`
 font-style: italic;
 margin-right: 10px;
+&:hover {
+  cursor: pointer;
+  color: var(--color-deepteal)
+}
 
 
 `

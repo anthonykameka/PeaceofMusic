@@ -421,6 +421,12 @@ color: white;
 
 
 const EditSong = styled.button`
+position: absolute;
+top: -40px;
+right: 0;
+&:hover {
+  color: white;
+}
 `
 const SongActions = styled.div`
 display:flex;
@@ -440,6 +446,10 @@ margin-top: 4px;
 
 const AddedBy = styled.p`
 margin-top: 4px;
+&:hover {
+  cursor: pointer;
+  color: black;
+}
 `
 
 const Title = styled.h1`
@@ -495,9 +505,8 @@ const LyricsWrapper = styled.div`
 width: 50vw;
 margin: auto;
 height: 500px;
-border:1px solid black
 
-columns: 200px 3;
+margin-top: 90px;
 `
 const Wrapper = styled.div`
 display:flex;`

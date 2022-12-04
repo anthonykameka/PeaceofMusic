@@ -14,6 +14,7 @@ export const MusicContext = createContext();
     const [artistsData, setArtistsData] = useState(null)
     const [refreshEdits, setRefreshEdits] = useState(0)
     const [accessToken, setAccessToken] = useState(null)
+    const [searchBarModalToggler, setSearchBarModalToggler] = useState(false)
 
     useEffect(() => {
         fetch(`api/get-access-token`)
@@ -72,6 +73,8 @@ export const MusicContext = createContext();
                 refreshEdits,
                 setRefreshEdits,
                 accessToken,
+                searchBarModalToggler,
+                setSearchBarModalToggler,
             }}
         >
             {children}

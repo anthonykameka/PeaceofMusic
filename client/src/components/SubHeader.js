@@ -31,16 +31,19 @@ position: relative;
 display: flex;
 justify-content: space-evenly;
 align-items: flex-end;
+border-bottom: 1px solid var(--color-darkpurple);
+margin-bottom: 5px;
 
 button {
   height: 50px;
   width: 20%;
   border: none;
-  background-color: white;
+
   font-weight: bold;
   font-size: 17px;
-  background-color: var(--sea-green);
+
   color: white;
+  margin-bottom: 20px;
   
   &:focus {
     border-bottom: 2px solid var(--color-deepteal) !important;

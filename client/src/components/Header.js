@@ -141,12 +141,15 @@ const UpdateAll = styled.button`
 
 const ButtonsAndSearch = styled.div`
 display: flex;
+margin-right: 10px;
+position: absolute;
+right: 700px;
+bottom: 10px;
 `
 
 const Buttons = styled.div`
 display:flex;
-width: 300px;
-margin-left: 800px;
+width: 100px;
 justify-content: space-between;
 button {
   margin-left: 10px;

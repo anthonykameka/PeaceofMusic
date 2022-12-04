@@ -103,6 +103,7 @@ const ProfileInfo = ({profileID, profileData, params}) => {
     let displayEditButtonText = "Edit"
 
     const handleEditDisplayName = (ev) => {
+        console.log("test")
         ev.preventDefault();
         setEditDisplayName(!editDisplayName)
         if (newDisplayName && editDisplayName) {
@@ -128,6 +129,7 @@ const ProfileInfo = ({profileID, profileData, params}) => {
                 }
             })
         }
+        setRefreshUser(refreshUser+1)
     }
 
     const handlePicture = (ev) => {
@@ -556,7 +558,7 @@ margin-bottom: 10px;
 width: 100%;
 input {
     background: transparent !important;
-    border: none!important;
+    border: 1px solid grey;
     border-radius: 10px;
     font-size: 16px;
     

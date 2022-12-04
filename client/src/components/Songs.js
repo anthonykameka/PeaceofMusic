@@ -33,7 +33,8 @@ console.log(artistsData)
 }
 
 const ArtistList = styled.ul`
- columns: ;
+ margin-top: 10px ;
+ margin-left: 10px;
 `
 
 export default Songs

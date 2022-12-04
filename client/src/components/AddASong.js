@@ -29,7 +29,8 @@ const AddASong = () => {
     const {
       setRefreshSongs, 
       refreshSongs, //dependency for the getSongs fetch. Adding song will cause dependent data to refresh
-      accessToken
+      accessToken,
+      searchBarModalToggler,
     } = useContext(MusicContext)
   
   
@@ -51,6 +52,12 @@ const AddASong = () => {
     const [isOpen, setIsOpen] = useState(false); // initialize modal state
 
 
+    
+    useEffect(() => {
+      if (searchBarModalToggler) {
+        toggleModal()
+      }
+    }, [searchBarModalToggler])
     
 
 

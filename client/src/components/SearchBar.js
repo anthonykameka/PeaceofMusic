@@ -18,6 +18,8 @@ const SearchBar = () => {
     const {
         songs,
         artists,
+        searchBarModalToggler,
+        setSearchBarModalToggler,
     } = useContext(MusicContext)
 
     useEffect(() => {
@@ -122,10 +124,23 @@ const SearchBar = () => {
 
     // // handler for clicking an item on results to be navigated to its details site.
     // // reset values 
-    const handleSelect = (event, id) => {
-        // console.log("test")
+    const handleSelect = (result) => {
+        console.log(result)
+        if (result.includes("by")) {
+            const song = songs?.filter(song => song.thisSong.title === result)[0]
+
+            navigate(`/songs/${song._id}`)
+        }
         searchBarRef.current.value = "" // clear searchbar
         setSearchInput("") //clear state for search input
+    }
+
+    const handleAddSong = (ev)=> {
+        ev.preventDefault();
+        setSearchBarModalToggler(!searchBarModalToggler)
+        searchBarRef.current.value = "" // clear searchbar
+        setSearchInput("") //clear state for search input
+        
     }
 
 
@@ -179,6 +194,7 @@ const SearchBar = () => {
                 // logic to select different items in results. with mouse and keyboard
                 // this map works through each RESULT
                 firstResults.map((result, i) => {
+                    
                     const index = searchItems.indexOf(result) // as we are working with the names array, we use the index of the result to the names array
                     // const id = items[index]._id // once index found, use it to find id of the item  
                     // // when result is selected it will return true if the results index(i) 
@@ -200,7 +216,7 @@ const SearchBar = () => {
                     return (
                         <>
                         <Result
-                            onClick={event => handleSelect(event)}
+                            onClick={() => handleSelect(result)}
                             onMouseEnter={() => setSelectedResultsIndex(i)}
                             style={{
                                 background: isSelected() ? 'var(--border-color)' : 'transparent',
@@ -210,12 +226,14 @@ const SearchBar = () => {
                                 <Match>{match(result, searchInputs[0])}</Match>
                                 <After>{after(result, searchInputs[0])}</After>
                         </Result>
+                        
                         </>
                     )
                     
                 }
                 )
             }
+            <Result onClick={handleAddSong} id="cantfind">Cant find? Add Song!</Result>
         </Results>
         }
     </Wrapper>
@@ -255,10 +273,17 @@ const Result = styled.li`
         color: var(--color-dark-grey);
         cursor: default;
     }
+
+ 
 `
 const Results = styled.ul`
 border: 1px solid white;
 z-index: 444;
+#cantfind {
+        background: linear-gradient(var(--color-deepteal), var(--color-darkpurple));
+        color: black;
+        border-top: 1px solid white;
+    }
 background: var(--color-darkpurple);`
 
 const Search = styled.div`
@@ -278,8 +303,8 @@ display: flex;
 flex-direction: column;
 
 position: absolute;
-left: 600px;
-top: 145px;
+left: 400px;
+top: 130px;
 
 `
 

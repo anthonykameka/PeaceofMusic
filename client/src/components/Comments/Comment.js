@@ -33,7 +33,7 @@ const handleProfileClick = (ev) => {
         <CommentBox>
             <AuthorPhoto onClick={handleProfileClick}src={user?.profile_picture_src}/>
             <NameAndText>
-              <UserName>{user.username}</UserName>
+              <UserName onClick={handleProfileClick}>{user.username}</UserName>
               <CommentText>{comment.text}</CommentText>
             </NameAndText>
         </CommentBox>

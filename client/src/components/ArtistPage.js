@@ -55,6 +55,7 @@ const ArtistPage = () => {
 
     navigate(`/songs/${songId}`)
   }
+  
 
 
   return (
@@ -77,7 +78,11 @@ const ArtistPage = () => {
               sortedSongs.map(song => {
                 console.log(song)
                 return (
-                  <Song onClick={() => handleSongClick(song._id)}>{song.songTitle[0].toUpperCase() + song.songTitle.substring(1)}</Song>
+                  <Song onClick={() => handleSongClick(song._id)}>
+                    {
+                    song.songTitle[0].toUpperCase() + song.songTitle.slice(1)
+                    }
+                    </Song>
                 )
               })
             }
@@ -143,6 +148,7 @@ color: var(--color-deepteal);
 
 const Song = styled.li`
 color: white;
+margin-left: 20px;
 line-height: 25px;
 &:hover{
   color: #bc35ca;

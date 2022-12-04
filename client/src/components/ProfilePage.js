@@ -182,6 +182,10 @@ const HomePage = () => {
 
     const Favorite = styled.li`
     display: flex;
+    &:hover {
+        cursor: pointer;
+        color: var(--color-darkpurple)
+    }
     
     `
     

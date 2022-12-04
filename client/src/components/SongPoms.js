@@ -13,7 +13,7 @@ console.log(song)
   return (
     <Wrapper> 
         <PomList>
-            <PomCard onClick={handlePomClick} song={song}>hi</PomCard>
+            <PomCard onClick={handlePomClick} song={song}>Peace Of Music</PomCard>
         </PomList>
     </Wrapper>
   )
@@ -27,6 +27,14 @@ display: flex;
 const PomList = styled.ul`
 `
 
-const PomCard = styled.li``
+const PomCard = styled.button`
+display:flex;
+margin-top: 22px;
+justify-content: center;
+font-size: 20px;;
+margin-right: 30px !important;
+background: linear-gradient(var(--color-deepteal), var(--color-darkpurple));
+
+`
 
 export default SongPoms

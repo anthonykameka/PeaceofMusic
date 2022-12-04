@@ -81,8 +81,18 @@ const UserPanel = () => {
             <UserPanelBox>
             <ProfilePicture  onClick={handleGoToProfile}src={currentUser.profile_picture_src}/>
             <NameAndActions>
-            <DisplayName>{currentUser.displayname} </DisplayName>
-            <LogoutButton style={{color: "white"}}/>
+                
+            <DisplayName>
+                {
+                currentUser.displayname
+                ?currentUser.displayname
+                :"Random Pom"
+                }
+
+                </DisplayName>
+            <UserName>{currentUser.username}</UserName>
+            <LogoutPending>
+            <PendingBox>
             {
                reviewer?
                 <Pending onClick={handlePendingClick}>Pending</Pending>
@@ -93,9 +103,12 @@ const UserPanel = () => {
                 <div></div>
                 :
                 <PendingList>
-                    <PendingEdits onClick={handlePendingEditClick}>edits: {pendingEdits?.length}</PendingEdits>
+                    <PendingEdits onClick={handlePendingEditClick}><p>edits: {pendingEdits?.length}</p></PendingEdits>
                 </PendingList>
             }
+            </PendingBox>
+            <LogoutButton style={{color: "white"}}/>
+            </LogoutPending>
             </NameAndActions>
             </UserPanelBox>
             {
@@ -122,21 +135,44 @@ const UserPanel = () => {
   )
 }
 
+const PendingBox = styled.div`
+
+p{
+    margin-left: 13px;
+}
+`
+
+const UserName = styled.p`
+margin-left: 10px;
+`
+
 const NameAndActions = styled.div`
 height: 80%
 ;
 `
+const LogoutPending = styled.div`
+display:flex;
 
+justify-content: center;
+align-items: center;
+`
 
 const UserPanelBox = styled.div`
 display:flex;`
-const PendingEdit = styled.div``
+const PendingEdit = styled.div`
+display:flex;
+flex-direction: column;`
 const EditTitle = styled.p`
 `
-const PendingEditsList = styled.ul``
+const PendingEditsList = styled.ul`
+display:flex;
+flex-direction: column;
+`
 const PendingEditPreview = styled.li``
 
 const PendingEdits = styled.li`
+display:flex;
+flex-direction: column;
 `
 
 const PendingList = styled.ul`
@@ -144,7 +180,8 @@ const PendingList = styled.ul`
 
 const Pending = styled.button`
 height: 30px;
-margin-top: 30px;
+margin-left: -10px;
+
 `
 
 const DisplayName = styled.h1`
@@ -165,8 +202,10 @@ align-items: center;
 padding: 0 30px;
 border-radius: 35px;
 position: relative;
-right: 50px;
+margin-bottom: 10px;
+right: 0px;
 color: black;
+width: 300px;
 `
 
 export default UserPanel
