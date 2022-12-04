@@ -9,19 +9,21 @@ import Modal from "styled-react-modal"
 import FocusLock from "react-focus-lock";
 import { useParams } from "react-router-dom";
 import { MusicContext } from "./MusicContext";
-
+import { useNavigate } from "react-router-dom";
 
 const HomePage = () => {
+
+    const navigate = useNavigate()
     const { user, isAuthenticated, isLoading } = useAuth0();
-    
     const params = useParams();
-    // console.log(params)
     const profileID = params.id
-    console.log(profileID)
     const {
         currentUser,
-
     } = useContext(CurrentUserContext)
+
+    const {
+        songs,
+    } = useContext(MusicContext)
 
 
 
@@ -30,6 +32,7 @@ const HomePage = () => {
 
     useEffect(() => {
         console.log("test")
+        if (profileID) {
         fetch(`/api/get-this-user/${profileID}`)
         .then(res => res.json())
         .then(res => {
@@ -38,7 +41,8 @@ const HomePage = () => {
             
             
         })
-     }, [])
+    }
+     }, [params, currentUser])
 
    // console.log(currentUser)
 
@@ -71,31 +75,67 @@ const HomePage = () => {
     let favorites = null;
     let currentUserMatch = false;
     if (!params.id) {
-        favorites = currentUser.favorites
+        favorites = currentUser?.favorites
         currentUserMatch=true
     }
     
     
    else if (currentUser?._id === profileData?._id) {
-        favorites = currentUser.favorites
+        favorites = currentUser?.favorites
         currentUserMatch=true
     }
     else {
         currentUserMatch=false
-        favorites=profileData.favorites
+        favorites=profileData?.favorites
     }
+
+
+
+    let favoriteSongs = songs?.filter(song => favorites?.includes(song._id))
+
+    
+  const handleSongClick = (songId) => {
+
+    navigate(`/songs/${songId}`)
+  }
+    
 
     return (
         isAuthenticated && (
         <Wrapper>
             
             <Content>
-            <SubHeader/>
+            
+            {
+                !favoriteSongs? <></>
+                :
+            
             <FavoritesWrapper>
+                <SubHeader/>
                 <Favorites>
-                    <Favorite></Favorite>
+                   
+                        {
+                            favoriteSongs.map(favorite => {
+                                console.log(favorite)
+                                return (
+                                    <Favorite>
+                                        <AlbumArt src={favorite.thisSong.albumArt}/>
+                                        <ArtistName>
+                                            <Artist>
+                                                {favorite.artistName}
+                                            </Artist>
+                                            <Song onClick={() => handleSongClick(favorite._id)} > 
+                                                {favorite.songTitle}
+                                            </Song>
+                                        </ArtistName>
+                                    </Favorite>
+                                )
+                            })
+                        }
+                    
                 </Favorites>
             </FavoritesWrapper>
+            }
             {
                 !currentUser? <h1>LOADING CIRCLE....</h1>
                 :
@@ -109,17 +149,40 @@ const HomePage = () => {
     );
     };
 
+    const ArtistName = styled.div`
+    `
+    const Song = styled.a`
+    
+    `   
+    const Artist = styled.h2`
+    `
+
+    const AlbumArt = styled.img`
+    width: 100px;
+    
+    `
+
     const FavoritesWrapper = styled.div`
     display: flex;
     flex-direction: column;
+    position: absolute;
+    left: 0;
+    width: 80vw;
 
     `
-    const Favorites = styled.ul``
+    const Favorites = styled.ul`
+    
+    display:flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    align-items: flex-start;
+
+
+    `
 
     const Favorite = styled.li`
     display: flex;
-    align-items: center;
-    justify-content: center;
+    
     `
     
     const Content = styled.div`

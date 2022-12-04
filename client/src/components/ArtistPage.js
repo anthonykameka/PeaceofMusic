@@ -3,8 +3,10 @@ import { useParams } from 'react-router-dom'
 import { useContext, useState } from 'react';
 import { MusicContext } from './MusicContext';
 import styled from "styled-components/"
+import { useNavigate } from 'react-router-dom';
 
 const ArtistPage = () => {
+    const navigate = useNavigate();
     const params = useParams();
     const artistId = params.id
     console.log(artistId)
@@ -47,10 +49,12 @@ const ArtistPage = () => {
       setSongView(true)
     }
 
-    const handleSongClick = (ev) => {
-      ev.preventDefault();
-      console.log(ev.target)
-    }
+    
+      
+  const handleSongClick = (songId) => {
+
+    navigate(`/songs/${songId}`)
+  }
 
 
   return (
@@ -61,7 +65,7 @@ const ArtistPage = () => {
           <TitleView>
           <Title>{artistName}</Title>
           <Views>
-            <View onClick={handleAlbumView}>Album View</View>
+            {/* <View onClick={handleAlbumView}>Album View</View> */}
             <View onClick={handleSongView}>Song View</View>
             </Views>
           </TitleView>
@@ -71,8 +75,9 @@ const ArtistPage = () => {
           <Songs>
             {
               sortedSongs.map(song => {
+                console.log(song)
                 return (
-                  <Song onClick={handleSongClick}>{song.songTitle[0].toUpperCase() + song.songTitle.substring(1)}</Song>
+                  <Song onClick={() => handleSongClick(song._id)}>{song.songTitle[0].toUpperCase() + song.songTitle.substring(1)}</Song>
                 )
               })
             }

@@ -34,7 +34,7 @@ const SearchBar = () => {
 
     const {allUsers} = useState(CurrentUserContext)
 
-    console.log(songs, allUsers, artists)
+    // console.log(songs, allUsers, artists)
 
 
 
@@ -79,7 +79,7 @@ const SearchBar = () => {
         results = searchItems.filter(itemName => itemName.toLowerCase().includes(searchInput.toLowerCase()))
     }
 
-    console.log(results)
+    // console.log(results)
     // // if user uses multiple words in search, it splits into array of searchinputs
     const searchInputs = searchInput.split(" ")
 
@@ -123,7 +123,7 @@ const SearchBar = () => {
     // // handler for clicking an item on results to be navigated to its details site.
     // // reset values 
     const handleSelect = (event, id) => {
-        console.log("test")
+        // console.log("test")
         searchBarRef.current.value = "" // clear searchbar
         setSearchInput("") //clear state for search input
     }

@@ -612,7 +612,8 @@ const Wrapper = styled.div`
     border-left: 1px dotted rgba(0, 0, 0,  0.2);
     width: 23vw;
     height: calc(100vh - 200px);
-    position: relative;
+    position: absolute;
+    right: 0;
     background: linear-gradient(var(--color-deepteal), var(--color-darkpurple), var(--color-orange));
     p, h1, h2{
         color: black;
