@@ -297,7 +297,7 @@ const ProfileInfo = () => {
             </MiddleContent>
             <BottomContent>
                 <DeleteUpdate>
-                <DeleteProfile onClick={handleDeleteProfile}>Delete Profile</DeleteProfile>
+                
                 {
                     !editPicture?<UpdateProfile onClick={handlePicture}>Update Picture</UpdateProfile>
                     : <>
@@ -310,6 +310,7 @@ const ProfileInfo = () => {
                 </DeleteUpdate>
                 
                 <ProfilePic src={currentUser.profile_picture_src} />
+                <DeleteProfile onClick={handleDeleteProfile}>Deactivate</DeleteProfile>
             </BottomContent>
             <Modal
                 isOpen={isOpen}
@@ -324,7 +325,7 @@ const ProfileInfo = () => {
                 <Label>Yes</Label>
                <Yes onChange={(ev) => handleYesChange(ev)} type="checkbox"/>
                <Cancel onClick={handleCancel}>Cancel</Cancel>
-               <Deactivate onClick={handleDeactivation}>Deactivate profile.. </Deactivate>
+               <Deactivate onClick={handleDeactivation}>Deactivate profile </Deactivate>
                 </Form>
             </FocusLock>
 
@@ -336,13 +337,13 @@ const ProfileInfo = () => {
 
 const DeleteUpdate = styled.div`
 width: 60%;
-border: 1px solid black;
 display:flex;
     justify-content: space-between;
     align-items: center;
 `
 
 const UpdatePicture = styled.button`
+margin-left: 10px;
 `
 
 const PictureInput = styled.input`
@@ -385,10 +386,16 @@ const Deactivate = styled.button`
 
 const DeleteProfile = styled.button`
 width: 20%;
+bottom: -5px;
+right: 50px;
+position: absolute;
 margin-bottom: 10px;`
 
 const UpdateProfile = styled.button`
 width: 20%;
+top: -30px;
+left: 0;
+position: absolute;
 margin-bottom: 10px;`
 
 

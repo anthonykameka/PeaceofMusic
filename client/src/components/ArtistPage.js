@@ -15,18 +15,18 @@ const ArtistPage = () => {
         artistsData
     } = useContext(MusicContext)
 
-
-    const test = songs.filter(song => song.artistId === artistId)
-    const artistName = test[0].artistName
+    console.log(songs)
+    const test = songs?.filter(song => song.artistId === artistId)
+    const artistName = test[0]?.artistName
   
-    const songData = artistsData.filter(artist => artist.artistName.includes(artistName))[0]
-    const sortedSongs = songData.sort((a, b) => a.artistName.localeCompare(b.artistName))
-    const photos = songData.map(song => {
+    const songData = artistsData?.filter(artist => artist.artistName.includes(artistName))[0]
+    const sortedSongs = songData?.sort((a, b) => a.artistName.localeCompare(b.artistName))
+    const photos = songData?.map(song => {
       return song.thisSong.albumArt
     })
 
     console.log(photos)
-    let uniqueAlbumPhotos= photos.filter((item, i, array) => array.indexOf(item) === i);
+    let uniqueAlbumPhotos= photos?.filter((item, i, array) => array.indexOf(item) === i);
     console.log(uniqueAlbumPhotos);
 
 
@@ -45,6 +45,11 @@ const ArtistPage = () => {
       ev.preventDefault();
       setAlbumView(false)
       setSongView(true)
+    }
+
+    const handleSongClick = (ev) => {
+      ev.preventDefault();
+      console.log(ev.target)
     }
 
 
@@ -67,7 +72,7 @@ const ArtistPage = () => {
             {
               sortedSongs.map(song => {
                 return (
-                  <Song>{song.songTitle}</Song>
+                  <Song onClick={handleSongClick}>{song.songTitle[0].toUpperCase() + song.songTitle.substring(1)}</Song>
                 )
               })
             }
@@ -78,21 +83,26 @@ const ArtistPage = () => {
             
         </ListWrapper>
 
-          
           {
             albumView?
 
-            <AlbumsWrapper>
+            <Albums>
             {
-            uniqueAlbumPhotos?.map(photo => {
-              return (
-                <AlbumWrapper>
-                  <Album src={photo}/>
-                </AlbumWrapper>
-              )
-      })}
+              sortedSongs.map(song => {
+                return (
+                  <>
+                  <SongAlbum>
+                  <Album src={song.thisSong.albumArt}/>
+                    <Song onClick={handleSongClick}>{song.songTitle.charAt(0).toUpperCase()}</Song>
+                  </SongAlbum>
+                  </>
+                )
+              })
+            }
 
-      </AlbumsWrapper>
+          </Albums>
+
+      
       :<></>
           }
 
@@ -100,6 +110,15 @@ const ArtistPage = () => {
         </Wrapper>
   )
 }
+
+const SongAlbum = styled.li`
+display:flex;
+`
+
+const Albums = styled.ul`
+margin-left: 40px;
+
+`
 
 const AlbumsWrapper = styled.div`
 
@@ -153,6 +172,7 @@ width: 250px;
 `
 
 const Wrapper = styled.div`
-display:flex;`
+display:flex;
+flex-direction: column;`
 
 export default ArtistPage

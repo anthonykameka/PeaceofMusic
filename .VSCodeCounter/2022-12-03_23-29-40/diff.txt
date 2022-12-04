@@ -1,0 +1,45 @@
+Date : 2022-12-03 23:29:40
+Directory : c:\Users\antka\OneDrive\Documents\Final Project\PeaceofMusic
+Total : 16 files,  630 codes, 69 comments, 167 blanks, all 866 lines
+
+Languages
++------------+------------+------------+------------+------------+------------+
+| language   | files      | code       | comment    | blank      | total      |
++------------+------------+------------+------------+------------+------------+
+| JavaScript |         16 |        630 |         69 |        167 |        866 |
++------------+------------+------------+------------+------------+------------+
+
+Directories
++----------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                                     | files      | code       | comment    | blank      | total      |
++----------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                                        |         16 |        630 |         69 |        167 |        866 |
+| client                                                                                                   |         15 |        630 |         69 |        165 |        864 |
+| client\src                                                                                               |         15 |        630 |         69 |        165 |        864 |
+| client\src\components                                                                                    |         14 |        627 |         69 |        168 |        864 |
+| server                                                                                                   |          1 |          0 |          0 |          2 |          2 |
+| server\handlers                                                                                          |          1 |          0 |          0 |          2 |          2 |
++----------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++----------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| filename                                                                                                 | language   | code       | comment    | blank      | total      |
++----------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| c:\Users\antka\OneDrive\Documents\Final Project\PeaceofMusic\client\src\components\AddASong.js           | JavaScript |         11 |          0 |          0 |         11 |
+| c:\Users\antka\OneDrive\Documents\Final Project\PeaceofMusic\client\src\components\ArtistPage.js         | JavaScript |         96 |          1 |         25 |        122 |
+| c:\Users\antka\OneDrive\Documents\Final Project\PeaceofMusic\client\src\components\CurrentUserContext.js | JavaScript |          1 |          0 |          0 |          1 |
+| c:\Users\antka\OneDrive\Documents\Final Project\PeaceofMusic\client\src\components\Header.js             | JavaScript |         13 |          4 |          4 |         21 |
+| c:\Users\antka\OneDrive\Documents\Final Project\PeaceofMusic\client\src\components\HomePage.js           | JavaScript |         -6 |          0 |          0 |         -6 |
+| c:\Users\antka\OneDrive\Documents\Final Project\PeaceofMusic\client\src\components\LoginButton.js        | JavaScript |          5 |          0 |          2 |          7 |
+| c:\Users\antka\OneDrive\Documents\Final Project\PeaceofMusic\client\src\components\LogoutButton.js       | JavaScript |          3 |          0 |          1 |          4 |
+| c:\Users\antka\OneDrive\Documents\Final Project\PeaceofMusic\client\src\components\PeaceContext.js       | JavaScript |         67 |          1 |         25 |         93 |
+| c:\Users\antka\OneDrive\Documents\Final Project\PeaceofMusic\client\src\components\PeaceOfMusic.js       | JavaScript |        262 |         36 |         74 |        372 |
+| c:\Users\antka\OneDrive\Documents\Final Project\PeaceofMusic\client\src\components\PomContext.js         | JavaScript |        -46 |          0 |        -15 |        -61 |
+| c:\Users\antka\OneDrive\Documents\Final Project\PeaceofMusic\client\src\components\ProfileInfo.js        | JavaScript |          9 |          0 |          1 |         10 |
+| c:\Users\antka\OneDrive\Documents\Final Project\PeaceofMusic\client\src\components\SearchBar.js          | JavaScript |        209 |         27 |         50 |        286 |
+| c:\Users\antka\OneDrive\Documents\Final Project\PeaceofMusic\client\src\components\SongPage.js           | JavaScript |          0 |          0 |          1 |          1 |
+| c:\Users\antka\OneDrive\Documents\Final Project\PeaceofMusic\client\src\components\UserPanel.js          | JavaScript |          3 |          0 |          0 |          3 |
+| c:\Users\antka\OneDrive\Documents\Final Project\PeaceofMusic\client\src\index.js                         | JavaScript |          3 |          0 |         -3 |          0 |
+| c:\Users\antka\OneDrive\Documents\Final Project\PeaceofMusic\server\handlers\userhandlers.js             | JavaScript |          0 |          0 |          2 |          2 |
+| Total                                                                                                    |            |        630 |         69 |        167 |        866 |
++----------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+

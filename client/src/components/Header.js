@@ -45,7 +45,7 @@ const {
   
   const handleLogoClick = (ev) => {
     ev.preventDefault();
-    navigate("/profile")
+    navigate("/home")
   }
 
   const handleJournalClick = (ev) => {
