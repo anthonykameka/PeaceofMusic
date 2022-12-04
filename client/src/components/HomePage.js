@@ -2,17 +2,11 @@ import React, { useEffect, useState, useContext } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import { CurrentUserContext } from "./CurrentUserContext";
 import styled from "styled-components";
-import pomme1 from "../assets/pommes/pomme1.png"
-import pomme2 from "../assets/pommes/pomme2.png"
-import pomme3 from "../assets/pommes/pomme3.png"
-import pomme4 from "../assets/pommes/pomme4.png"
-import pomme5 from "../assets/pommes/pomme5.png"
-import pomme6 from "../assets/pommes/pomme6.png"
 import SubHeader from "./SubHeader";
-import PomEditor from "./TextEditor/PomEditor"
 import ProfileInfo from "./ProfileInfo";
-import YoutubePlayer from "./YouTubePlayer";
 import GlobalStyles from "./GlobalStyles";
+import Modal from "styled-react-modal"
+import FocusLock from "react-focus-lock";
 
 
 
@@ -54,7 +48,7 @@ const HomePage = () => {
     return (
         isAuthenticated && (
         <Wrapper>
-            
+            <
             <Content>
             <SubHeader />
             {

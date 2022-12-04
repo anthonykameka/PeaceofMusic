@@ -286,6 +286,8 @@ const deactivateUser = async (req, res) => {
         res.status(404).json({ status: 404, data: "Not Found" });
     } finally {
     client.close();
+
+
     console.log("disconnected from database.")
     }
 }
