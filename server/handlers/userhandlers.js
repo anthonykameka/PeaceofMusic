@@ -95,6 +95,25 @@ const getUser = async (req, res) => {
     }
 }
 
+const getThisUser = async (req, res) => {
+    const client = new MongoClient(MONGO_URI, options)
+    console.log(req.params)
+
+    try {
+        await client.connect();
+        const db = client.db("peaceofmusic");
+        console.log("connected")
+        const thisUser = await db.collection("users").findOne({_id: req.params.id})
+        // const thisUser = await db.collection("users").findOne({auth0_sub: auth0_sub})
+        thisUser && res.status(200).json({status: 200, data: thisUser, message: "success"})
+        // !thisUser && res.status(403).json({status: 403, data: thisUser, message: "this is a new user"})
+    } catch (err) {
+        res.status(404).json({ status: 404, data: "Not Found" });
+    } finally {
+    client.close();
+    console.log("disconnected from database.")
+    }
+}
 
 const deleteUser = async (req, res) => {
     const client = new MongoClient(MONGO_URI, options)
@@ -239,6 +258,7 @@ const addUser = async (req, res) => {
         adds: 0,
         notifications: [],
         messages: [],
+        favorites: [],
     }
 
     //console.log(newUserInfo)
@@ -337,6 +357,22 @@ const updatePicture = async (req, res) => {
     }
 }
 
+const updateAllUsers = async (req, res) => {
+    const client = new MongoClient(MONGO_URI, options);
+    try {
+        await client.connect();
+        const db = client.db("peaceofmusic");
+        console.log("connected")
+        await db.collection("users").updateMany({}, {$set: {favorites: []}})
+        res.status(200).json({status: 200, message: "all users updated"})
+    } catch (err) {
+        res.status(404).json({ status: 404, messages: "Not Found" });
+    } finally {
+    client.close();
+    console.log("disconnected from database.")
+    }
+}
+
 
 
 
@@ -351,5 +387,7 @@ module.exports = {
     updateUserName,
     updateDisplayName,
     updatePicture,
+    updateAllUsers,
+    getThisUser,
     
 }

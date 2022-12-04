@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useContext, useState, useRef } from 'react'
 import { CurrentUserContext } from './CurrentUserContext'
 import styled from "styled-components";
@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
 import { set } from 'date-fns';
 
-const ProfileInfo = () => {
+const ProfileInfo = ({profileID, profileData}) => {
 
     const tags = ["musician", "bass", "guitar", "piano", "drums", 
                 "songwriter", "producer", "poet", "fan", "educator", 
@@ -20,18 +20,17 @@ const ProfileInfo = () => {
         setRefreshUser,
     } = useContext(CurrentUserContext)
 
-
-        //default profile picture randomizer
+    // console.log(profileID)
+     console.log(profileData)
 ///////////////////////////////////////
-    const randomIntFromInterval = (min, max) => { // min and max included 
-        return Math.floor(Math.random() * (max - min + 1) + min)
-    }
-    const randomInt = randomIntFromInterval(1, 6) // increase depending on photos in the assets
-    //console.log(randomInt)
-    /////////////////////
-    // console.log(currentUser)
 
-    ///EDIT USERNAME///
+    if (currentUser._id === profileData._id) {
+        console.log('same user')
+    }
+    else {
+        console.log("different user")
+    }
+
 
 
 
@@ -153,6 +152,8 @@ const ProfileInfo = () => {
     }
 
 
+
+
     if (editDisplayName) {
         displayEditButtonText = "Done"
     }
@@ -212,6 +213,8 @@ const ProfileInfo = () => {
             logout();
         })
     }
+
+    console.log(currentUser)
 
 
     return (

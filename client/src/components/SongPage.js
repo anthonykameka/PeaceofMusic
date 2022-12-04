@@ -8,7 +8,7 @@ import Modal from 'styled-react-modal'
 import FocusLock from "react-focus-lock"
 import { EditorBlock } from 'draft-js'
 import SongPoms from './SongPoms'
-import { AiFillEye } from "react-icons/ai";
+import { AiFillEye, AiOutlineStar, AiFillStar } from "react-icons/ai";
 import CommentSection from './Comments/CommentSection'
 import { CircularProgress } from '@mui/material'
 
@@ -173,7 +173,45 @@ const SongPage = () => {
 
   }
 
-  console.log(song)
+  const handleUnfav = (ev) => {
+    ev.preventDefault();
+    fetch(`/api/remove-fav`,  
+     {
+       method: "PATCH",
+       headers: {
+           "Accept": "application/json",
+           "Content-Type": "application/json"
+       },
+       body: JSON.stringify({songId: songId, userId: currentUser._id})
+     })
+       .then(res => res.json())
+       .then(res => {
+         console.log(res)
+         setRefreshSongs(refreshSongs+1)
+         setRefreshUser(refreshUser+1)
+       })
+
+  }
+
+  const handleFav = (ev) => {
+    ev.preventDefault();
+    fetch(`/api/add-fav`,  
+     {
+       method: "PATCH",
+       headers: {
+           "Accept": "application/json",
+           "Content-Type": "application/json"
+       },
+       body: JSON.stringify({songId: songId, userId: currentUser._id})
+     })
+       .then(res => res.json())
+       .then(res => {
+         console.log(res)
+         setRefreshSongs(refreshSongs+1)
+         setRefreshUser(refreshUser+1)
+       })
+
+  }
 
 
 useEffect(() => {
@@ -181,7 +219,9 @@ useEffect(() => {
 
 }, [song])
 
-console.log(songId)
+console.log(currentUser?.favorites.includes(song?._id))
+console.log(currentUser)
+
 
   return (
     <Wrapper>
@@ -192,6 +232,14 @@ console.log(songId)
         <>
         <SongInfoBox>
         <SongInfoSubBox>
+          <Favorites> 
+            <p style={{marginRight: "10px"}}>{song.favorites}</p>
+            {
+              currentUser?.favorites.includes(song._id)?
+              <AiFillStar onClick={handleUnfav} size={20}/>
+              : <AiOutlineStar onClick={handleFav}  size={20}/>
+            }
+          </Favorites>
           <Views>{song.views}<AiFillEye/></Views>
           <AlbumCover src={song.thisSong.albumArt}/>
           <Title>{song?.songTitle}</Title>
@@ -286,7 +334,13 @@ display: flex;
 width: 50%;
 margin-left: 100px;
 `
-
+const Favorites = styled.div`
+position: absolute;
+top: 10px;
+left: 40px;
+justify-content: center;
+display: flex;
+`
 const Views = styled.div`
 position: absolute;
 top: 10px;

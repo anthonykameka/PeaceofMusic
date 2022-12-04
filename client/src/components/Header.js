@@ -79,6 +79,16 @@ const {
         console.log(res)
     })
   }
+
+    /// function below is used to update all users where/when required
+    const handleUpdateAllUsers = (ev) => {
+      ev.preventDefault();
+      fetch("/api/update-users")
+      .then(res => res.json())
+      .then(res => {
+          console.log(res)
+      })
+    }
   
 
   return (
@@ -94,6 +104,8 @@ const {
           
           <Artists onClick={handleArtistsClick}>Artists</Artists>
         <Songs onClick={handleSongs}>Songs</Songs>
+        {/* <UpdateAll onClick={handleUpdateAll}>Update ALL with Favo</UpdateAll> */}
+        {/* <UpdateAll onClick={handleUpdateAllUsers}>Update Users with fav</UpdateAll> */}
         <AddASong/>
         {
           currentUser?.role === "founder"?
@@ -123,6 +135,9 @@ const {
     </Wrapper>
   )
 }
+
+const UpdateAll = styled.button`
+`
 
 const ButtonsAndSearch = styled.div`
 display: flex;

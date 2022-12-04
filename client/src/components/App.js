@@ -1,12 +1,12 @@
 import {BrowserRouter, Routes, Route} from "react-router-dom"
 import LandingPage from "./LandingPage";
-import HomePage from "./HomePage";
+import HomePage from "./ProfilePage";
 import styled from "styled-components"
 import GlobalStyles from "./GlobalStyles";
 import Artists from "./Artists";
 import SubmissionForm from "./SubmissionForm";
 import ErrorPage from "./ErrorPage";
-import ProfilePage from "./HomePage";
+import ProfilePage from "./ProfilePage";
 import Layout from "./Layout";
 import { CurrentUserContext } from "./CurrentUserContext";
 import { useContext } from "react";

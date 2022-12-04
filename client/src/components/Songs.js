@@ -18,7 +18,7 @@ console.log(artistsData)
   return (
     <ArtistList>
       {
-        artistsData.map(artist => {
+        artistsData?.map(artist => {
           const artistName = artist.artistName
         
 

@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import {format} from 'date-fns'
+import { useNavigate } from 'react-router-dom'
 
 
 const Comment = ({comment}) => {
+
+  const navigate = useNavigate();
 
   const [user, setUser] = useState(null)
 
@@ -13,22 +16,48 @@ const Comment = ({comment}) => {
     .then(res => setUser(res.data))
   }, [])
 
-  console.log(comment)
-  console.log(user)
+const handleProfileClick = (ev) => {
+  ev.preventDefault();
+  navigate(`/profile/${user._id}`)
+}
 
   return (
     <Wrapper>
-       <ScoreBox>
+      {
+        !user?<></>
+        : 
+        <>
+        <ScoreBox>
         <Score>{comment.score}</Score>
-       </ScoreBox>
-       <CommentBox>
-        <AuthorPhoto src={user?.profile_picture_src}/>
-        <CommentText>{comment.text}</CommentText>
-       </CommentBox>
-       <Date>{comment.date.slice(0, 10)}</Date>
+        </ScoreBox>
+        <CommentBox>
+            <AuthorPhoto onClick={handleProfileClick}src={user?.profile_picture_src}/>
+            <NameAndText>
+              <UserName>{user.username}</UserName>
+              <CommentText>{comment.text}</CommentText>
+            </NameAndText>
+        </CommentBox>
+        <Date>{comment.date.slice(0, 10)}</Date>
+        </>
+      }
     </Wrapper>
   )
 }
+
+const NameAndText = styled.div`
+display: flex;
+flex-direction: column;
+
+width: 222px;
+
+`
+
+const UserName = styled.p`
+text-decoration: underline;
+margin-left: 10px;
+margin-bottom: 5px;
+
+`
 const Date = styled.p`
   font-size: 14px;
   position: absolute;
@@ -37,8 +66,8 @@ const Date = styled.p`
   right: 10px;
   font-weight: bold;`
 const AuthorPhoto = styled.img`
-width: 40px;
-height: 40px;
+width: 50px;
+height: 50px;
 border-radius: 100%;
 margin-left: 10px;
 
@@ -49,7 +78,7 @@ const CommentText = styled.p`
   font-weight: bold;
   margin-left: 10px;
 
-  width: 275px;
+  width: 222px;
 
 
 `
@@ -58,6 +87,8 @@ const CommentBox = styled.div`
   display: flex;
   padding: 10px;
   display: relative;
+
+  align-items: center ;
   color: white;
   flex-direction: row;`
 

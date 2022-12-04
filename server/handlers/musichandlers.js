@@ -124,7 +124,7 @@ const updateAllSongs = async (req, res) => {
         await client.connect();
         const db = client.db("peaceofmusic");
         console.log("connected")
-        await db.collection("songs").updateMany({}, {$set: {views: 0}})
+        await db.collection("songs").updateMany({}, {$set: {favorites: 0}})
         res.status(200).json({status: 200, message: "all songs update"})
     } catch (err) {
         res.status(404).json({ status: 404, messages: "Not Found" });
@@ -154,6 +154,51 @@ const addView = async (req, res) => {
 
 }
 
+const addFav = async (req, res) => {
+    const client = new MongoClient(MONGO_URI, options);
+    const id = req.body.songId
+    const userId = req.body.userId
+    console.log(req.body)
+    console.log("this is the body", req.body)
+    try {
+        await client.connect();
+        const db = client.db("peaceofmusic");
+        console.log("connected")
+        const song = await db.collection("songs").findOne({_id: id})
+        console.log(id, userId)
+        await db.collection("users").updateOne({_id: userId}, {$push: {"favorites": id}})
+        await db.collection("songs").updateOne({_id: id}, {$inc: {favorites: 1}})
+        res.status(200).json({status: 200, message: "song found, fav added", data: song})
+    } catch (err) {
+        res.status(404).json({ status: 404, messages: "Not Found" });
+    } finally {
+    client.close();
+    console.log("disconnected from database.")
+    }
+}
+
+
+    const removeFav = async (req, res) => {
+        const client = new MongoClient(MONGO_URI, options);
+        const id = req.body.songId
+        const userId = req.body.userId
+        console.log("this is the body", req.body)
+        try {
+            await client.connect();
+            const db = client.db("peaceofmusic");
+            console.log("connected")
+            const song = await db.collection("songs").findOne({_id: id})
+            await db.collection("users").updateOne({_id: userId}, {$pull: {"favorites": id}})
+            await db.collection("songs").updateOne({_id: id}, {$inc: {favorites: -1}})
+            
+            res.status(200).json({status: 200, message: "song found, fav removed", data: song})
+        } catch (err) {
+            res.status(404).json({ status: 404, messages: "Not Found" });
+        } finally {
+        client.close();
+        console.log("disconnected from database.")
+        }
+    }
 
 const getSongs = async (req, res) => {
     const client = new MongoClient(MONGO_URI, options);
@@ -650,5 +695,7 @@ module.exports = {
     reviewEdit,
     updateAllSongs,
     addView,
+    removeFav,
+    addFav,
     // addArtist,
 }

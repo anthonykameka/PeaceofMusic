@@ -20,6 +20,8 @@ const {
   updateUserName,
   updateDisplayName,
   updatePicture,
+  updateAllUsers,
+  getThisUser,
 } = require("./handlers/userhandlers")
 
 const { 
@@ -38,6 +40,8 @@ const {
   reviewEdit,
   updateAllSongs,
   addView,
+  addFav,
+  removeFav,
 } = require("./handlers/musichandlers")
 
 const {
@@ -73,6 +77,7 @@ app.use(express.static("public"))
     //USERS//
   app.get("/api/get-users", getUsers)
   app.get("/api/get-user/:auth0", getUser)
+  app.get("/api/get-this-user/:id", getThisUser)
   app.get("/api/match-user/:id", matchUser)
   app.post("/api/add-user", addUser)
   app.patch("/api/update-username", updateUserName )
@@ -81,6 +86,7 @@ app.use(express.static("public"))
   app.patch("/api/activate-user/:id", activateUser)
   app.patch("/api/update-picture", updatePicture)
   app.delete("/api/delete-user/:id", deleteUser)
+  app.get("/api/update-users", updateAllUsers)
 
 
   ///EDIT HANDLERS//
@@ -100,6 +106,8 @@ app.use(express.static("public"))
   app.delete("/api/delete-song/:id", deleteSong)
   app.get("/api/update-songs", updateAllSongs) // used to update all songs when required
   app.patch("/api/view-song/", addView)
+  app.patch("/api/remove-fav/", removeFav)
+  app.patch("/api/add-fav/", addFav)
 
   //COMMENT HANDLERS //
   app.get("/api/get-comments/:targetId", getComments)

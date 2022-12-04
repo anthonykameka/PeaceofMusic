@@ -2,7 +2,6 @@ import React from 'react'
 import styled from 'styled-components'
 import { useContext, useState, useEffect } from 'react'
 import { CurrentUserContext } from './CurrentUserContext'
-import pomme from "../assets/pommes/pomme4.png"
 import { useNavigate } from 'react-router-dom'
 import { MusicContext } from './MusicContext'
 import LogoutButton from './LogoutButton'

@@ -14,11 +14,11 @@ const CommentSection = ({songId}) => {
   const [comments, setComments] = useState([]);
   const [deleteModal, setDeleteModal] = useState(false)
   const [refreshComments, setRefreshComments] = useState(0)
-  console.log(songId)
+  // console.log(songId)
 
     
 
-    console.log(currentUser)
+    // console.log(currentUser)
 
 
 
@@ -84,13 +84,13 @@ const CommentSection = ({songId}) => {
 
 
       const [commentText, setCommentText] = useState(null)
-      console.log(comments)
+      //console.log(comments)
 
       useEffect(() => {
         fetch(`/api/get-comments/${songId}`)
         .then(res => res.json())
         .then(res => {
-          console.log(res.data)
+          // console.log(res.data)
           setComments(res.data)
         })
   
