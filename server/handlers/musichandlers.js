@@ -1,7 +1,7 @@
 "use strict";
 const { MongoClient } = require("mongodb");
 require("dotenv").config();
-const { MONGO_URI } = process.env;
+const { MONGO_URI, apiKey } = process.env;
 
 const options = {
     useNewUrlParser: true,
@@ -10,6 +10,16 @@ const options = {
 
 const { v4: uuidv4 } = require("uuid");
 
+const getAccessToken = async (req, res) => { 
+    console.log("connected")
+    if (apiKey) {
+    return res.status(200).json({status:200, data: apiKey})
+    }
+    else {
+        return res.status(444).json({status:444, message: "cant find accessToken"})
+    }
+    
+}
 ///////////////////////////////////////////
 ///add song handler 
 const addSong = async (req, res) => {
@@ -697,5 +707,6 @@ module.exports = {
     addView,
     removeFav,
     addFav,
+    getAccessToken,
     // addArtist,
 }

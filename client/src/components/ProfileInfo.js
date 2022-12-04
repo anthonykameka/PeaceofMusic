@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
 import { set } from 'date-fns';
 
-const ProfileInfo = ({profileID, profileData}) => {
+const ProfileInfo = ({profileID, profileData, params}) => {
 
     const tags = ["musician", "bass", "guitar", "piano", "drums", 
                 "songwriter", "producer", "poet", "fan", "educator", 
@@ -20,16 +20,28 @@ const ProfileInfo = ({profileID, profileData}) => {
         setRefreshUser,
     } = useContext(CurrentUserContext)
 
-    // console.log(profileID)
-     console.log(profileData)
+ 
+     
 ///////////////////////////////////////
+ 
 
-    if (currentUser._id === profileData._id) {
-        console.log('same user')
+    let profile = null;
+    let currentUserMatch = false;
+    if (!params.id) {
+        profile = currentUser
+        currentUserMatch=true
+    }
+    
+    
+   else if (currentUser?._id === profileData?._id) {
+        profile = currentUser
+        currentUserMatch=true
     }
     else {
-        console.log("different user")
+        currentUserMatch=false
+        profile = profileData
     }
+
 
 
 
@@ -47,7 +59,7 @@ const ProfileInfo = ({profileID, profileData}) => {
         if (newUserName && editUserName) {
 
             if (newUserName.charAt(0) !== "@") {
-                console.log("wrong format")
+               
                 return
             }
             const patch = {newUserName: newUserName, _id: currentUser._id}
@@ -120,18 +132,20 @@ const ProfileInfo = ({profileID, profileData}) => {
 
     const handlePicture = (ev) => {
         ev.preventDefault();
-        setEditPicture(true)
+        setEditPicture(!editPicture)
     }
 
     const handlePictureChange = (ev) => {
         ev.preventDefault();
         setPictureSrc(ev.target.value)
-        console.log(ev.target.value)
+     
     }
 
     const handlePatchPicture = (ev) => {
         ev.preventDefault();
+        setEditPicture(false)
         const src = {src: pictureSrc, _id: currentUser._id}
+        if (pictureSrc !== null) {
         fetch("/api/update-picture/", 
             {
                 method: "PATCH",
@@ -148,7 +162,7 @@ const ProfileInfo = ({profileID, profileData}) => {
                 }
                 
             })
-        
+        }
     }
 
 
@@ -175,7 +189,7 @@ const ProfileInfo = ({profileID, profileData}) => {
 
     const handleDeleteProfile = (ev) => {
         ev.preventDefault();
-        console.log("deleting")
+       
         toggleModal();
     }
     
@@ -209,45 +223,87 @@ const ProfileInfo = ({profileID, profileData}) => {
         })
         .then(res => res.json())
         .then(res => {
-            console.log(res);
+            
             logout();
         })
     }
 
-    console.log(currentUser)
+    const handleDisplayCancel = (ev) => {
+        ev.preventDefault();
+        setEditDisplayName(!editDisplayName)
+        // setDisplayNameDisplay(null)
+    }
 
+    const handleUserCancel = (ev) => {  
+        ev.preventDefault();
+        setEditUserName(!editUserName)
+    }
 
+    const handlePictureCancel = (ev) => {
+            ev.preventDefault();
+            setEditPicture(!editPicture)
+    }
     return (
         <Wrapper>
+            {
+                !profile?<></>
+                : 
+            <>
             <TopContent>
                 {/* <ClicktoEdit>Click to Edit</ClicktoEdit> */}
-                <DisplayNameLine>
+                <DisplayNameLine>       
                     <DisplayName>
                         {
-                            !editDisplayName?
-                            !currentUser.displayname?
-                            <h2>Random Pom</h2>
-                            : <h2>{currentUser.displayname}</h2>
-                            :<input placeholder={currentUser.displayname} onChange={(e)=> setNewDisplayName(e.target.value)}></input>
+                            !editDisplayName
+                            ?
+                                !profile.displayname
+                                ? <h2>Random Pom</h2>
+                                : <h2>{profile.displayname}</h2>
+                            :
+                            <>
+                                <input placeholder={profile.displayname}
+                                        onChange={(e)=> setNewDisplayName(e.target.value)}
+                                ></input>
+                                <CancelButton onClick={handleDisplayCancel}>Cancel</CancelButton>
+                            </>
                         }
                     </DisplayName>
-                    <EditDisplay onClick={(handleEditDisplayName)}>{displayEditButtonText}</EditDisplay>
+                    {
+                        currentUserMatch? <EditDisplay onClick={(handleEditDisplayName)}>{displayEditButtonText}</EditDisplay>
+                        : <></>
+                    }
+                   
                 </DisplayNameLine>
                 <UserNameLine>
                     <UserName>
                         {
                             !editUserName?
                             <h2>{usernameDisplay}</h2> 
-                            : <input placeholder={currentUser.username} onChange={(e)=> setNewUserName(e.target.value)}></input>
+                            : <>
+                            <input 
+                                placeholder={profile.username} 
+                                onChange={(e)=> setNewUserName(e.target.value)}>
+                                        
+                            </input>
+                            <CancelButton onClick = {handleUserCancel}>Cancel</CancelButton>
+                            </>
                         }
                         
                     </UserName>
+                    {
+                        currentUserMatch? 
+                        <>
+                        
+                        <EditUser onClick={(handleEditUserName)}>{editButtonText}</EditUser>
+                        </>
+                        : <></>
+                    }
                 
-                    <EditUser onClick={(handleEditUserName)}>{editButtonText}</EditUser>
+                 
                 </UserNameLine>
                 <RolesBox>
                     {
-                        currentUser.tags?
+                        profile.tags?
                         tags.map((tag => {
                             return (
                                 <Tag>{tag}</Tag>
@@ -260,61 +316,75 @@ const ProfileInfo = ({profileID, profileData}) => {
             <MiddleContent>
                 <Contributions>
                     <ContributionsTitle>Contributions: </ContributionsTitle>
-                    <SongsAdded>Songs Added: {currentUser.adds}</SongsAdded>
+                    <SongsAdded>Songs Added: {profile.adds}</SongsAdded>
                     <Annotations>
                         Annotations: 
                         {
-                        currentUser.annotations.meanings.length + currentUser.annotations.theories.length > 0
-                        ? currentUser.annotations.meanings.length + currentUser.annotations.theories.length
+                        profile.annotations.meanings.length + profile.annotations.theories.length > 0
+                        ? profile.annotations.meanings.length + profile.annotations.theories.length
                         : 0
                         }
                     </Annotations>
                     <Edits>
                         edits: 
                         {
-                        currentUser.edits.approved.length + currentUser.edits.approved.length > 0
-                        ? currentUser.edits.approved.length + currentUser.edits.approved.length
+                        profile.edits.approved.length + profile.edits.approved.length > 0
+                        ? profile.edits.approved.length + profile.edits.approved.length
                         : 0
                         }
                     </Edits>
                     <Comments>
                         comments: 
                         {
-                        currentUser.comments.approved.length + currentUser.comments.approved.length > 0
-                        ? currentUser.comments.approved.length + currentUser.comments.approved.length
+                        profile.comments.approved.length + profile.comments.approved.length > 0
+                        ? profile.comments.approved.length + profile.comments.approved.length
                         : 0
                         }
                     </Comments>
                     <Poms>
                         poms: 
                         {
-                        currentUser.poms.approved.length + currentUser.poms.approved.length > 0
-                        ? currentUser.poms.approved.length + currentUser.poms.approved.length
+                        profile.poms.approved.length + profile.poms.approved.length > 0
+                        ? profile.poms.approved.length + profile.poms.approved.length
                         : 0
                         }
                     </Poms>
 
 
                 </Contributions>
-                <AccountStatus>Account Status: {currentUser.role}</AccountStatus>
+                <AccountStatus>Account Status: {profile.role}</AccountStatus>
             </MiddleContent>
             <BottomContent>
+                {
+                        !currentUserMatch? <></>
+                        : 
+                
                 <DeleteUpdate>
                 
-                {
-                    !editPicture?<UpdateProfile onClick={handlePicture}>Update Picture</UpdateProfile>
-                    : <>
-                    <input onChange={(ev) => handlePictureChange(ev)} ></input>
-                    <button onClick={handlePatchPicture}>confirm</button>
-                    </>
-                    // <><PictureInput onChange={(ev) => handlePictureChange}>copy URL of photo</PictureInput>
-                    // <UpdatePicture onClick={handlePatchPicture}>Update</UpdatePicture></>
+                {   
+                    !editPicture
+                    ?<UpdateProfile onClick={handlePicture}>Update Picture</UpdateProfile>
+                    : <PictureEdit>
+                        <input placeholder="enter URL" onChange={(ev) => handlePictureChange(ev)} ></input>
+                        <CancelConfirm>
+                            <Confirm   Confirm onClick={handlePatchPicture}>Confirm</Confirm>
+                            <CancelPicture onClick = {handlePictureCancel}>Cancel</CancelPicture>
+                        </CancelConfirm>
+                    </PictureEdit>
                 }
-                </DeleteUpdate>
                 
-                <ProfilePic src={currentUser.profile_picture_src} />
-                <DeleteProfile onClick={handleDeleteProfile}>Deactivate</DeleteProfile>
+                </DeleteUpdate>
+                }
+                <ProfilePic src={profile.profile_picture_src} />
+                {
+                        !currentUserMatch? <></>
+                        : <DeleteProfile onClick={handleDeleteProfile}>Deactivate</DeleteProfile>
+                }
+                
             </BottomContent>
+            {
+                        !currentUserMatch? <></>
+                        :
             <Modal
                 isOpen={isOpen}
                 onEscapeKeydown={toggleModal}
@@ -333,13 +403,64 @@ const ProfileInfo = ({profileID, profileData}) => {
             </FocusLock>
 
         </Modal>
-
+        }
+        </>
+    }
         </Wrapper>
     )
 }
 
+const CancelPicture = styled.button`
+position: absolute;
+top: 0px;
+left: -40px;
+
+`
+
+const Confirm = styled.button`
+position: absolute;
+left: -104px;
+`
+
+const CancelConfirm = styled.div`
+width: 25%;
+position: absolute;
+top: 20px;
+left: 80px;
+`
+
+const PictureEdit = styled.div`
+display: flex;
+flex-direction: column;
+width: 50%;
+justify-content: space-between;
+position: absolute;
+top: -40px;
+left: 10px;
+
+
+
+input {
+    background: transparent !important;
+    border: 1px solid black
+    border-radius: 30px;
+    font-size: 16px;
+    height: 2
+    
+
+    &:active{
+        border: 1px solid var(--color-darkpurple)
+    }
+}
+`
+
+const CancelButton = styled.button`
+position: absolute;
+right: 53px;
+`
+
 const DeleteUpdate = styled.div`
-width: 60%;
+width: 100%;
 display:flex;
     justify-content: space-between;
     align-items: center;
@@ -381,7 +502,9 @@ const Form = styled.form`
 
 const Yes = styled.input``
 
-const Cancel = styled.button``
+const Cancel = styled.button`
+
+`
 const Label = styled.label``
 
 const Deactivate = styled.button`
@@ -414,12 +537,34 @@ margin-bottom: 5px;`
 
 const UserNameLine = styled.div`
 display:flex;
-width: 30%;`
+input {
+    background: transparent !important;
+    border: none!important;
+    border-radius: 10px;
+    font-size: 16px;
+
+    &:active{
+        border: 1px solid var(--color-darkpurple)
+    }
+    
+}
+width: 100%;`
 
 const DisplayNameLine = styled.div`
 display:flex;
 margin-bottom: 10px;
-width: 30%;
+width: 100%;
+input {
+    background: transparent !important;
+    border: none!important;
+    border-radius: 10px;
+    font-size: 16px;
+    
+    &:active{
+        border: 1px solid var(--color-darkpurple)
+    }
+    
+}
 
 `
 
@@ -465,7 +610,7 @@ const Wrapper = styled.div`
     display:flex;
     flex-direction: column;
     border-left: 1px dotted rgba(0, 0, 0,  0.2);
-    width: 20vw;
+    width: 23vw;
     height: calc(100vh - 200px);
     position: relative;
     background: linear-gradient(var(--color-deepteal), var(--color-darkpurple), var(--color-orange));

@@ -344,13 +344,14 @@ const updatePicture = async (req, res) => {
         await client.connect();
         const db = client.db("peaceofmusic");
         console.log("connected")
-        
+        const user = await db.collection("users").findOne({_id: patch._id})
+        console.log(user)
          await db.collection("users").updateOne({_id: patch._id}, {$set: {"profile_picture_src": patch.src}})
-         const thisUser = db.collection("users").findOne({_id: _id})
-         res.status(200).json({status: 200, message: "account activated", data: thisUser})
+
+         res.status(200).json({status: 200, message: "picture changed", data: patch})
     }
     catch (err) {
-        res.status(404).json({ status: 404, data: "Not Found" });
+        res.status(404).json({ status: 404, data: "Issue completing this operation" });
     } finally {
     client.close();
     console.log("disconnected from database.")

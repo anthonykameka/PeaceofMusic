@@ -1,18 +1,20 @@
 import React from 'react'
 import styled from 'styled-components'
-const SubHeader = () => {
+const SubHeader = ({profileData}) => {
+
+  console.log(profileData)
   return (
     <Wrapper>
-      <SetLists>SetLists</SetLists>
+      <Favorites>Favorites</Favorites>
 
-    <Contributions>Contributions</Contributions>
+    {/* <Contributions>Contributions</Contributions>
     <Annotations>Annotations</Annotations>
-    <Comments>Comments</Comments>
+    <Comments>Comments</Comments> */}
     </Wrapper>
   )
 }
 
-const SetLists = styled.button`
+const Favorites = styled.button`
 `
 const Annotations = styled.button``
 const Comments = styled.button``

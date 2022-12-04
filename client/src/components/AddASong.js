@@ -17,6 +17,8 @@ const AddASong = () => {
     const navigate = useNavigate();
 
 
+
+
     const {
       currentUser, // current logged in user (from MONGODB)
       setRefreshUser,
@@ -25,7 +27,9 @@ const AddASong = () => {
     } = useContext(CurrentUserContext)
 
     const {
-      setRefreshSongs, refreshSongs //dependency for the getSongs fetch. Adding song will cause dependent data to refresh
+      setRefreshSongs, 
+      refreshSongs, //dependency for the getSongs fetch. Adding song will cause dependent data to refresh
+      accessToken
     } = useContext(MusicContext)
   
   
@@ -47,7 +51,7 @@ const AddASong = () => {
     const [isOpen, setIsOpen] = useState(false); // initialize modal state
 
 
-
+    
 
 
 
@@ -79,7 +83,7 @@ const handleAddSong = () => {
     setFinishAdding(false)
     //these options are required for GENIUS API/NPM package // use inputs to search api
     const options = {
-      apiKey: "mPaybTjlCGUYikeRswTWOEU57Pf-vXKk6WrAttu0ue344TFuamLsUzn7p9GgXe3p",
+      apiKey: accessToken,
       title: songSearch,
       artist: artistSearch,
       optimizeQuery:true

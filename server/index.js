@@ -42,6 +42,7 @@ const {
   addView,
   addFav,
   removeFav,
+  getAccessToken,
 } = require("./handlers/musichandlers")
 
 const {
@@ -74,6 +75,8 @@ app.use(express.static("public"))
 
     /// ENDPOINTS///
 
+  
+
     //USERS//
   app.get("/api/get-users", getUsers)
   app.get("/api/get-user/:auth0", getUser)
@@ -99,6 +102,7 @@ app.use(express.static("public"))
   app.get("/api/get-chords", getChords)
 
   //SONG HANDLERS ///
+  app.get("/api/get-access-token", getAccessToken)
   app.post("/api/add-song", addSong)
   app.get("/api/get-songs", getSongs)
   app.get("/api/get-song/:id", getSong)

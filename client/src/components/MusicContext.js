@@ -13,6 +13,13 @@ export const MusicContext = createContext();
     const [artists, setArtists] = useState(null)
     const [artistsData, setArtistsData] = useState(null)
     const [refreshEdits, setRefreshEdits] = useState(0)
+    const [accessToken, setAccessToken] = useState(null)
+
+    useEffect(() => {
+        fetch(`api/get-access-token`)
+        .then(res => res.json())
+        .then(res => setAccessToken(res.data))
+      }, [])
 
     const songsByArtists = (songArray, artistArray) => {
         const newArray = artistArray.map(artist => {
@@ -64,6 +71,7 @@ export const MusicContext = createContext();
                 getSong,
                 refreshEdits,
                 setRefreshEdits,
+                accessToken,
             }}
         >
             {children}
