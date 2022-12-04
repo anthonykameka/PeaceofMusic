@@ -223,7 +223,7 @@ console.log(songId)
       <LyricsWrapper>
         <Title>{song?.songTitle}</Title>
           <Title><span>{song?.artistName}</span></Title>
-        <Lyrics>{song.thisSong.lyrics}</Lyrics>
+        <Lyrics>{song?.thisSong.lyrics}</Lyrics>
        
       </LyricsWrapper>
      

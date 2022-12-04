@@ -296,6 +296,7 @@ const ProfileInfo = () => {
                 <AccountStatus>Account Status: {currentUser.role}</AccountStatus>
             </MiddleContent>
             <BottomContent>
+                <DeleteUpdate>
                 <DeleteProfile onClick={handleDeleteProfile}>Delete Profile</DeleteProfile>
                 {
                     !editPicture?<UpdateProfile onClick={handlePicture}>Update Picture</UpdateProfile>
@@ -306,6 +307,7 @@ const ProfileInfo = () => {
                     // <><PictureInput onChange={(ev) => handlePictureChange}>copy URL of photo</PictureInput>
                     // <UpdatePicture onClick={handlePatchPicture}>Update</UpdatePicture></>
                 }
+                </DeleteUpdate>
                 
                 <ProfilePic src={currentUser.profile_picture_src} />
             </BottomContent>
@@ -331,6 +333,14 @@ const ProfileInfo = () => {
         </Wrapper>
     )
 }
+
+const DeleteUpdate = styled.div`
+width: 60%;
+border: 1px solid black;
+display:flex;
+    justify-content: space-between;
+    align-items: center;
+`
 
 const UpdatePicture = styled.button`
 `
@@ -445,10 +455,10 @@ const Wrapper = styled.div`
     display:flex;
     flex-direction: column;
     border-left: 1px dotted rgba(0, 0, 0,  0.2);
-    width: 30vw;
+    width: 20vw;
     height: calc(100vh - 200px);
     position: relative;
-    background-color: var(--color-orange);
+    background: linear-gradient(var(--color-deepteal), var(--color-darkpurple), var(--color-orange));
     p, h1, h2{
         color: black;
     }

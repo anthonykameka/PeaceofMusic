@@ -11,7 +11,7 @@
         return (
         <Wrapper >
                             <LogBox>
-                                <Login>Login</Login>
+                                <Login></Login>
                     <LoginButton/>
 
                 </LogBox>

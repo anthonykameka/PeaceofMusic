@@ -1,6 +1,7 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import { useNavigate } from "react-router-dom";
 import { RiLoginCircleFill } from "react-icons/ri";
+import styled from "styled-components";
 import React from "react";
 
 const LoginButton = () => {
@@ -13,8 +14,14 @@ const LoginButton = () => {
     navigate("/home")
   }
 
-  return <RiLoginCircleFill size={25} onClick={() => {handleClick()}}>Log In</RiLoginCircleFill>;
+  return <Button size={25} onClick={() => {handleClick()}}>Log In/Sign Up</Button>;
 };
+
+const Button = styled.button`
+width: 400px;
+font-size: 40px;
+
+`
 
 
 export default LoginButton;

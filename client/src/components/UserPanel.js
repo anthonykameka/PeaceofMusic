@@ -5,6 +5,7 @@ import { CurrentUserContext } from './CurrentUserContext'
 import pomme from "../assets/pommes/pomme4.png"
 import { useNavigate } from 'react-router-dom'
 import { MusicContext } from './MusicContext'
+import LogoutButton from './LogoutButton'
 
 
 const UserPanel = () => {
@@ -82,13 +83,14 @@ const UserPanel = () => {
             <ProfilePicture  onClick={handleGoToProfile}src={currentUser.profile_picture_src}/>
             <NameAndActions>
             <DisplayName>{currentUser.displayname} </DisplayName>
+            <LogoutButton style={{color: "white"}}/>
             {
                reviewer?
                 <Pending onClick={handlePendingClick}>Pending</Pending>
                 :<div></div>
             }
             {
-                !pendingActive?
+                !pendingActive || !reviewer?
                 <div></div>
                 :
                 <PendingList>
@@ -164,7 +166,8 @@ align-items: center;
 padding: 0 30px;
 border-radius: 35px;
 position: relative;
-right: 50px
+right: 50px;
+color: black;
 `
 
 export default UserPanel

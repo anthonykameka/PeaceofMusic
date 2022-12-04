@@ -295,6 +295,7 @@ input {
   height: 30px;
   font-size: 17px;
   margin-left: 22px;
+  margin-bottom: -10px;
   color: white;
   border-bottom: 1px solid var(--color-orange);
   &:focus {
@@ -494,7 +495,7 @@ display:flex;
 flex-direction: column;
 width: 50%;
 margin-top: 5%;
-
+margin-left: -10px
 border-radius: 3px;
 
 padding-bottom: 10px;
@@ -512,6 +513,16 @@ const Wrapper = styled.div`
 `
 
 const AddSong = styled.button`
+display:flex;
+justify-content: center;
+font-size: 20px;;
+margin-right: 30px !important;
+color: black !important;
+background: linear-gradient(var(--color-deepteal), var(--color-darkpurple));
+  &:hover {
+  color: white !important;
+}
+
 `
 
 
@@ -535,7 +546,7 @@ display:flex;
 button {
   margin-left: 20px;
   height: 50px !important;
-  margin-top: 40px;
+  margin-top: 60px;
 }
 `
 

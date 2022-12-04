@@ -48,7 +48,7 @@ const HomePage = () => {
     return (
         isAuthenticated && (
         <Wrapper>
-            <
+            
             <Content>
             <SubHeader />
             {

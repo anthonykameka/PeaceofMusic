@@ -7,14 +7,15 @@ import { useNavigate } from 'react-router-dom';
 import { useState, useContext, useEffect } from 'react';
 
 import { MusicContext } from './MusicContext';
-import logo from '../assets/logo1.png'
-import logoText from '../assets/logotext.png'
-import { BsJournals } from "react-icons/bs"
-import {GiMusicalScore} from "react-icons/gi"
+// import logo from '../assets/logo1.png'
+// import logoText from '../assets/logotext.png'
+// import { BsJournals } from "react-icons/bs"
+// import {GiMusicalScore} from "react-icons/gi"
 import { CurrentUserContext } from './CurrentUserContext';
 import UserPanel from './UserPanel';
 import AddASong from './AddASong';
-import newLogo from "../assets/POMnewlogo.png"
+import newLogo from "../assets/POMbackgroundtiny.png"
+import SearchBar from "./SearchBar"
 
 const Header = () => {
 //CONTEXT VARIABLES
@@ -83,14 +84,27 @@ const {
   return (
     <Wrapper>
       {/* <Logo src={logo} onClick={handleLogoClick}></Logo> */}
-      <NewLogo onClick={handleLogoClick} src={newLogo}/>
+      <NewLogo style={{marginBottom: "-10px"}}
+        onClick={handleLogoClick} 
+        src={newLogo}/>
+        <SearchBar/>
       <LeftBox>
-      <Buttons>
+      <ButtonsAndSearch>
+        <Buttons>
+          
+          <Artists onClick={handleArtistsClick}>Artists</Artists>
+        <Songs onClick={handleSongs}>Songs</Songs>
+        <AddASong/>
+        {
+          currentUser?.role === "founder"?
+          <AllEdits onClick={handleEditsClick} > all edits</AllEdits>
+          : <></>
+        }
         
-        <Artists onClick={handleArtistsClick}>Artists</Artists>
-      <Songs onClick={handleSongs}>songs</Songs>
-      <AllEdits onClick={handleEditsClick} > all edits</AllEdits>
-      </Buttons>
+        {/* <LogoutButton/> */}
+        </Buttons>
+        
+      </ButtonsAndSearch>
       </LeftBox>
 
         <Nav>
@@ -103,18 +117,25 @@ const {
         
         </Nav>
         
-        <AddASong/>
+       
 
         <UserPanel/>
     </Wrapper>
   )
 }
 
+const ButtonsAndSearch = styled.div`
+display: flex;
+`
+
 const Buttons = styled.div`
 display:flex;
+width: 300px;
+margin-left: 800px;
 justify-content: space-between;
 button {
   margin-left: 10px;
+  width: 130px;
   background-color: none !important;
   &:hover {
     color: white

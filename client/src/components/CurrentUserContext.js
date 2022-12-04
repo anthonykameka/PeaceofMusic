@@ -66,7 +66,7 @@ export const CurrentUserProvider = ({ children }) => {
         .then(res => res.json())
         .then(res => setAllUsers(res.data))
         
-    }, [user])
+    }, [])
 
 
 
@@ -82,7 +82,8 @@ export const CurrentUserProvider = ({ children }) => {
             value={{
                 authUser, //auth0 info where required
                 currentUser, // current user details
-                refreshUser, // used to refreshUser after an action
+                refreshUser,// used to refreshUser after an action
+                allUsers, // all users
                 setRefreshUser, // used to refreshUser after an action
                 reviewer, // reviewer status depending on site role
             }}
