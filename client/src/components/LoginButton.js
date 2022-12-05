@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { RiLoginCircleFill } from "react-icons/ri";
 import styled from "styled-components";
 import React from "react";
-
+// login with redirect option from auth0
 const LoginButton = () => {
 
   const navigate = useNavigate();
@@ -14,12 +14,17 @@ const LoginButton = () => {
     navigate("/home")
   }
 
-  return <Button size={25} onClick={() => {handleClick()}}>Log In/Sign Up</Button>;
+  return <Button  onClick={() => {handleClick()}}>Log In/Sign Up</Button>;
 };
 
 const Button = styled.button`
-width: 400px;
+width: 700px;
 font-size: 40px;
+position: absolute;
+height: 100px;
+background: linear-gradient( 45deg, var(--color-deepteal), var(--color-darkpurple), var(--color-orange));
+right:-200px;
+font-family: 'Inconsolata', monospace;
 
 `
 

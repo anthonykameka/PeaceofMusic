@@ -284,7 +284,7 @@ z-index: 444;
         color: black;
         border-top: 1px solid white;
     }
-background: var(--color-darkpurple);`
+background: rgba(179, 82, 176, 0.70);`
 
 const Search = styled.div`
 `
