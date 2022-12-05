@@ -13,6 +13,7 @@ import { useNavigate } from "react-router-dom";
 
 const HomePage = () => {
 
+    // initializing values
     const navigate = useNavigate()
     const { user, isAuthenticated, isLoading } = useAuth0();
     const params = useParams();
@@ -30,8 +31,9 @@ const HomePage = () => {
     const [thisUser, setThisUser] = useState(null)
     const [profileData, setProfileData] = useState(null)
 
+    // profile page
     useEffect(() => {
-        console.log("test")
+
         if (profileID) {
         fetch(`/api/get-this-user/${profileID}`)
         .then(res => res.json())
@@ -46,7 +48,7 @@ const HomePage = () => {
 
    // console.log(currentUser)
 
-
+ // get user info
     useEffect(() => {
         fetch(`/api/get-user/${user.sub}`)
         .then(res => res.json())
@@ -57,12 +59,6 @@ const HomePage = () => {
     
 
 
-    const size = {
-        width: '100%',
-        height: 300,
-      };
-      const view = 'list'; // or 'coverart'
-      const theme = 'black'; // or 'white'
       
 
     
@@ -70,8 +66,8 @@ const HomePage = () => {
     if (isLoading) {
         return <div>Loading ...</div>;
     }
-
-
+ 
+    // favoritesong list logic.
     let favorites = null;
     let currentUserMatch = false;
     if (!params.id) {
@@ -89,11 +85,11 @@ const HomePage = () => {
         favorites=profileData?.favorites
     }
 
-
+    // find those songs by id within database
 
     let favoriteSongs = songs?.filter(song => favorites?.includes(song._id))
 
-    
+    // go to song when clicked
   const handleSongClick = (songId) => {
 
     navigate(`/songs/${songId}`)

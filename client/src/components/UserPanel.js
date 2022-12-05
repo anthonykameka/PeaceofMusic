@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import { MusicContext } from './MusicContext'
 import LogoutButton from './LogoutButton'
 
-
+// user panel on top right
 const UserPanel = () => {
     const navigate = useNavigate();
     const {
@@ -29,7 +29,7 @@ const UserPanel = () => {
         fetch("/api/get-edits")
         .then(res => res.json())
         .then(res => {
-            console.log(res)
+            
             setPendingEdits(res.data.filter(edit => edit.status === "pending")   )// check pending edits
             setPendingActive(!pendingActive)
         })
@@ -51,13 +51,12 @@ const UserPanel = () => {
 
     const handlePendingEditClick = (ev) => {
         ev.preventDefault();
-        console.log(pendingEdits)
+    
         setPendingEditActive(!pendingEditActive)
     }
 
     const handleGoToEditPage = (edit) => {
-        console.log(edit._id)
-        console.log("test")
+  
         setPendingEditActive(!pendingEditActive)
         setPendingActive(!pendingActive)
         navigate(`/edits/song/${edit._id}`)

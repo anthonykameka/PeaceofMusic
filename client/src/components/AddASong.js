@@ -10,35 +10,31 @@ import { MusicContext } from './MusicContext';
 import GlobalStyles from './GlobalStyles';
 import { TextField } from '@mui/material'
 import { set } from 'date-fns';
-import loader from "../assets/pomloader.gif"
+import { CircularProgress } from '@mui/material';
 
 const AddASong = () => {
 
-    const navigate = useNavigate();
-
-
+    const navigate = useNavigate(); // initial useNavigate hook
 
 
     const {
       currentUser, // current logged in user (from MONGODB)
-      setRefreshUser,
-      refreshUser,
+      setRefreshUser, // used to rerender
+      refreshUser, // used to rerender
       
     } = useContext(CurrentUserContext)
 
     const {
-      setRefreshSongs, 
+      setRefreshSongs,  // used to rerender songs
       refreshSongs, //dependency for the getSongs fetch. Adding song will cause dependent data to refresh
-      accessToken,
-      searchBarModalToggler,
-      setSearchBarModalToggler,
-      isOpen,
-      setIsOpen,
+      accessToken, // used for authentication
+
+      isOpen, //modal state
+      setIsOpen, //modal state
        //will
     } = useContext(MusicContext)
   
-  
-  
+
   
     const [songSearch, setSongSearch] = useState(null) // initialize
     const [artistSearch, setArtistSearch] = useState(null) // initialize.
@@ -53,33 +49,20 @@ const AddASong = () => {
     const [searching, setSearching] = useState(null)
     
 
-
-
-
-    
-    useEffect(() => {
-      if (searchBarModalToggler) {
-        toggleModal()
-      }
-    }, [searchBarModalToggler])
-    
-
-
-
-
    //function to toggle modal
   const toggleModal = () => {
     setIsOpen(!isOpen)
   
     
 }
-
+// when button is clicked, activate the Modal. 
+// reset search result to make sure previous searhc result is no longer there.
 const handleAddSong = () => {
     toggleModal()
     setSearchResult(null)
 
   }
-
+// cancel.. changing a few states
   const handleCancelClick = (ev) => {
     setNotFound(false)
     setExists(false)
@@ -87,6 +70,8 @@ const handleAddSong = () => {
     toggleModal()
   }
 
+  
+  
   const handleSearch = (ev) => { 
     setExists(false)
     setSearching(true)
@@ -101,21 +86,18 @@ const handleAddSong = () => {
       optimizeQuery:true
   }
 
-  // console.log(options)
-  // console.log(currentUser)
-  
 
+  
+  // gets song from. if no song found, setNotfound state to true
     getSong(options).then((song) => {
       setSearchResult(song)
       if (song===null) {
         setNotFound(true)
       }
-
-      
     })
 
-    setSearching(false)
-    // toggleModal()
+    setSearching(false) // done searching
+
   }
 
 
@@ -225,7 +207,7 @@ console.log(songSearch)
 
                     {
                       !addingSong || searching? <></>
-                      : <Fetching><img src={loader}></img>trying to add..please wait</Fetching>
+                      : <Fetching><CircularProgress/>trying to add..please wait</Fetching>
                     }
                     
                     </FormBoxB>
@@ -355,7 +337,7 @@ font-size: 20px;
 const ResultMain = styled.div`
 border-left: 1px solid var(--color-darkpurple);
 padding-left: 20px;
-height: 304px;
+height: 216px;
 `
 const SearchMain = styled.div`
 
@@ -437,6 +419,7 @@ margin-top: 20px;
 
 const Clear = styled.button`
 background-color: var(--color-darkpurple);
+width: 80px;
 
 
 `
@@ -572,7 +555,9 @@ button {
 const EditSong = styled.button``
 const Search = styled.button`
 background-color: white;
-width: 100px;
+width:80px;
+margin-top:10px
+height: 30px !important;
 `
 
 export default AddASong

@@ -1,11 +1,6 @@
 import { createContext, useState, useEffect } from "react";
 export const MusicContext = createContext();
-
-
-
-
-
-
+// context for all of the song metadata.
  export const MusicProvider = ({ children }) => {
 
     const [songs, setSongs] = useState(null)
@@ -14,14 +9,13 @@ export const MusicContext = createContext();
     const [artistsData, setArtistsData] = useState(null)
     const [refreshEdits, setRefreshEdits] = useState(0)
     const [accessToken, setAccessToken] = useState(null)
-    const [searchBarModalToggler, setSearchBarModalToggler] = useState(false)
     const [isOpen, setIsOpen] = useState(false); // initialize modal state
 
     useEffect(() => {
         fetch(`api/get-access-token`)
         .then(res => res.json())
         .then(res => setAccessToken(res.data))
-      }, [])
+      }, []) // get access token from server
 
     const songsByArtists = (songArray, artistArray) => {
         const newArray = artistArray.map(artist => {
@@ -74,8 +68,6 @@ export const MusicContext = createContext();
                 refreshEdits,
                 setRefreshEdits,
                 accessToken,
-                searchBarModalToggler,
-                setSearchBarModalToggler,
                 isOpen,
                 setIsOpen
             }}

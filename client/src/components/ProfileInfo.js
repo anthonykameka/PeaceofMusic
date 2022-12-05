@@ -13,7 +13,7 @@ const ProfileInfo = ({profileID, profileData, params}) => {
     const tags = ["musician", "bass", "guitar", "piano", "drums", 
                 "songwriter", "producer", "poet", "fan", "educator", 
                 "transcriber", "saxophone", "clarinet", "violin", "cello"]
-
+    // to be used later // each user will select their tags, used for potential future use.
     const {
         currentUser,
         refreshUser,
@@ -24,7 +24,8 @@ const ProfileInfo = ({profileID, profileData, params}) => {
      
 ///////////////////////////////////////
  
-
+// profile page depends on if it is current user or not. logic is below.
+// data is changed dependent on currentUserMAtch
     let profile = null;
     let currentUserMatch = false;
     if (!params.id) {
@@ -44,15 +45,20 @@ const ProfileInfo = ({profileID, profileData, params}) => {
 
 
 
-
+// states for editing info
 
     const [editUserName, setEditUserName] = useState(false)
     const [newUserName, setNewUserName] = useState(null)
     const [usernameDisplay, setUserNameDisplay] = useState(currentUser.username)
+    const [editDisplayName, setEditDisplayName] = useState(false)
+    const [newDisplayName, setNewDisplayName] = useState(null)
+    const [displayNameDisplay, setDisplayNameDisplay] = useState(currentUser.displayName)
+    const [editPicture, setEditPicture] = useState(false)
+    const [pictureSrc, setPictureSrc] = useState(null)
 
 
-    let editButtonText = "Edit"
-
+    let editButtonText = "Edit" // edit button text
+    // edit username function
     const handleEditUserName = (ev) => {
         ev.preventDefault();
         setEditUserName(!editUserName)
@@ -85,7 +91,7 @@ const ProfileInfo = ({profileID, profileData, params}) => {
             })
         }
 
-    }
+    } // change button text depending on state
     if (editUserName) {
         editButtonText = "Done"
     }
@@ -94,11 +100,7 @@ const ProfileInfo = ({profileID, profileData, params}) => {
     }
 
 
-    const [editDisplayName, setEditDisplayName] = useState(false)
-    const [newDisplayName, setNewDisplayName] = useState(null)
-    const [displayNameDisplay, setDisplayNameDisplay] = useState(currentUser.displayName)
-    const [editPicture, setEditPicture] = useState(false)
-    const [pictureSrc, setPictureSrc] = useState(null)
+    // display name is nearly identical to username change
 
     let displayEditButtonText = "Edit"
 
@@ -132,6 +134,7 @@ const ProfileInfo = ({profileID, profileData, params}) => {
         setRefreshUser(refreshUser+1)
     }
 
+    // the following handlers for profile photo change. similar concept to the above
     const handlePicture = (ev) => {
         ev.preventDefault();
         setEditPicture(!editPicture)
@@ -177,7 +180,7 @@ const ProfileInfo = ({profileID, profileData, params}) => {
         displayEditButtonText = "Edit"
     }
 
-    ///DELETE FUNCTION + DELETE MODAL ///
+    ///USER DEACTIVATION // USER CANOT DELETE SUBMISSIONS OR COMMENTS. // ONLY THEIR PROFILE. RELOGGING IN WILL REACTIVATE
     const { logout } = useAuth0();
 
     const navigate = useNavigate();
@@ -216,7 +219,7 @@ const ProfileInfo = ({profileID, profileData, params}) => {
             deactivateUser();
         }
     }
-
+ // deactivation
     const deactivateUser = async (req, res) => {
         await fetch(`/api/deactivate-user/${currentUser._id}`,
         {
@@ -229,6 +232,7 @@ const ProfileInfo = ({profileID, profileData, params}) => {
             logout();
         })
     }
+    // handlers
 
     const handleDisplayCancel = (ev) => {
         ev.preventDefault();

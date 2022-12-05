@@ -13,8 +13,6 @@ const ArtistCard = ({artist, data}) => {
 
   // sort data alphebetically based on song title//
 
-  // console.log(data)
-
   data.sort((songA, songB) => songA.songTitle.localeCompare(songB.songTitle))
 
   //easy access to album art

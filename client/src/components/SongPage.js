@@ -13,7 +13,7 @@ import CommentSection from './Comments/CommentSection'
 import { CircularProgress } from '@mui/material'
 
 const SongPage = () => {
-
+ // initialize values
   const navigate = useNavigate();
 
   const {
@@ -27,18 +27,19 @@ const SongPage = () => {
     setRefreshSongs // to refresh song list after edit or deletion
   } = useContext(MusicContext)
 
+  useEffect(() => {
+      setRefreshSongs(refreshSongs + 1)
+  }, [])
 
-    console.log(currentUser)
+
     const _id = useParams()
-    const songId = _id.id
-    console.log(_id)
-
+    const songId = _id.id // params
     const [song, setSong] = useState(null)
     const [userWhoAdded, setUserWhoAdded] = useState(null)
     const [dateAdded, setDateAdded] = useState(null)
     const [userActive, setUserActive] = useState(true)
-    console.log(song)
 
+ // add views to song
     useEffect(() => {
       fetch(`/api/view-song`,  
      {
@@ -52,24 +53,24 @@ const SongPage = () => {
        .then(res => res.json())
        .then(res => {
          console.log(res)
-         setRefreshSongs(refreshSongs+1)
+         setRefreshSongs(refreshSongs => refreshSongs+1)
        })
     
 
     }, [])
     
 
-
+    // get song
     useEffect(() => {
         fetch(`/api/get-song/${_id.id}`)
         .then(res => res.json())
         .then(res =>  {
             setSong(res.data)
-            console.log(res.data)
+           
             const rawDate = res.data.dateAdded.slice(0, 10)
-            console.log(rawDate)
+            
             setDateAdded(rawDate)
-            fetch(`/api/match-user/${res.data.thisSong.addedBy}`)
+            fetch(`/api/match-user/${res.data.thisSong.addedBy}`) // get user info for who added
           .then(res => res.json())
           .then(res => {
            setUserWhoAdded(res.data) 
@@ -83,8 +84,7 @@ const SongPage = () => {
         
     }, [refreshSongs, _id])
 
-
-////////////////////SITE ROLES TO ALLOW FOR EDITS//DELETING
+// site roles, let you edit or delete.
     let canEdit = true;
     let canDelete = false;
     let canSubmit = true;
@@ -116,7 +116,9 @@ const SongPage = () => {
 
     }
 
-    //EDIT MODAL
+  // USER  CAN SUBMIT EDITS
+
+    //EDIT MODAL 
 
     const [isOpen, setIsOpen] = useState(false); // initialize modal state
     const [editedTitle, setEditedTitle] = useState(null)
@@ -132,7 +134,7 @@ const SongPage = () => {
   const handleEditSong = (ev) => {
     ev.preventDefault();
     toggleModal()
-  }
+  } // edit is sent to server
 
   const handleSubmitEdit = (ev) => {
     ev.preventDefault();
@@ -143,7 +145,7 @@ const SongPage = () => {
                   editedBy: currentUser._id,
                   targetId: songId
                 }
-
+                //
     fetch(`/add-edit`,  
     {
       method: "PATCH",
@@ -155,7 +157,7 @@ const SongPage = () => {
     })
     .then(res => res.json())
     .then(res => {
-      console.log(res)
+      
       toggleModal();
     })
 
@@ -166,14 +168,14 @@ const SongPage = () => {
     ev.preventDefault();
     toggleModal();
   }
-
+  // if you click the added by, you will go to their profile
   const handleAddedByClick = (ev) => {
     ev.preventDefault();
-    // console.log(userWhoAdded)
+
     navigate(`/profile/${userWhoAdded._id}`)
 
   }
-
+ // unfavorite
   const handleUnfav = (ev) => {
     ev.preventDefault();
     fetch(`/api/remove-fav`,  
@@ -187,13 +189,13 @@ const SongPage = () => {
      })
        .then(res => res.json())
        .then(res => {
-         console.log(res)
+         
          setRefreshSongs(refreshSongs+1)
          setRefreshUser(refreshUser+1)
        })
 
   }
-
+ // favorite
   const handleFav = (ev) => {
     ev.preventDefault();
     fetch(`/api/add-fav`,  
@@ -215,13 +217,8 @@ const SongPage = () => {
   }
 
 
-useEffect(() => {
-  
 
-}, [song])
 
-console.log(currentUser?.favorites.includes(song?._id))
-console.log(currentUser)
 
 
   return (

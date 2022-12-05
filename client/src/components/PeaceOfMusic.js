@@ -51,29 +51,8 @@ const PeaceOfMusic = () => {
 
     }, [])
 
+// similar to lyrics reference function, the user will highlight section for musical education.
 
-    //* The below function is used to allow users to highlight area of the text. This has not be completed intime for the project presentation.
-    //
-    // const selection = useRef(''); // 
-    // const text = document.getSelection().toString();
-        
-    // const handleSelection = () => {
-      
-    //   if (text) {
-    //     selection.current = text;
-    //   }
-    //  }
-        
-    //  useEffect(() => {
-    //     // console.log(text)
-    //  }, [text])
-
-    //SELECTION HANDLER FOR LATER // 
-// const selectionHandler = (ev) => {
-//     ev.preventDefault()
-//     let text = window.getSelection().toString();
-//     console.log(text)
-// }
 
 
  // line separator. split at new lines..
@@ -102,14 +81,13 @@ const suffixes = music?.suffixes
 // although the saving is not functional as of yet, it will aid in storing and analysing the harmonic data. The first word of a line uses the ONE chord. 67% of the time.
 
 const handleWordClick = (line, word) => {
-    console.log(line, word)
     setSelectedWordIndex([line, word])
     
     toggleModal()
 
 }
 
-//console.log(keys)
+
 
 
 
@@ -178,7 +156,6 @@ const handleNC = (ev) => {
 
     const emptySpaceClick = (ev) => {
         ev.preventDefault();
-        console.log(ev.target)
     }
 
 

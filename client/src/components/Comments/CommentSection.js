@@ -5,48 +5,73 @@ import styled from 'styled-components';
 import { CurrentUserContext } from '../CurrentUserContext';
 import PomEditor from '../TextEditor/PomEditor';
 import Comment from "./Comment"
+import { MusicContext } from '../MusicContext';
+
 const CommentSection = ({songId}) => {
 
   const {
-    currentUser
+    currentUser,
+    refreshUsers,
   } = useContext(CurrentUserContext)
+
+  const {
+    refreshSongs,
+    setRefreshSongs
+  } = useContext(MusicContext)
+
 
   const [comments, setComments] = useState([]);
   const [deleteModal, setDeleteModal] = useState(false)
-  const [refreshComments, setRefreshComments] = useState(0)
-  // console.log(songId)
+  const [refreshComments, setRefreshComments] = useState(0) // used when the comments are needed to rerender, such as when comment is posted
+  const [reference, setReference] = useState("var(--color-orange") // reference color for highlighting
+  const [commentText, setCommentText] = useState(null) // state for comment text
 
+// FEATURE NOT COMPLETED.. WIP //
+// USER CAN HIGHLIGHT TEXT WITH COLOR OF THEIR CHOICE> THey WILL EVENTUALLY BE SAVED IN THIS STATE ASWELL AS COMMENTS NEXT TO THEIR REFERENCES.
+// A + sign will be on the top right of each comment. 
+// Once toggled, their references will be shown to the current user
+
+
+// highlighting function.
+  const handleReference = (ev) => {
+    ev.preventDefault()
+    let selection= window.getSelection().getRangeAt(0); 
+      
+      let selectedText = selection.extractContents();
+      console.log(selectedText)
+      let span= document.createElement("span");
+      span.style.backgroundColor = reference;
+
+      span.appendChild(selectedText);
+      selection.insertNode(span);
     
+  }
 
-    // console.log(currentUser)
+// color toggles.
+    const handlePinkReference = (ev) => {
+      ev.preventDefault();
 
 
+      setReference("var(--color-darkpurple")
 
-    // const handleReference = (ev) => {
+      
+      //   // console.log(id)
+      }
 
-    //   let selection= window.getSelection().getRangeAt(0);
-    //   let selectedText = selection.extractContents();
-    //   let span= document.createElement("span");
-    //   span.style.backgroundColor = "var(--color-orange)";
-    //   span.appendChild(selectedText);
-    //   selection.insertNode(span);
-    //   // let span = document.createElement("span")
-    //   // span.backgroundColor = "var(--color--orange)"
+    const handleOrangeReference = (ev) => {
+      ev.preventDefault();
+      setReference("var(--color-orange")
 
-    //   // ev.preventDefault();
-    //   // const sel = window.getSelection();
-    //   // if (sel.rangeCount) {
-    //   //   const range = sel.getRangeAt(0);
-    //   //   console.log(range)
-    //   //   const cloneRange = range.cloneRange();
-    //   //   console.log(cloneRange)
-    //   //   range.surroundContents(span);
-    //   //   sel.removeAllRanges();
-    //   //   sel.addRange(range);// const text = range.toString();
-    //   //   // console.log(text)
-    //   //   /const text = window.getSelection().toString()/ const id = text.split(' ')[0];
-    //   //   // console.log(id)
-    //   }
+    }
+
+    const handleTealReference = (ev) => {
+      ev.preventDefault();
+      setReference("var(--color-deepteal")
+
+
+    }
+
+    // POST COMMENT TO SERVER
 
       const handleLeaveComment = (ev) => {
         ev.preventDefault();
@@ -83,8 +108,9 @@ const CommentSection = ({songId}) => {
       
 
 
-      const [commentText, setCommentText] = useState(null)
-      //console.log(comments)
+    
+
+      // get comments 
 
       useEffect(() => {
         fetch(`/api/get-comments/${songId}`)
@@ -95,7 +121,7 @@ const CommentSection = ({songId}) => {
         })
   
   
-      }, [refreshComments])
+      }, [refreshComments, refreshSongs, setRefreshSongs, refreshUsers,])
       
 
    
@@ -135,7 +161,20 @@ const CommentSection = ({songId}) => {
             <CommentTextBox>
               <CommentTextarea className="comment-post"onChange={(ev) => {setCommentText(ev.target.value)}}></CommentTextarea>
             </CommentTextBox>
-            <CommentToolbar><Reference>Reference</Reference><SubmitComment onClick={handleLeaveComment} className="yes">Submit</SubmitComment></CommentToolbar>
+            <CommentToolbar>
+              {
+                !reference
+                ?<></>
+                :
+                <Colors>
+                  <Color style={{background: "var(--color-darkpurple)"}} onClick={handlePinkReference}></Color>
+                  <Color style={{background: "var(--color-orange)"}} onClick={handleOrangeReference}></Color>
+                  <Color style={{background: "var(--color-deepteal"}} onClick={handleTealReference}></Color>
+                </Colors> 
+              }
+              <Reference onClick={handleReference}>Ref</Reference>
+              <SubmitComment onClick={handleLeaveComment} className="yes">Submit</SubmitComment>
+            </CommentToolbar>
           </CommentBox>
         </PostComment>
       </BoxA>
@@ -144,6 +183,21 @@ const CommentSection = ({songId}) => {
 
   
 }
+
+const Color = styled.div`
+height: 25px;
+width: 50px;
+border: 1px solid white;
+margin-left: 5px;
+`
+
+const Colors = styled.div`
+display:flex;
+width: 100px;
+margin-right: 10px;
+margin-top: 
+
+`
 
 const CommentTextBox = styled.div`
  width: 75%;
@@ -167,14 +221,23 @@ const CommentWrapper = styled.div`
 `
 
 const Reference = styled.button`
-display:none;
+width: 85px;
+margin-top: 10px;
+margin-right: 5px;
+box-shadow: rgba(0, 0, 0, 0.12) 0 1px 1px;
+transition: box-shadow .05s ease-in-out,opacity .05s ease-in-out;
+border: 1px solid #2A8387;
+    border-radius: 4px;
 background-color:#87CA35;`
+
+
 const ProfilePicture = styled.img`
 width: 50px;
 left: 30px;
 border-radius: 100px;
 position: absolute;
 top: -10px;
+
 `
 const PostComment = styled.div`
   margin-top: 10px;

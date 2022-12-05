@@ -30,8 +30,7 @@ const updateUserName = async (req, res) => {
     const client = new MongoClient(MONGO_URI, options)
     const newUserName = req.body.newUserName
     const _id = req.body._id
-    console.log(newUserName)
-    console.log(_id)
+
     try {
         await client.connect();
         const db = client.db("peaceofmusic");
@@ -41,7 +40,7 @@ const updateUserName = async (req, res) => {
 
         user && res.status(402).json({ status: 402, message: "username already exists", data: "newUserName"})
         if (!user) {
-            console.log(_id)
+        
             await db.collection("users").updateOne({_id: _id}, {$set:{"username":newUserName}} )
             res.status(200).json({status: 200, message: "username successfuly updated.", data: newUserName})
         }
@@ -57,8 +56,7 @@ const updateDisplayName = async (req, res) => {
     const client = new MongoClient(MONGO_URI, options)
     const newDisplayName = req.body.newDisplayName
     const _id = req.body._id
-    console.log(newDisplayName)
-    console.log(_id)
+
     try {
         await client.connect();
         const db = client.db("peaceofmusic");
@@ -97,7 +95,7 @@ const getUser = async (req, res) => {
 
 const getThisUser = async (req, res) => {
     const client = new MongoClient(MONGO_URI, options)
-    console.log(req.params)
+
 
     try {
         await client.connect();
@@ -106,7 +104,7 @@ const getThisUser = async (req, res) => {
         const thisUser = await db.collection("users").findOne({_id: req.params.id})
         // const thisUser = await db.collection("users").findOne({auth0_sub: auth0_sub})
         thisUser && res.status(200).json({status: 200, data: thisUser, message: "success"})
-        // !thisUser && res.status(403).json({status: 403, data: thisUser, message: "this is a new user"})
+        
     } catch (err) {
         res.status(404).json({ status: 404, data: "Not Found" });
     } finally {
@@ -140,11 +138,11 @@ const matchUser = async (req, res) => {
         await client.connect();
         const db = client.db("peaceofmusic");
         console.log("connected")
-        console.log(req.params)
+
         const id = req.params.id
-        console.log(id)
+
         const thisUser = await db.collection("users").findOne({_id: id})
-        console.log(thisUser)
+
         thisUser && res.status(200).json({status: 200, data: thisUser, message: "success"})
         !thisUser && res.status(403).json({status: 403, data: thisUser, message: "this user does not exist"})
     } catch (err) {
@@ -291,7 +289,7 @@ const deactivateUser = async (req, res) => {
     const client = new MongoClient(MONGO_URI, options)
     const _id = req.params.id
 
-    console.log(req.params)
+
 
     try {
         await client.connect();
@@ -316,7 +314,7 @@ const activateUser = async (req, res) => {
     const client = new MongoClient(MONGO_URI, options)
     const _id = req.params.id
 
-    console.log(req.params)
+
 
     try {
         await client.connect();
@@ -338,14 +336,14 @@ const activateUser = async (req, res) => {
 const updatePicture = async (req, res) => {
     const client = new MongoClient(MONGO_URI, options)
     const patch = req.body
-    console.log(patch)
+ 
 
     try {
         await client.connect();
         const db = client.db("peaceofmusic");
         console.log("connected")
         const user = await db.collection("users").findOne({_id: patch._id})
-        console.log(user)
+      
          await db.collection("users").updateOne({_id: patch._id}, {$set: {"profile_picture_src": patch.src}})
 
          res.status(200).json({status: 200, message: "picture changed", data: patch})

@@ -3,7 +3,7 @@ import { RiLogoutCircleLine} from "react-icons/ri";
 import styled
  from "styled-components";
 import React from "react";
-
+// logout with redirect option from auth0
 const LogoutButton = () => {
     const { logout } = useAuth0();
 

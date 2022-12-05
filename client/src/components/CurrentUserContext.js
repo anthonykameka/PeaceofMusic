@@ -19,6 +19,7 @@ export const CurrentUserProvider = ({ children }) => {
     //Get all users
     
     // get Current User
+    // if current user not found in database, create a default profile.
     useEffect(() => {
         user && fetch("/api/add-user", {
                     method: "POST",
@@ -35,9 +36,9 @@ export const CurrentUserProvider = ({ children }) => {
                         fetch(`/api/get-user/${user.sub}`)
                         .then(res => res.json())
                         .then(res => {
-                            console.log(res)
+                           
                             setCurrentUser(res.data)
-                            console.log(res.data.active)
+                            
                             if (res.data.active === false) {
                                 console.log("test")
                                 fetch(`/api/activate-user/${res.data._id}`,
@@ -46,7 +47,7 @@ export const CurrentUserProvider = ({ children }) => {
                                 })
                                 .then(res => res.json())
                                 .then(res => {
-                                    console.log(res)
+                                    
     
                                 })
                             }

@@ -98,7 +98,7 @@ const addSong = async (req, res) => {
         if (!thisSong) {
            
                 const artistCheck = await db.collection("artists").findOne({artistName: artistName})
-                console.log(artistCheck)
+                
                 if (artistCheck) {
                     console.log("this artist already exists, proceeding without adding new artist")
                 }
@@ -107,12 +107,12 @@ const addSong = async (req, res) => {
                     await db.collection("artists").insertOne(thisArtist)
                 }
             await db.collection("songs").insertOne(rawSong)
-            console.log("test")
+            
             
             const contributor = await db.collection("users").findOne({_id: rawSong.thisSong.addedBy})
-            console.log(contributor)
+        
             const previousAddCount = contributor.adds
-            console.log(previousAddCount)
+         
             await db.collection("users").updateOne({_id: rawSong.thisSong.addedBy}, {$inc: {adds: +1 }})
             res.status(200).json({status: 200, message: "success", data: rawSong})
             console.log("successfully updated")
@@ -168,7 +168,7 @@ const addFav = async (req, res) => {
     const client = new MongoClient(MONGO_URI, options);
     const id = req.body.songId
     const userId = req.body.userId
-    console.log(req.body)
+
     console.log("this is the body", req.body)
     try {
         await client.connect();
@@ -192,7 +192,7 @@ const addFav = async (req, res) => {
         const client = new MongoClient(MONGO_URI, options);
         const id = req.body.songId
         const userId = req.body.userId
-        console.log("this is the body", req.body)
+     
         try {
             await client.connect();
             const db = client.db("peaceofmusic");
@@ -229,13 +229,13 @@ const getSongs = async (req, res) => {
 const getSong = async (req, res) => {
     const client = new MongoClient(MONGO_URI, options);
     const _id = req.params
-    console.log(_id)
+    
     try {
         await client.connect();
         const db = client.db("peaceofmusic");
         console.log("connected")
         const thisSong = await db.collection("songs").findOne({_id: _id.id})
-        console.log(thisSong)
+        
         if (thisSong) {
             res.status(200).json({status: 200, message: "success", data: thisSong})
         }
@@ -257,7 +257,7 @@ const getArtists = async (req, res) => {
         const db = client.db("peaceofmusic");
         console.log("connected")
         const songs = await db.collection("songs").find().toArray();
-        console.log(songs)
+    
         res.status(200).json({ status: 200, data: songs })
     } catch (err) {
         res.status(404).json({ status: 404, data: "Not Found" });
@@ -274,9 +274,9 @@ const deleteSong = async (req, res) => {
         const db = client.db("peaceofmusic");
         console.log("connected")
         const thisSong = await db.collection("songs").findOne({_id: id})
-        console.log(thisSong)
+     
         await db.collection("songs").deleteOne({_id: id})
-        console.log(thisSong.thisSong.addedBy)
+
         await db.collection("users").updateOne({_id: thisSong.thisSong.addedBy}, {$inc: {adds: -1 }})
         res.status(200).json({status: 200, data: id, message: "success. song deleted"})
        
@@ -293,7 +293,7 @@ const deleteSong = async (req, res) => {
 const addEdit = async (req, res) => {
     const client = new MongoClient(MONGO_URI, options)
     const edit = req.body
-    console.log(edit)
+  
     
     try {
         await client.connect();
@@ -393,7 +393,7 @@ const getEdits = async (req, res) => {
         const db = client.db("peaceofmusic");
         console.log("connected")
         const edits = await db.collection("edits").find().toArray();
-        console.log(edits)
+    
         res.status(200).json({ status: 200, data: edits })
     } catch (err) {
         res.status(404).json({ status: 404, data: "Not Found" });
@@ -435,7 +435,7 @@ const reviewEdit = async (req, res) => {
         const db = client.db("peaceofmusic");
         console.log("connected")
         const edit = await db.collection("edits").findOne({_id: editId})
-        console.log(edit)
+      
         /// IF EDIT IS APPROVED ////
         if(status === "approved" ) {
             const reviewTime = new Date()
@@ -675,21 +675,7 @@ const reviewEdit = async (req, res) => {
 
 
 
-// "flight": reservation.flight, "seats": {"$elemMatch": {"id": reservation.seat}} for future reference
 
-// const addArtist = async (req, res) => {
-//     const client = new MongoClient(MONGO_URI, options);
-//     try {
-//     await client.connect();
-//         const db = client.db("peaceofmusic");
-//         console.log("connected")
-//         res.status(200).json({ status: 200 })
-//     } catch (err) {
-//         res.status(404).json({ status: 404, data: "Not Found" });
-//     } finally {
-//     client.close(); 
-//     }
-// }
 
         
 
