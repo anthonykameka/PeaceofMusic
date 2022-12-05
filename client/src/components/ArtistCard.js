@@ -41,6 +41,8 @@ const ArtistCard = ({artist, data}) => {
 
 const Song = styled.li`
 font-style: italic;
+word-wrap:wrap;
+text-align: center;
 margin-right: 10px;
 &:hover {
   cursor: pointer;
@@ -56,21 +58,32 @@ margin-left: 3px;
 
 const SongList = styled.ul`
 max-height: 80px;
+word-wrap:wrap
 display: flex;
 flex-flow: wrap column;
 `
 
 const ArtistName = styled.p`
 font-weight: bold;
+word-wrap:wrap;
+font-size: 16px;
+text-align: center;
 color: #bc35ca;;`
 
 const AlbumArt = styled.img`
-width: 100px;`
+width: 130px;`
 
 const ArtistBox = styled.div`
+flex-direction: column;
+align-items: center;
+justify-content:center;
 display:flex;`
 
-const ArtistItem = styled.li`
+const ArtistItem = styled.div`
+
+    height: 200px;
+    padding: 10px;
+    width: 300px;
 
 min-height: 100px;`
 

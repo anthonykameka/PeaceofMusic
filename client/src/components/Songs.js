@@ -32,8 +32,11 @@ function Songs() {
 }
 
 const ArtistList = styled.ul`
- margin-top: 10px ;
- margin-left: 10px;
+    display:flex;
+    grid-template-columns: 1fr;
+    padding: 0.8em;
+    flex-wrap: wrap;
+    margin-left: 10px;
 `
 
 export default Songs
