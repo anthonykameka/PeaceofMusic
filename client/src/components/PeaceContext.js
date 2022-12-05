@@ -1,6 +1,6 @@
 import { createContext, useState, useEffect } from "react";
 export const PeaceContext = createContext();
-
+//used for the WIP PEace OF MUSIC FEATURE // sending data
 
 const initialState = {
     status: "idle",
@@ -69,7 +69,7 @@ export const PeaceProvider = ({ children }) => {
         })
     },[])
 
-   console.log(keys)
+ 
 
 
 

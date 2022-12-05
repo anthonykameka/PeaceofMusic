@@ -24,12 +24,14 @@ const HomePage = () => {
 
     const {
         songs,
+        featured,
     } = useContext(MusicContext)
 
 
 
     const [thisUser, setThisUser] = useState(null)
     const [profileData, setProfileData] = useState(null)
+
 
     // profile page
     useEffect(() => {
@@ -94,7 +96,14 @@ const HomePage = () => {
 
     navigate(`/songs/${songId}`)
   }
+
+  /// get random features
     
+
+    const shuffled = songs?.sort(() => 0.5 - Math.random());
+     let featuredSongs = shuffled?.slice(0, 21);
+
+    // console.log(selected)
 
     return (
         isAuthenticated && (
@@ -108,7 +117,31 @@ const HomePage = () => {
             
             <FavoritesWrapper>
                 <SubHeader/>
-                <Favorites>
+                <FavoritesFeatured>
+                    {
+                        featured?
+                    
+                    <Featured>
+                    {
+                        !featuredSongs?<></>
+                        : 
+                        
+                            featuredSongs.map(song => {
+                                return (
+                                    <FeaturedSong>
+                                        <FeaturedAlbum src={song.thisSong.albumArt}/>
+                                        <FeaturedArtist>{song.artistName}</FeaturedArtist>
+                                        <FeaturedSongTitle>{song.songTitle}</FeaturedSongTitle>
+                                    </FeaturedSong>
+                                )
+                            })
+
+                            
+                        }
+                    
+                    </Featured>
+                    :
+                    <Favorites>
                    
                         {
                             favoriteSongs.map(favorite => {
@@ -130,6 +163,8 @@ const HomePage = () => {
                         }
                     
                 </Favorites>
+                }
+                </FavoritesFeatured>
             </FavoritesWrapper>
             }
             {
@@ -145,16 +180,53 @@ const HomePage = () => {
     );
     };
 
+    const FeaturedSong = styled.div`
+
+    max-height: 250px;
+    padding: 20px;
+    max-width: 200px;
+
+    `
+
+    const FeaturedAlbum = styled.img`
+    width: 150px;
+
+
+
+    `
+
+    const FeaturedSongTitle = styled.p`
+    word-wrap:wrap;
+    `
+
+    const FeaturedArtist = styled.h2`
+    `
+
+    const Featured = styled.div`
+    display:flex;
+    grid-template-columns: 1fr;
+    padding: 0.8em;
+    flex-wrap: wrap;
+    margin-left: 10px;
+    
+    height: 700px;
+
+    `
+
+    const FavoritesFeatured = styled.div`
+    `
+
     const ArtistName = styled.div`
     `
     const Song = styled.a`
+    word-wrap:wrap;
     
     `   
     const Artist = styled.h2`
     `
 
     const AlbumArt = styled.img`
-    width: 100px;
+    width: 150px;
     
     `
 
@@ -166,18 +238,22 @@ const HomePage = () => {
     width: 80vw;
 
     `
-    const Favorites = styled.ul`
-    
+    const Favorites = styled.div`
     display:flex;
-    justify-content: flex-start;
-    flex-direction: column;
-    align-items: flex-start;
+    grid-template-columns: 1fr;
+    padding: 0.8em;
+    flex-wrap: wrap;
+    margin-left: 10px;
+    
+    height: 700px;
 
 
     `
 
-    const Favorite = styled.li`
-    display: flex;
+    const Favorite = styled.div`
+    max-height: 250px;
+    padding: 20px;
+    max-width: 200px;
     &:hover {
         cursor: pointer;
         color: var(--color-darkpurple)

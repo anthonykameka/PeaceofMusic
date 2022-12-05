@@ -1,13 +1,13 @@
 import { faBorderNone } from '@fortawesome/free-solid-svg-icons';
 import React from 'react'
-import { useState, useContext, useEffect } from 'react';
+import { useState, useContext, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { CurrentUserContext } from '../CurrentUserContext';
 import PomEditor from '../TextEditor/PomEditor';
 import Comment from "./Comment"
 import { MusicContext } from '../MusicContext';
 
-const CommentSection = ({songId}) => {
+const CommentSection = ({songId, params}) => {
 
   const {
     currentUser,
@@ -25,6 +25,7 @@ const CommentSection = ({songId}) => {
   const [refreshComments, setRefreshComments] = useState(0) // used when the comments are needed to rerender, such as when comment is posted
   const [reference, setReference] = useState("var(--color-orange") // reference color for highlighting
   const [commentText, setCommentText] = useState(null) // state for comment text
+  const commentRef = useRef(null)
 
 // FEATURE NOT COMPLETED.. WIP //
 // USER CAN HIGHLIGHT TEXT WITH COLOR OF THEIR CHOICE> THey WILL EVENTUALLY BE SAVED IN THIS STATE ASWELL AS COMMENTS NEXT TO THEIR REFERENCES.
@@ -75,6 +76,7 @@ const CommentSection = ({songId}) => {
 
       const handleLeaveComment = (ev) => {
         ev.preventDefault();
+        commentRef.current.value = ""
         const comment = {
           text: commentText,
           author: currentUser._id,
@@ -121,7 +123,7 @@ const CommentSection = ({songId}) => {
         })
   
   
-      }, [refreshComments, refreshSongs, setRefreshSongs, refreshUsers,])
+      }, [params])
       
 
    
@@ -159,7 +161,7 @@ const CommentSection = ({songId}) => {
           <CommentBox>
             <ProfilePicture src={currentUser?.profile_picture_src}></ProfilePicture>
             <CommentTextBox>
-              <CommentTextarea className="comment-post"onChange={(ev) => {setCommentText(ev.target.value)}}></CommentTextarea>
+              <CommentTextarea ref={commentRef}className="comment-post"onChange={(ev) => {setCommentText(ev.target.value)}}></CommentTextarea>
             </CommentTextBox>
             <CommentToolbar>
               {

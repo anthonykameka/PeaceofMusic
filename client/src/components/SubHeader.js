@@ -1,11 +1,29 @@
 import React from 'react'
 import styled from 'styled-components'
+import { MusicContext } from './MusicContext'
+import { useContext } from 'react'
 const SubHeader = ({profileData}) => {
+
+  const {
+    featured, 
+    setFeatured,
+  } = useContext(MusicContext)
+
+  const handleFeaturedClick = (ev) => {
+    ev.preventDefault()
+    setFeatured(true)
+  }
+
+  const handleFavoritesClick = (ev) => {
+    ev.preventDefault()
+    setFeatured(false)
+  }
 
 
   return (
     <Wrapper>
-      <Favorites>Favorites</Favorites>
+      <Featured onClick={handleFeaturedClick} autoFocus >Featured</Featured>
+      <Favorites onClick={handleFavoritesClick}>Favorites</Favorites>
 
     {/* <Contributions>Contributions</Contributions>
     <Annotations>Annotations</Annotations>
@@ -13,8 +31,15 @@ const SubHeader = ({profileData}) => {
     </Wrapper>
   )
 }
-
+const Featured = styled.button`
+  &:focus {
+    color: var(--color-orange)
+  }
+`
 const Favorites = styled.button`
+    &:focus {
+    color: var(--color-orange)
+  }
 `
 const Annotations = styled.button``
 const Comments = styled.button``

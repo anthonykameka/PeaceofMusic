@@ -31,7 +31,7 @@ export const CurrentUserProvider = ({ children }) => {
                 })
                 .then(res => res.json())
                 .then(res => {
-                    console.log(res)
+                    //console.log(res)
                     if (res.status === 400) {
                         fetch(`/api/get-user/${user.sub}`)
                         .then(res => res.json())
@@ -40,7 +40,7 @@ export const CurrentUserProvider = ({ children }) => {
                             setCurrentUser(res.data)
                             
                             if (res.data.active === false) {
-                                console.log("test")
+                                //console.log("test")
                                 fetch(`/api/activate-user/${res.data._id}`,
                                 {
                                     method: "PATCH",

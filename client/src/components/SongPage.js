@@ -282,7 +282,7 @@ const SongPage = () => {
       <PomWrapper>
         <SongPoms song={song}/>
       </PomWrapper>
-      <CommentSection songId={songId}/>
+      <CommentSection params={_id} songId={songId}/>
       <Modal
         isOpen={isOpen}
         onEscapeKeydown={toggleModal}
