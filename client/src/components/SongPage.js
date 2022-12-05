@@ -31,6 +31,7 @@ const SongPage = () => {
     console.log(currentUser)
     const _id = useParams()
     const songId = _id.id
+    console.log(_id)
 
     const [song, setSong] = useState(null)
     const [userWhoAdded, setUserWhoAdded] = useState(null)
@@ -80,7 +81,7 @@ const SongPage = () => {
         
        
         
-    }, [refreshSongs])
+    }, [refreshSongs, _id])
 
 
 ////////////////////SITE ROLES TO ALLOW FOR EDITS//DELETING

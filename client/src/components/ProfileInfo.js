@@ -399,8 +399,9 @@ const ProfileInfo = ({profileID, profileData, params}) => {
                     <h1>Are you sure you want to deactivate your profile?</h1>
                 <Label>Yes</Label>
                <Yes onChange={(ev) => handleYesChange(ev)} type="checkbox"/>
-               <Cancel onClick={handleCancel}>Cancel</Cancel>
                <Deactivate onClick={handleDeactivation}>Deactivate profile </Deactivate>
+               <Cancel onClick={handleCancel}>Cancel</Cancel>
+               
                 </Form>
             </FocusLock>
 
@@ -500,6 +501,9 @@ const SongsAdded = styled.p`
 `
 
 const Form = styled.form`
+background-color: var(--color-orange);
+border-radius: 10px;
+padding:20px;
 `
 
 const Yes = styled.input``

@@ -15,6 +15,7 @@ export const MusicContext = createContext();
     const [refreshEdits, setRefreshEdits] = useState(0)
     const [accessToken, setAccessToken] = useState(null)
     const [searchBarModalToggler, setSearchBarModalToggler] = useState(false)
+    const [isOpen, setIsOpen] = useState(false); // initialize modal state
 
     useEffect(() => {
         fetch(`api/get-access-token`)
@@ -75,6 +76,8 @@ export const MusicContext = createContext();
                 accessToken,
                 searchBarModalToggler,
                 setSearchBarModalToggler,
+                isOpen,
+                setIsOpen
             }}
         >
             {children}

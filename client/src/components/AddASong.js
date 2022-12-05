@@ -31,6 +31,10 @@ const AddASong = () => {
       refreshSongs, //dependency for the getSongs fetch. Adding song will cause dependent data to refresh
       accessToken,
       searchBarModalToggler,
+      setSearchBarModalToggler,
+      isOpen,
+      setIsOpen,
+       //will
     } = useContext(MusicContext)
   
   
@@ -49,7 +53,7 @@ const AddASong = () => {
     const [searching, setSearching] = useState(null)
     
 
-    const [isOpen, setIsOpen] = useState(false); // initialize modal state
+
 
 
     
@@ -66,6 +70,7 @@ const AddASong = () => {
    //function to toggle modal
   const toggleModal = () => {
     setIsOpen(!isOpen)
+  
     
 }
 
@@ -350,6 +355,7 @@ font-size: 20px;
 const ResultMain = styled.div`
 border-left: 1px solid var(--color-darkpurple);
 padding-left: 20px;
+height: 304px;
 `
 const SearchMain = styled.div`
 
@@ -397,8 +403,10 @@ align-items: center;
 
 const Error = styled.p`
 color: white;
-margin-top: 50px;
-margin-bottom: 10px;
+margin-top: 40px;
+
+margin-bottom: 20px;
+
 span {
   text-decoration: underline;
   color: var(--color-orange);

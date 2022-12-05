@@ -18,8 +18,8 @@ const SearchBar = () => {
     const {
         songs,
         artists,
-        searchBarModalToggler,
-        setSearchBarModalToggler,
+        setIsOpen,
+        isOpen,
     } = useContext(MusicContext)
 
     useEffect(() => {
@@ -133,14 +133,14 @@ const SearchBar = () => {
         }
         searchBarRef.current.value = "" // clear searchbar
         setSearchInput("") //clear state for search input
+        
     }
 
     const handleAddSong = (ev)=> {
         ev.preventDefault();
-        setSearchBarModalToggler(!searchBarModalToggler)
         searchBarRef.current.value = "" // clear searchbar
         setSearchInput("") //clear state for search input
-        
+        setIsOpen(!isOpen)
     }
 
 
@@ -271,7 +271,7 @@ const Result = styled.li`
     padding: 0px 8px;
     &:hover {
         color: var(--color-dark-grey);
-        cursor: default;
+        cursor: pointer;
     }
 
  
