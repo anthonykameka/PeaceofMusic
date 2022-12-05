@@ -20,6 +20,18 @@ const ProfileInfo = ({profileID, profileData, params}) => {
         setRefreshUser,
     } = useContext(CurrentUserContext)
 
+    
+// states for editing info
+
+const [editUserName, setEditUserName] = useState(false)
+const [newUserName, setNewUserName] = useState(null)
+const [usernameDisplay, setUserNameDisplay] = useState(currentUser.username)
+const [editDisplayName, setEditDisplayName] = useState(false)
+const [newDisplayName, setNewDisplayName] = useState(null)
+const [displayNameDisplay, setDisplayNameDisplay] = useState(currentUser.displayName)
+const [editPicture, setEditPicture] = useState(false)
+const [pictureSrc, setPictureSrc] = useState(null)
+
  
      
 ///////////////////////////////////////
@@ -45,16 +57,6 @@ const ProfileInfo = ({profileID, profileData, params}) => {
 
 
 
-// states for editing info
-
-    const [editUserName, setEditUserName] = useState(false)
-    const [newUserName, setNewUserName] = useState(null)
-    const [usernameDisplay, setUserNameDisplay] = useState(currentUser.username)
-    const [editDisplayName, setEditDisplayName] = useState(false)
-    const [newDisplayName, setNewDisplayName] = useState(null)
-    const [displayNameDisplay, setDisplayNameDisplay] = useState(currentUser.displayName)
-    const [editPicture, setEditPicture] = useState(false)
-    const [pictureSrc, setPictureSrc] = useState(null)
 
 
     let editButtonText = "Edit" // edit button text

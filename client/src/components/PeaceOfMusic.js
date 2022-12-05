@@ -316,13 +316,14 @@ width: 200px;
 
 const AlbumCover = styled.img`
 width: 200px;
+margin-top: 0%;
 border: 1px solid black;
 `
 
 const SongInfoSubBox = styled.div`
 background-color: var(--color-darkpurple);
 width: 250px;
-height: 280px;
+height: 310px;
 display:flex;
 flex-direction: column;
 align-items: center;
