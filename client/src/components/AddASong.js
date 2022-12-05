@@ -101,7 +101,7 @@ const handleAddSong = () => {
   }
 
 
-console.log(searching)
+
 
 
   const handleConfirmAdd = (ev) => {
@@ -122,7 +122,7 @@ console.log(searching)
       })
       .then(res => res.json())
       .then(res => {
-          console.log(res)
+          
           setPostedSong(res.data)
           if (res.status === 200) {
             setRefreshSongs(refreshSongs+1)
@@ -158,9 +158,9 @@ const handleExists = (ev) => {
 
 const handleSongClick = (ev) => {
   ev.preventDefault();
-  console.log("help")
+ 
 }
-console.log(songSearch)
+
 
   return (
         <Wrapper>

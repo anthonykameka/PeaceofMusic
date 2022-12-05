@@ -2,13 +2,13 @@ import React from 'react'
 import styled from "styled-components"
 import { useNavigate } from 'react-router-dom'
 const SongPoms = ({ song }) => {
-
+ 
 const navigate = useNavigate()
 const handlePomClick = (ev) => {
     ev.preventDefault();
     navigate(`/pom/${song._id}`)
 }
-console.log(song)
+
 
   return (
     <Wrapper> 

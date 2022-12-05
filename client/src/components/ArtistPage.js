@@ -9,7 +9,7 @@ const ArtistPage = () => {
     const navigate = useNavigate();
     const params = useParams();
     const artistId = params.id
-    console.log(artistId)
+    
 
     const {
         songs,
@@ -17,7 +17,7 @@ const ArtistPage = () => {
         artistsData
     } = useContext(MusicContext)
 
-    console.log(songs)
+
     const test = songs?.filter(song => song.artistId === artistId)
     const artistName = test[0]?.artistName
   
@@ -27,13 +27,11 @@ const ArtistPage = () => {
       return song.thisSong.albumArt
     })
 
-    console.log(photos)
     let uniqueAlbumPhotos= photos?.filter((item, i, array) => array.indexOf(item) === i);
-    console.log(uniqueAlbumPhotos);
+  
 
 
-    // console.log(artistSongs)
-    console.log(artistsData)
+ 
 
     const [songView, setSongView] = useState(true)
     const [albumView, setAlbumView] = useState(false)

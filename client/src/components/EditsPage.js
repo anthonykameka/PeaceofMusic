@@ -17,7 +17,7 @@ const EditsPage = () => {
 
     }, [])
 
-    console.log(edits)
+
 
     const handleEditClick = (id) => {
         navigate(`/edits/song/${id}`)

@@ -16,13 +16,12 @@ const Artists = () => {
   const handleArtistClick = (ev)=> {
     ev.preventDefault();
   
-    console.log(ev.target.innerText)
+
     const thisArtistData = artistsData.filter(artist => {
       return artist.artistName === ev.target.innerText
 
     })
 
-    console.log(thisArtistData)
     navigate(`/artist/${thisArtistData[0][0].artistId}`)
   }
 

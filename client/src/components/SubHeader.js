@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 const SubHeader = ({profileData}) => {
 
-  console.log(profileData)
+
   return (
     <Wrapper>
       <Favorites>Favorites</Favorites>

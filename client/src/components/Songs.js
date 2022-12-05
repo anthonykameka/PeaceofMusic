@@ -12,7 +12,6 @@ function Songs() {
   } = useContext(MusicContext)
 
 
-console.log(artistsData)
 
 
   return (

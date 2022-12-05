@@ -52,7 +52,7 @@ const SongPage = () => {
      })
        .then(res => res.json())
        .then(res => {
-         console.log(res)
+        //  console.log(res)
          setRefreshSongs(refreshSongs => refreshSongs+1)
        })
     
