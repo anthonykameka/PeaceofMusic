@@ -15,6 +15,8 @@ function Songs() {
 
 
   return (
+    <>
+    <AllSongs>All Songs</AllSongs>
     <ArtistList>
       {
         artistsData?.map(artist => {
@@ -28,13 +30,26 @@ function Songs() {
         })
       }
     </ArtistList>
+    </>
   )
 }
+
+
+const AllSongs = styled.p`
+  margin: 0;
+  color: var(--color-orange);
+  font-size: 50px;
+  left: 82px;
+  top: 210px;
+  position: absolute;
+  padding: 0;`
+
 
 const ArtistList = styled.ul`
     display:flex;
     grid-template-columns: 1fr;
     padding: 0.8em;
+    margin-top: 60px;
     flex-wrap: wrap;
     margin-left: 10px;
 `

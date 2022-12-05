@@ -268,7 +268,7 @@ const SongPage = () => {
       <LyricsComments>
       <LyricsWrapper>
         <Title>{song?.songTitle}</Title>
-          <Title><span>{song?.artistName}</span></Title>
+          <Title><span id="artistName">{song?.artistName}</span></Title>
         <Lyrics>{song?.thisSong.lyrics}</Lyrics>
        
       </LyricsWrapper>
@@ -507,6 +507,10 @@ height: 500px;
 margin-top: 90px;
 `
 const Wrapper = styled.div`
-display:flex;`
+#artistName {
+  color: var(--color-orange)
+}
+display:flex;
+`
 
 export default SongPage

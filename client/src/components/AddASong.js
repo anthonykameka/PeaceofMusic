@@ -265,11 +265,17 @@ const handleSongClick = (ev) => {
                  </ResultMain>
                  </MainFormContent>
                  {
+                  addingSong?
+                  <CircularProgress/>
+                  : <></>
+                 }
+                 {
                       !finishAdding || !postedSong ? <></>
                       :
                         <Success>Song was added sucessfully. <a href={`/songs/${postedSong._id}`}>go to song</a></Success>
 
                     }
+                    
                 </Form>
                 
                 </FormSubContainer>
