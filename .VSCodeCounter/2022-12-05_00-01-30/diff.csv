@@ -1,0 +1,35 @@
+"filename", "language", "JavaScript", "HTML", "comment", "blank", "total"
+"c:\Users\antka\OneDrive\Documents\Final Project\PeaceofMusic\client\public\index.html", "HTML", 0, 3, 0, 1, 4
+"c:\Users\antka\OneDrive\Documents\Final Project\PeaceofMusic\client\src\components\AddASong.js", "JavaScript", 1, 0, 2, -3, 0
+"c:\Users\antka\OneDrive\Documents\Final Project\PeaceofMusic\client\src\components\App.js", "JavaScript", -6, 0, 0, 0, -6
+"c:\Users\antka\OneDrive\Documents\Final Project\PeaceofMusic\client\src\components\ArtistCard.js", "JavaScript", 16, 0, -1, -1, 14
+"c:\Users\antka\OneDrive\Documents\Final Project\PeaceofMusic\client\src\components\ArtistPage.js", "JavaScript", 0, 0, -1, 5, 4
+"c:\Users\antka\OneDrive\Documents\Final Project\PeaceofMusic\client\src\components\Artists.js", "JavaScript", -2, 0, 0, 1, -1
+"c:\Users\antka\OneDrive\Documents\Final Project\PeaceofMusic\client\src\components\Comments\CommentSection.js", "JavaScript", 62, 0, -17, 20, 65
+"c:\Users\antka\OneDrive\Documents\Final Project\PeaceofMusic\client\src\components\CurrentUserContext.js", "JavaScript", -5, 0, 3, 3, 1
+"c:\Users\antka\OneDrive\Documents\Final Project\PeaceofMusic\client\src\components\Diff.js", "JavaScript", 0, 0, 1, 0, 1
+"c:\Users\antka\OneDrive\Documents\Final Project\PeaceofMusic\client\src\components\EditSongPage.js", "JavaScript", 1, 0, 1, -1, 1
+"c:\Users\antka\OneDrive\Documents\Final Project\PeaceofMusic\client\src\components\EditsPage.js", "JavaScript", 3, 0, 0, 3, 6
+"c:\Users\antka\OneDrive\Documents\Final Project\PeaceofMusic\client\src\components\ForgivenessContext.js", "JavaScript", 0, 0, 1, -1, 0
+"c:\Users\antka\OneDrive\Documents\Final Project\PeaceofMusic\client\src\components\Header.js", "JavaScript", 3, 0, 0, 0, 3
+"c:\Users\antka\OneDrive\Documents\Final Project\PeaceofMusic\client\src\components\Journal.js", "JavaScript", -25, 0, 0, -4, -29
+"c:\Users\antka\OneDrive\Documents\Final Project\PeaceofMusic\client\src\components\Layout.js", "JavaScript", -2, 0, 0, 2, 0
+"c:\Users\antka\OneDrive\Documents\Final Project\PeaceofMusic\client\src\components\LoginButton.js", "JavaScript", 5, 0, 1, -1, 5
+"c:\Users\antka\OneDrive\Documents\Final Project\PeaceofMusic\client\src\components\LogoutButton.js", "JavaScript", 0, 0, 1, -1, 0
+"c:\Users\antka\OneDrive\Documents\Final Project\PeaceofMusic\client\src\components\MusicContext.js", "JavaScript", 6, 0, 1, -6, 1
+"c:\Users\antka\OneDrive\Documents\Final Project\PeaceofMusic\client\src\components\PeaceContext.js", "JavaScript", -1, 0, 1, 0, 0
+"c:\Users\antka\OneDrive\Documents\Final Project\PeaceofMusic\client\src\components\PeaceOfMusic.js", "JavaScript", -2, 0, -18, -3, -23
+"c:\Users\antka\OneDrive\Documents\Final Project\PeaceofMusic\client\src\components\ProfileInfo.js", "JavaScript", 5, 0, 9, -4, 10
+"c:\Users\antka\OneDrive\Documents\Final Project\PeaceofMusic\client\src\components\ProfilePage.js", "JavaScript", 49, 0, 8, 19, 76
+"c:\Users\antka\OneDrive\Documents\Final Project\PeaceofMusic\client\src\components\SearchBar.js", "JavaScript", 19, 0, -1, 7, 25
+"c:\Users\antka\OneDrive\Documents\Final Project\PeaceofMusic\client\src\components\SideBar.js", "JavaScript", -47, 0, 0, -10, -57
+"c:\Users\antka\OneDrive\Documents\Final Project\PeaceofMusic\client\src\components\SongPage.js", "JavaScript", 1, 0, 8, -2, 7
+"c:\Users\antka\OneDrive\Documents\Final Project\PeaceofMusic\client\src\components\SongPoms.js", "JavaScript", 6, 0, 0, 2, 8
+"c:\Users\antka\OneDrive\Documents\Final Project\PeaceofMusic\client\src\components\Songs.js", "JavaScript", 3, 0, 0, 0, 3
+"c:\Users\antka\OneDrive\Documents\Final Project\PeaceofMusic\client\src\components\Spotify.js", "JavaScript", -24, 0, 0, -8, -32
+"c:\Users\antka\OneDrive\Documents\Final Project\PeaceofMusic\client\src\components\SubHeader.js", "JavaScript", 23, 0, 0, 5, 28
+"c:\Users\antka\OneDrive\Documents\Final Project\PeaceofMusic\client\src\components\Transcribe.js", "JavaScript", -61, 0, -5, -14, -80
+"c:\Users\antka\OneDrive\Documents\Final Project\PeaceofMusic\client\src\components\UserPanel.js", "JavaScript", 29, 0, 1, 8, 38
+"c:\Users\antka\OneDrive\Documents\Final Project\PeaceofMusic\server\handlers\musichandlers.js", "JavaScript", -14, 0, -14, 14, -14
+"c:\Users\antka\OneDrive\Documents\Final Project\PeaceofMusic\server\handlers\userhandlers.js", "JavaScript", -13, 0, -1, 12, -2
+"Total", "-", 30, 3, -20, 43, 56

@@ -624,6 +624,8 @@ const Wrapper = styled.div`
     height: calc(100vh - 200px);
     position: absolute;
     right: 0;
+    box-shadow: rgba(240, 46, 170, 0.4) -5px 5px, rgba(240, 46, 170, 0.3) -10px 10px, rgba(240, 46, 170, 0.2) -15px 15px, rgba(240, 46, 170, 0.1) -20px 20px, rgba(240, 46, 170, 0.05) -25px 25px;
+ 
     background: linear-gradient(var(--color-deepteal), var(--color-darkpurple), var(--color-orange));
     p, h1, h2{
         color: black;

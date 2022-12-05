@@ -106,7 +106,7 @@ const UserPanel = () => {
                 </PendingList>
             }
             </PendingBox>
-            <LogoutButton style={{color: "white"}}/>
+            <LogoutButton style={{color: "white", marginLeft: "10px"}}/>
             </LogoutPending>
             </NameAndActions>
             </UserPanelBox>
@@ -185,6 +185,7 @@ margin-left: -10px;
 
 const DisplayName = styled.h1`
 margin-top: 7px;
+margin-left: 10px;
 `
 
 const ProfilePicture = styled.img`
@@ -205,6 +206,7 @@ margin-bottom: 10px;
 right: 0px;
 color: black;
 width: 300px;
+box-shadow: rgb(240, 46, 170) 3px 3px 6px 0px inset, rgba(240, 46, 170, 0.5) -3px -3px 6px 1px inset;
 `
 
 export default UserPanel
