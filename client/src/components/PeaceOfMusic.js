@@ -67,7 +67,7 @@ const PeaceOfMusic = () => {
 
 // split the keys array [array of 12 keys] // split to aid with the styling
 const keysA = keys?.slice(0, 6) 
-const keysB = keys?.slice(7,12)
+const keysB = keys?.slice(6,12)
 
 
 // initialize a list of suffixes.
@@ -563,7 +563,8 @@ const KeyBox = styled.div``
 const Word = styled.span`
 color: white;
 &:hover {
-color: var(--color-orange)
+color: var(--color-orange);
+cursor: pointer;
 }`
 
 const Lyrics = styled.p`
