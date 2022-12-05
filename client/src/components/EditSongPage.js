@@ -124,7 +124,7 @@ const EditSongPage = () => {
                 targetId: editDetails.targetId
 
             }
-
+            // review server action
             fetch(`/api/review-edit/`,
             {
                 method: "PATCH",
@@ -488,7 +488,7 @@ p {
 `
 
 const EditSubWrapper = styled.div`
-background-color: var(--color-purple);
+background-color: var(--color-darkpurple);
 width: 80%;
 margin: auto;
 height: 60%;
@@ -525,7 +525,7 @@ display: flex;
 flex-direction: column;
 border-radius: 40px;
 margin-top: 20px;
-height: 500px;
+height: 400px;
 
 
 `
@@ -574,6 +574,7 @@ border: 1px solid black;
 `
 
 const Lyrics = styled.p`
+margin-top: 20px;
 white-space: pre-wrap;`
 
 const LyricsWrapper = styled.div`

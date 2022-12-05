@@ -23,6 +23,8 @@ const EditsPage = () => {
         navigate(`/edits/song/${id}`)
     }
 
+
+
   return (
     <Wrapper>
         { !edits? <></>
@@ -30,8 +32,12 @@ const EditsPage = () => {
         <EditList>
             {
                 edits.map(edit => {
+                    let color = "white"
+                    if (edit.status === "pending") {
+                        color = "var(--color-orange)"
+                    }
                     return(
-                        <Edit onClick={() => handleEditClick(edit._id)}>{edit._id}</Edit>
+                        <Edit style={{color: `${color}`}} onClick={() => handleEditClick(edit._id)}>{edit._id}</Edit>
                     )
                 })
             }

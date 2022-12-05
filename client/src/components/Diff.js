@@ -3,11 +3,12 @@ import React from "react";
 import PropTypes from "prop-types";
 const diff = require("diff");
 window.diff = diff;
+// diff is a js package that helps find differences between text. not much was added other than my own styling.
 
 const styles = {
   added: {
-    color: "green",
-    backgroundColor: "#b5efdb",
+    color: "white",
+    backgroundColor: "var(--color-deepteal)",
     fontWeight: "bold"
   },
   removed: {
