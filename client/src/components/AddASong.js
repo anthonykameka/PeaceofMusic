@@ -94,9 +94,12 @@ const handleAddSong = () => {
       if (song===null) {
         setNotFound(true)
       }
+      else {
+        setSearching(false) // done searching
+      }
     })
 
-    setSearching(false) // done searching
+    
 
   }
 
@@ -160,6 +163,8 @@ const handleSongClick = (ev) => {
   ev.preventDefault();
  
 }
+
+console.log(searching)
 
 
   return (
@@ -231,7 +236,12 @@ const handleSongClick = (ev) => {
                  }
                  </SearchMain>
                  <ResultMain>
-                 {
+                  {
+                    searching?
+                    <CircularProgress/>
+                    :
+                  
+                 
                   searchResult?
                   <SearchResultsBox>
                       
@@ -250,6 +260,7 @@ const handleSongClick = (ev) => {
                     </SearchResultsBox>
                     :<></>
                     }
+      
                 
                  </ResultMain>
                  </MainFormContent>
