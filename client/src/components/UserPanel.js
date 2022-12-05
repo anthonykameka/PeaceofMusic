@@ -41,7 +41,7 @@ const UserPanel = () => {
         fetch("/api/get-edits")
         .then(res => res.json())
         .then(res => {
-            console.log(res)
+            
             setPendingEdits(res.data.filter(edit => edit.status === "pending")   )// check pending edits
             setPendingActive(!pendingActive)
         })
@@ -203,7 +203,7 @@ padding: 0 30px;
 border-radius: 35px;
 position: relative;
 margin-bottom: 10px;
-right: 0px;
+right: 10px;
 color: black;
 width: 300px;
 box-shadow: rgb(240, 46, 170) 3px 3px 6px 0px inset, rgba(240, 46, 170, 0.5) -3px -3px 6px 1px inset;
