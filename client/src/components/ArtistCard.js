@@ -83,7 +83,7 @@ const ArtistItem = styled.div`
 
     height: 200px;
     padding: 10px;
-    width: 300px;
+    width: 260px;
 
 min-height: 100px;`
 

@@ -10,7 +10,7 @@ export const MusicContext = createContext();
     const [refreshEdits, setRefreshEdits] = useState(0)
     const [accessToken, setAccessToken] = useState(null)
     const [isOpen, setIsOpen] = useState(false); // initialize modal state
-    const [featured, setFeatured] = useState(false); //featured/favorutes homepage state
+    const [featured, setFeatured] = useState(true); //featured/favorutes homepage state
 
     useEffect(() => {
         fetch(`api/get-access-token`)
