@@ -330,8 +330,8 @@ align-items: center;
 border-radius: 30px;
 justify-content: center;
 position: absolute;
-top: 40px;
-left: 40px;
+top: 100px;
+left: 100px;
 padding-bottom: 30px;
 p, h1{
   color: white
