@@ -164,7 +164,7 @@ const handleSongClick = (ev) => {
  
 }
 
-console.log(searching)
+
 
 
   return (

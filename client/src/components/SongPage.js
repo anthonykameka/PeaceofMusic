@@ -238,7 +238,7 @@ const SongPage = () => {
               : <AiOutlineStar onClick={handleFav}  size={20}/>
             }
           </Favorites>
-          <Views>{song.views}<AiFillEye/></Views>
+          <Views>{song.views}<AiFillEye style={{marginLeft: "10px"}}/></Views>
           <AlbumCover src={song.thisSong.albumArt}/>
           <Title>{song?.songTitle}</Title>
           <Title><span>{song?.artistName}</span></Title>
@@ -335,7 +335,7 @@ margin-left: 100px;
 const Favorites = styled.div`
 position: absolute;
 top: 10px;
-left: 40px;
+left: 30px;
 justify-content: center;
 display: flex;
 `

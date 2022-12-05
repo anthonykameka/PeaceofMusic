@@ -123,7 +123,7 @@ const CommentSection = ({songId, params}) => {
         })
   
   
-      }, [params])
+      }, [params, refreshComments, setRefreshComments])
       
 
    
