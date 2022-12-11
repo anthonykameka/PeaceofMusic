@@ -9,11 +9,17 @@ const handlePomClick = (ev) => {
     navigate(`/pom/${song._id}`)
 }
 
+const handleTestClick = (ev) => {
+    ev.preventDefault();
+    navigate(`/poms/${song._id}`)
+}
+
 
   return (
     <Wrapper> 
         <PomList>
             <PomCard onClick={handlePomClick} song={song}>Peace Of Music</PomCard>
+            <PomCard onClick={handleTestClick} song={song}>Version 2</PomCard>
         </PomList>
     </Wrapper>
   )

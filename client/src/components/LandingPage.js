@@ -10,11 +10,11 @@
 
         return (
         <Wrapper >
-                            <LogBox>
-                                <Login></Login>
-                    <LoginButton/>
+            <LogBox>
+                <Login></Login>
+                <LoginButton/>
 
-                </LogBox>
+            </LogBox>
             <Background style={{backgroundImage: `url(${background})`, backgroundSize:"contain"}}>
             <WelcomeBox>
                 <Logo src={logo}/>

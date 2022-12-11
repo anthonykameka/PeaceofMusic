@@ -27,6 +27,8 @@ const HomePage = () => {
         featured,
     } = useContext(MusicContext)
 
+    console.log(featured)
+
 
 
     const [thisUser, setThisUser] = useState(null)
@@ -100,8 +102,7 @@ const HomePage = () => {
   /// get random features
     
 
-    const shuffled = songs?.sort(() => 0.5 - Math.random());
-     let featuredSongs = shuffled?.slice(0, 21);
+
 
     // console.log(selected)
 
@@ -123,10 +124,10 @@ const HomePage = () => {
                     
                     <Featured>
                     {
-                        !featuredSongs?<></>
+                        !featured?<></>
                         : 
                         
-                            featuredSongs.map(song => {
+                            featured?.map(song => {
                                 return (
                                     <FeaturedSong>
                                         <FeaturedAlbum src={song.thisSong.albumArt}/>

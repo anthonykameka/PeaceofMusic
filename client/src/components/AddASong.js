@@ -80,13 +80,13 @@ const handleAddSong = () => {
     setFinishAdding(false)
     //these options are required for GENIUS API/NPM package // use inputs to search api
     const options = {
-      apiKey: accessToken,
+      apiKey: "mPaybTjlCGUYikeRswTWOEU57Pf-vXKk6WrAttu0ue344TFuamLsUzn7p9GgXe3p",
       title: songSearch,
       artist: artistSearch,
       optimizeQuery:true
   }
 
-
+  console.log(accessToken)
   
   // gets song from. if no song found, setNotfound state to true
     getSong(options).then((song) => {

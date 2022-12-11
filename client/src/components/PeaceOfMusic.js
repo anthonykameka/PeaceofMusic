@@ -71,9 +71,7 @@ const keysB = keys?.slice(6,12)
 
 
 // initialize a list of suffixes.
-const suffixes = music?.suffixes
-
-
+let suffixes = music?.suffixes
 
 
 // word click.

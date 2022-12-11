@@ -19,6 +19,12 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "@tombatossals/react-chords": "^0.2.10",
+    "@types/jest": "^29.2.4",
+    "@types/node": "^18.11.13",
+    "@types/react": "^18.0.26",
+    "@types/react-dom": "^18.0.9",
+    "chordjs": "^2.0.1",
+    "chordsheetjs": "^7.12.0",
     "components": "^0.1.0",
     "compromise": "^14.8.0",
     "date-fns": "^2.29.3",
@@ -26,6 +32,7 @@
     "dotenv": "^16.0.3",
     "draft-js": "^0.11.7",
     "genius-lyrics-api": "^3.2.0",
+    "lz-string": "^1.4.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-draft-wysiwyg": "^1.15.0",
@@ -42,6 +49,7 @@
     "styled-react-modal": "^3.0.1",
     "syllables": "^1.0.0",
     "tonal": "^4.6.10",
+    "typescript": "^4.9.4",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

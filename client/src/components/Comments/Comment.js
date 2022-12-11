@@ -3,20 +3,20 @@ import styled from 'styled-components'
 import {format} from 'date-fns'
 import { useNavigate } from 'react-router-dom'
 
-
+// COMMENT IS INDIVIDUAL COMMENT
 const Comment = ({comment}) => {
 
-  const navigate = useNavigate();
+  const navigate = useNavigate(); // initialize usenavigate hook
 
-  const [user, setUser] = useState(null)
+  const [user, setUser] = useState(null) 
 
   useEffect(() => {
-    fetch(`/api/match-user/${comment.author}`)
+    fetch(`/api/match-user/${comment.author}`) //use api call to match user and set their data
     .then(res => res.json())
     .then(res => setUser(res.data))
   }, [])
 
-const handleProfileClick = (ev) => {
+const handleProfileClick = (ev) => {  // if user name or picture clicked, go to their profile.
   ev.preventDefault();
   navigate(`/profile/${user._id}`)
 }
@@ -24,11 +24,11 @@ const handleProfileClick = (ev) => {
   return (
     <Wrapper>
       {
-        !user?<></>
+        !user?<></> //render if user
         : 
         <>
         <ScoreBox>
-        <Score>{comment.score}</Score>
+        <Score>{comment.score}</Score> 
         </ScoreBox>
         <CommentBox>
             <AuthorPhoto onClick={handleProfileClick}src={user?.profile_picture_src}/>

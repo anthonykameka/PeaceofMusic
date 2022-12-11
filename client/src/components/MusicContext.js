@@ -10,7 +10,7 @@ export const MusicContext = createContext();
     const [refreshEdits, setRefreshEdits] = useState(0)
     const [accessToken, setAccessToken] = useState(null)
     const [isOpen, setIsOpen] = useState(false); // initialize modal state
-    const [featured, setFeatured] = useState(true); //featured/favorutes homepage state
+    const [featured, setFeatured] = useState(null)
 
     useEffect(() => {
         fetch(`api/get-access-token`)
@@ -36,10 +36,12 @@ export const MusicContext = createContext();
         fetch("/api/get-songs")
         .then(res => res.json())
         .then(res =>  {
+            // console.log(res.data)
             setSongs(res.data)
             const artists = [...new Set(res.data.map((song) => song.artistName))] // creating new array of unique artists based on data
             setArtists(artists.sort())
             songsByArtists(res.data, artists)
+            
             
         })
         
@@ -54,6 +56,30 @@ export const MusicContext = createContext();
 
         }
 
+
+        const shuffle = (array) => {
+            console.log(array[0])
+           
+          
+            // // While there remain elements to shuffle.
+            // while (currentIndex != 0) {
+          
+            //   // Pick a remaining element.
+            //   let randomIndex = Math.floor(Math.random() * currentIndex);
+            //   currentIndex--;
+          
+            //   // And swap it with the current element.
+            //   [array[currentIndex], array[randomIndex]] = [
+            //     array[randomIndex], array[currentIndex]];
+            // }
+          
+            return array;
+          }
+          
+    // let featuredSongs = songs?.slice()
+    // console.log(shuffle(featuredSongs))
+
+        //   console.log(songs)
 
 
 
@@ -72,7 +98,6 @@ export const MusicContext = createContext();
                 isOpen,
                 setIsOpen,
                 featured,
-                setFeatured
             }}
         >
             {children}
