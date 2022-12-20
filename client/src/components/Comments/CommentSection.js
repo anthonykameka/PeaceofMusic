@@ -37,7 +37,7 @@ const CommentSection = ({songId, params}) => {
   const handleReference = (ev) => {
     ev.preventDefault()
     let selection= window.getSelection().getRangeAt(0); 
-      
+      console.log(selection)
       let selectedText = selection.extractContents();
       console.log(selectedText)
       let span= document.createElement("span");

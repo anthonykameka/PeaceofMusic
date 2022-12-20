@@ -7,6 +7,7 @@ import styled from 'styled-components'
 import { useParams } from 'react-router-dom'
 import chordsheetjs from 'chordsheetjs';
 import ChordSheetJS from 'chordsheetjs';
+import { id } from 'date-fns/locale'
 
 
 const POM = () => {
@@ -19,7 +20,7 @@ const POM = () => {
     const [chosenSuffix, setChosenSuffix] = useState(null) // suffix of chord chosen (sus, dim maj7 etc)
     const [selectedWordIndex, setSelectedWordIndex] = useState(null) // index of the word being selected 
     const [pomLyrics, setPomLyrics] = useState(null) //
-
+    const [pomSheet, setPomSheet] = useState(null) //
     const songId = useParams().id; // params for the song 
 
     
@@ -54,11 +55,11 @@ const POM = () => {
         fetch(`/api/get-song/${songId}`)
         .then(res => res.json())
         .then(res => {
-            console.log(res.data)
+            // console.log(res.data)
             setSong(res.data) 
             setPomLyrics(res.data.thisSong.lyrics)
-            setSplitLines(lineSeparator(res.data.thisSong.lyrics)) })// split lines of the lyrics into  individual, arrays // useful for determining the word's location within the lyrics.
-
+            
+        })
     }, [])
 
     
@@ -84,7 +85,7 @@ const testSong = ` {title: Let it be}
     const pomFormatter = (lyrics) => {
         const pom1 = lyrics.replace(/\[/g, '{c: ').replace(/]/g, '}')
         const pom2 = proParser.parse(pom1)
-        console.log(pom2)
+        // console.log(pom2)
         const pom3 = formatter.format(pom2)
         return pom3
     }
@@ -92,36 +93,59 @@ const testSong = ` {title: Let it be}
     if (pomLyrics) {
         displayedLyrics = pomFormatter(pomLyrics)
     }
+    let POMSheet = null;
 
-    console.log(displayedLyrics)
+    // console.log(displayedLyrics)
 
-    console.log(document.getElementsByClassName("lyrics"))
+    const lines = document.getElementsByClassName("lyrics")
+   
 
-    //foreach the above to add and id for each line
+    setTimeout(() => {
+        for (let i = 0; i < lines.length; i++) {
+        
+            const line = lines[i]
+            // line.id =  "l-" + i;
+       
+            line.innerHTML = `<p id=l-${i}> ${line.textContent}</p>`
+            
+            let words = line.textContent.split(" ").filter(word => word.length > 0)
+            line.textContent = ""
+             
+            words.forEach((word, index) => {
+                const wordLink = document.createElement("span")
+                wordLink.id = `w-${index} l-${i}`
+                wordLink.className= "word"
+                wordLink.textContent = `${word} `
+                wordLink.addEventListener("click", handleWord);
+                line.append(wordLink)
+            })
 
-    // const testPom = song?.thisSong.lyrics
-    // const testPom2 = testPom?.replace(/\[/g, '{c: ').replace(/]/g, '}')
-    //  console.log(testPom2)
-    //  let testPom3 = null
-    //  let disp2 = null
-    //  if (testPom2) {
-    //     testPom3 = proParser.parse(testPom2)
-    //     disp2 = formatter.format(testPom3)
-    //  }
-    //  console.log(disp2)
+        }
+            // })}
+    }, 200)
+
+  
+const handleWord = (ev) => {
+    toggleModal()
+    ev.preventDefault()
+    let rawIndexes = null
+    console.log(ev.target.id)
+    let indexes = (ev.target.id.split(" "))
+    console.log(indexes)
+    let lineIndex = indexes[1].slice(2)
+    console.log(lineIndex)
+    let wordIndex = indexes[0].slice(2)
+    console.log(document.getElementById(ev.target.id))
+    console.log(wordIndex)
+    setSelectedWordIndex([lineIndex, wordIndex])
+    console.log(selectedWordIndex)
+    // console.log(pomLyrics)
     
-    // // const disp2 = formatter.format(testPom3)
-    // // console.log(disp2)
-    
+        
+}
 
 
- // line separator. split at new lines..
- const lineSeparator = (text) => {
-    const array = text.split("\n")
-    return array
-    
- }
-
+ 
 
 
 
@@ -138,9 +162,9 @@ let suffixes = music?.suffixes
 //see the return of the component. // each word is given a line number and a word number within that that line. A matrix to save and recall //
 // although the saving is not functional as of yet, it will aid in storing and analysing the harmonic data. The first word of a line uses the ONE chord. 67% of the time.
 
-const handleWordClick = (line, word) => {
-    setSelectedWordIndex([line, word])
+const handleWordClick = (ev) => {
     
+    setSelectedWordIndex()
     toggleModal()
 
 }
@@ -168,8 +192,16 @@ const handleSuffixClick = (ev) => {
     ev.preventDefault()
     setChosenSuffix(ev.target.innerText)
 }
+// function to replace string at certain index
+const replaceAt = (source, index, replacement) => {
+    return source.substring(0, index) + replacement + source.substring(index + replacement.length) + " ";
+}
 
 // handle OK click
+
+const [savedSheet, setSavedSheet] = useState(null)
+const [refreshPom, setRefreshPom] = useState(true)
+// console.log(savedSheet)
 
 const handleOK =(ev) => {
     ev.preventDefault()
@@ -181,15 +213,58 @@ const handleOK =(ev) => {
     const indexAndChord = [chosenRoot+chosenSuffix, selectedWordIndex] //unused at this time.
     const thisWord = selectedWordIndex[1] // get Word, within line
     const thisLine = selectedWordIndex[0] // get Line, within lyrics
-    const element = document.getElementById(`${thisWord}-${thisLine}-c`) // find the element by id that matches corresponding matrix value.
+  
+    let currentSheet = null
+    if (savedSheet) {
+        currentSheet = savedSheet
+    }
+    else {
+        currentSheet = pomLyrics
+    }
 
-    element.innerText = `${chosenChord}` // the element which is above the chosen word, is given text
+
+    let currentSheetLines = currentSheet.split(/\r?\n/)
+    let currentSheetLinesWithoutComments = currentSheetLines.filter(line => !line.includes("[Chorus") || !line.includes("[Verse") || !line.includes("[Intro"))
+    console.log(currentSheetLines)
+    console.log(currentSheetLinesWithoutComments)
+    let currentSheetLinesWithoutSpaces = currentSheetLinesWithoutComments.filter(line => line.length>0)
+    let currentLine = currentSheetLinesWithoutSpaces[thisLine]
+    // console.log(currentLine)
+    // console.log(currentSheetLines)
+    let currentLineWords = currentLine.split(" ")
+    // console.log(currentLineWords)
+    let currentWord = currentLineWords[thisWord]
+    // console.log(currentWord)
+    let newWord = `[${chosenChord}]${currentWord}`
+    // console.log(newWord)
+    currentLineWords[thisWord] = newWord
+    // console.log(currentLineWords)
+    let newLine = currentLineWords.join(" ")
+    // console.log(newLine)
+    currentSheetLines[thisLine] = newLine
+    let newSheet = currentSheetLines.join("\n")
+    // console.log(newSheet)
+    setSavedSheet(newSheet)
+    // console.log(savedSheet)
+    let newParsedSheet = proParser.parse(newSheet)
+    displayedLyrics = formatter.format(newParsedSheet)
+    // console.log(displayedLyrics)
+    setPomSheet(displayedLyrics)
+
+    // const element = document.getElementById(`${thisWord}-${thisLine}-c`) // find the element by id that matches corresponding matrix value.
+
+    // element.innerText = `${chosenChord}` // the element which is above the chosen word, is given text
     setSelectedWordIndex(null) // reset everything
     setChosenRoot("")
     setChosenSuffix("")
-    
+    setRefreshPom(!refreshPom) //
     toggleModal()
 }
+
+useEffect(() => {
+    setSavedSheet(savedSheet)
+
+}, [refreshPom])
 // HANDLE NO CHORD
 const handleNC = (ev) => {
     ev.preventDefault()
@@ -230,55 +305,88 @@ const handleNC = (ev) => {
         </SongInfoSubBox>
        
       </SongInfoBox>
-      <LyricsWrapper>
-      <TitleBox> 
-                <Info>{}</Info>
-
-            </TitleBox>
-            <Lyrics>
-                {
-                    song?
-                    splitLines.map((line, index)=> {
-
-                        const l = index //line number
-                        const words= line.split(" ")
-                        return (
-                            <div>
-                                <p>
-                                    {
-                                        words.map((word, index) => {
-                                        const w = index //word number
-                                        return (
-                                            <AChord id={`${w}-${l}-c`}  ></AChord>
-                                        )
-                                        })
-                                    }
-                                </p>
-                                <p>
-                                    {
-                                        words.map((word, index) => {
-                                            const w = index //word number
-                                            return (
-                                                <Word id={`${w}-${l}`} onClick={(ev) => handleWordClick(l, w)}> {word} </Word>
-                                            )
-                                        })
-                                    }
-                                </p>
-                            </div>
-                        )
-                        
-                })
-                : <></>
-            }
-           
-            </Lyrics>
-
-      </LyricsWrapper>
+      
     </Wrapper>
+    <Modal
+                isOpen={isOpen}
+                onEscapeKeydown={toggleModal}
+                role="dialog"
+                aria-modal={true}
+                aria-labelledby="modal-label"
+                transparent={true}
+                >
+                      <FocusLock>
+                        <ModalContainer>
+                            <ModalHeader>
+                                <ModalTitle>Chords</ModalTitle>
+                            </ModalHeader>
+                            <ModalBody>
+                                <ChordBase>
+                                   <h2> SELECT CHORD </h2>
+                                </ChordBase>
+                                <Chords>
+                                <ChordsA>
+                                    {
+                                        keysA.map(key => {
+
+                                            return (
+                                                <Chord onClick={handleChordClick}>{key}</Chord>
+                                                )
+                                        })
+                                    }
+                                 </ChordsA>
+                                 <ChordsB>
+                                    {
+                                        keysB.map(key => {
+
+                                            return (
+                                                <Chord onClick={handleChordClick}>{key}</Chord>
+                                                )
+                                        })
+                                    }
+                                 </ChordsB>
+                                 </Chords>
+                                 <Suffixes>
+                                    {
+                                        suffixes.map(suffix => {
+                                            if (suffix === "major"){
+                                                suffix = "maj"
+                                            }
+                                            if (suffix === "minor") {
+                                                suffix = "min"
+
+
+                                            }
+                                            return (
+                                                <Suffix onClick = {handleSuffixClick}>{suffix}</Suffix>
+                                                )
+                                        })
+                                    }
+                                 </Suffixes>
+                                 <ModalFooter>
+                                    <ChordSelected>
+                                        {chosenRoot}
+                                        {chosenSuffix}
+                                    </ChordSelected>
+                            
+                                    <NoChord onClick={handleNC}>N.C. </NoChord>
+                                    <OK onClick={handleOK}>OK</OK>
+                                    
+                                </ModalFooter>
+                            </ModalBody>
+
+                        </ModalContainer>
+                      </FocusLock>
+                </Modal>
+        
     <Lyrics2Wrapper>
     {
         !song? <></>
+       : pomSheet
+       ? <Lyrics2 dangerouslySetInnerHTML={{__html: pomSheet}}/>
        : <Lyrics2 dangerouslySetInnerHTML={{__html: displayedLyrics}}/>
+        
+        
     // : <></>
 
 
@@ -291,6 +399,16 @@ const handleNC = (ev) => {
 }
 
 const Lyrics2Wrapper = styled.div`
+display: flex;
+justify-content: center;
+align-items: center;
+
+span {
+    color: white;
+    &:hover {
+        color: var(--color-orange)
+    }
+}
 `
 
 
@@ -370,7 +488,7 @@ columns: 3;
 
 const Lyrics2 = styled.div`
 width: 400px;
-border: 1px solid red;
+
 font-family: "Source Sans Pro", sans-serif;
  .comment {
     font-weight: bold;
@@ -395,5 +513,175 @@ justify-content: center;
 position: relative;
 left: 00px;
 `
+
+const NoChord = styled.button`
+  background: var(--color-orange);
+  display:flex;
+justify-content: center;
+font-size: 20px;
+height: 50px;
+width: 100px;
+align-items: center;
+margin-left: 70px !important;`
+
+
+const OK = styled.button`
+display:flex;
+justify-content: center;
+font-size: 20px;
+height: 50px;
+width: 100px;
+align-items: center;
+margin-left: 70px !important;
+background: linear-gradient(var(--color-deepteal), var(--color-darkpurple));
+`
+
+const ModalFooter = styled.div`
+  display: flex;
+  align-items: center;
+  height: 100px;
+  justify-content: center;
+  `
+
+const ChordSelected = styled.div`
+display:flex;
+justify-content: center;
+align-items: center;
+border: 1px solid var(--color-orange);
+bottom: 30px;
+right: 500px;
+height: 70px;
+width: 400px;
+background-color: var(--color-deepteal);
+font-size: 40px;
+`
+
+const Suffix = styled.p`
+margin-left: 10px;
+  font-size: 20px;
+  font-weight: 600;
+  width: 20%;
+
+    &:hover {
+        color: var(--color-orange);
+        cursor: pointer;
+    }
+
+
+`
+const Suffixes = styled.div`
+display: grid;
+width: 70%;
+height: auto;
+padding-bottom: 10px;
+flex-direction: row;
+justify-content: center;
+
+
+align-items: center;
+margin-top: 50px;
+border-bottom: 1px solid var(--color-orange); 
+grid-template-columns: 1fr 1fr 1fr 1fr;
+  padding: 1em;
+  grid-row-gap: 1px;
+
+
+
+`
+const ChordsB = styled.div`
+  display: flex;
+  flex-direction: row;`
+const ChordsA = styled.div`
+  display: flex;
+  flex-direction: row;`
+const Chord = styled.button`
+
+
+  margin-left: 10px;
+  font-size: 28px;
+  font-weight: 600;
+  width: 20%;
+  color: white;
+
+    &:hover {
+        color: var(--color-orange);
+        cursor: pointer;
+    }
+    &:focus {
+        color: var(--color-orange);
+        font-size: 40px;
+    }
+`
+
+const Chords = styled.ul`
+
+display: flex;
+width: auto;
+padding-bottom: 10px;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+margin-top: 50px;
+
+border-bottom: 1px solid var(--color-orange);
+/* margin: 0 auto;
+list-style-type: none;
+border: 1px solid red;
+height: 20%; */
+
+
+`
+const ChordBase = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  font-size: 25px;
+  width: 75%;
+
+  h2 {
+    border-bottom: 1px solid var(--color-orange);
+    text-align: center;
+    padding-bottom: 10px;
+    
+    width: 50%;
+  }
+`
+
+const ModalBody = styled.div`
+  display: flex;
+  align-items: center;
+  height:100%;
+  width: 100%;
+  flex-direction: column;
+  position: relative;
+
+  .active {
+    color: var(--color-orange);
+  }
+
+`
+
+const ModalContainer = styled.div`
+width: 800px;
+height: 800px;
+position: relative;
+border: 1px solid var(--color-orange);
+background-color: var(--color-dark-grey);
+`
+
+const ModalTitle = styled.h1`
+text-align: center;
+
+`
+
+const ModalHeader = styled.div`
+  display: flex;
+  align-items: center;
+  border: 1px solid orange;
+  background-color: var(--color-darkpurple);
+  justify-content: space-between;`
+
 
 export default POM
