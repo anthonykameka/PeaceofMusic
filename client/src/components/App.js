@@ -18,6 +18,7 @@ import EditsPage from "./EditsPage";
 import PeaceOfMusic from "./PeaceOfMusic";
 import ArtistPage from "./ArtistPage"
 import POM from "./POM";
+import POM2 from "./POM2";
 
 const App = () => {
 
@@ -48,6 +49,7 @@ const App = () => {
               <Route path="/edits" element={<EditsPage/>}/>
               <Route path ="/artists" element={<Artists/>} />
               <Route path ="/poms/:id" element={<POM/>}/>
+              <Route path ="/pom2/:id" element={<POM2/>}/>
               <Route path="/pom/:songId" element={<PeaceOfMusic/>} />
             </Route>
 

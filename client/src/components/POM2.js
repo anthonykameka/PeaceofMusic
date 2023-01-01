@@ -5,12 +5,11 @@ import Modal from 'styled-react-modal'
 import FocusLock from 'react-focus-lock'
 import styled from 'styled-components'
 import { useParams } from 'react-router-dom'
-import chordsheetjs from 'chordsheetjs';
+import chordsheetjs, { HtmlTableFormatter } from 'chordsheetjs';
 import ChordSheetJS from 'chordsheetjs';
-import { id } from 'date-fns/locale'
 
 
-const POM = () => {
+const POM2 = () => {
 
     const [song, setSong] = useState(null) // this particular songs information 
     const [splitWords, setSplitWords] = useState(null) // split words used later
@@ -29,20 +28,6 @@ const POM = () => {
 
 
 
-      const ChordSheetViewer = () => {
-
-        const formatters = {
-            html: chordsheetjs.HtmlDivFormatter,
-            text: chordsheetjs.TextFormatter,
-          };
-
-      }
-
-      const ChordSheetEditor = () => {
-
-
-
-      }
     
 
     const {
@@ -89,10 +74,11 @@ const testSong = ` {title: Let it be}
         const pom2 = proParser.parse(pom1)
         // console.log(pom2)
         const pom3 = formatter.format(pom2)
+        console.log(pom1, pom2, pom3)
         return pom3
     }
     let displayedLyrics = null
-    if (pomLyrics) {
+    if (pomLyrics) {    
         displayedLyrics = pomFormatter(pomLyrics)
     }
     let POMSheet = null;
@@ -101,38 +87,136 @@ const testSong = ` {title: Let it be}
 
 //    console.log(defaultLyrics)
 
+const testsong2 = `
+{c: Verse 1}
+Amazing[D] Grace, how s[G]weet the so[D]und,
+that saved a wretch like [A7]me
+I onc[D]e was lost, but n[G]ow am fo[D]und,
+was blind, but [A7]now I s[D]ee.`
+
+const [selected, setSelected] = useState(null);
+
+const htmlFormatter = (lyrics) => {
+    const pro = proParser.parse(lyrics)
+    const pom = formatter.format(pro)
+    return pom
+}
+
+
+ if (pomLyrics) {
+    displayedLyrics = htmlFormatter(defaultLyrics)
+ }
+const words = [];
+  let index = 0;
+  let line = 0;
+  console.log(defaultLyrics?.split("\n"))
+  const testLines = testsong2?.split('\n').filter(line => line.length > 0).filter(line => !line.includes("{"))
+  console.log(testLines)
+  
+  testLines?.forEach((lineText) => {
+    line++;
+    lineText.split(/\s+/g).forEach((word) => {
+        
+      let chord = '';
+      let lyric = '';
+      word.match(/{([^}]+)}|([^{}]+)/g).forEach((part) => {
+        if (part.startsWith('{')) {
+          chord = part.slice(1, -1);
+        } else {
+          lyric = part;
+        }
+      });
+      words.push({
+        index,
+        line,
+        chord,
+        lyric,
+      });
+      index++;
+    });
+  });
+
+console.log(words)
+
+const groups = words.reduce((acc, word) => {
+    if (!acc[word.line]) {
+      acc[word.line] = [];
+    }
+    if (word.chord) {
+        acc[word.line].push(`[${word.chord}]${word.lyric}`);
+    } else {
+    acc[word.line].push(word.lyric);
+  }
+    return acc;
+
+  }, {});
+  
+//   const groupedLines = Object.values(groups);
+//   console.log(groupedLines);
+console.log(groups)
+console.log(testsong2)
+
+const chordsheet = proParser.parse(Object.values(groups).map((line) => line.join(' ')).join('\n'));
+console.log(chordsheet)
+const formatted2 = formatter.format(chordsheet)
+// subarrays?.forEach((line) => {
+//     console.log(line)
+// })
+
+const handleTestClick = (ev, word, index) => {
+    ev.preventDefault();
+
+}
+// const html = formatter.format(words?.map((word) => {
+//     if (word.chord) {
+//         return `{${word.chord}}`;
+//     }
+//     return word.lyric;
+// }))
+
+// console.log(html)
+
+const tdElements = document.querySelectorAll('td');
+
+console.log(document.querySelectorAll('td.lyrics'))
+
+let wordCounter = 0;
+        tdElements.forEach((td) => {
+            td.setAttribute('data-word', wordCounter.toString());
+            wordCounter++
+        });
+
     const lines = document.getElementsByClassName("row")
     
-    if (!updatedSheet) {
+    // if (!updatedSheet) {
 
-        setTimeout(() => {
-            for (let i = 0; i < lines.length; i++) {
+    //     setTimeout(() => {
+    //         for (let i = 0; i < lines.length; i++) {
             
-                const line = lines[i]
-                // line.id =  "l-" + i;
+    //             const line = lines[i]
+    //             // line.id =  "l-" + i;
            
-                // line.innerHTML = `<p id=l-${i}> ${line.textContent}</p>`
+    //             // line.innerHTML = `<p id=l-${i}> ${line.textContent}</p>`
                 
-                let words = line.textContent.split(" ").filter(word => word.length > 0)
-                line.textContent = ""
+    //             let words = line.textContent.split(" ").filter(word => word.length > 0)
+    //             line.textContent = ""
                  
-                words.forEach((word, index) => {
-                    const wordLink = document.createElement("span")
-                    wordLink.id = `w-${index} l-${i}`
-                    wordLink.className= "word"
-                    wordLink.textContent = `${word} `
-                    wordLink.addEventListener("click", handleWord);
-                    line.append(wordLink)
-                })
+    //             words.forEach((word, index) => {
+    //                 const wordLink = document.createElement("span")
+    //                 wordLink.id = `w-${index} l-${i}`
+    //                 wordLink.className= "word"
+    //                 wordLink.textContent = `${word} `
+    //                 wordLink.addEventListener("click", handleWord);
+    //                 line.append(wordLink)
+    //             })
     
-            }
-                // })}
-        }, 200)
+    //         }
+    //             // })}
+    //     }, 200)
     
 
-    }
+    // }
     
-  
 const handleWord = (ev) => {
     console.log('Word clicked:', ev.target.textContent);
     toggleModal(ev.target.textContent)
@@ -496,17 +580,26 @@ const handleNC = (ev) => {
     <Lyrics2Wrapper>
     {
         !song? <></>
-       : pomSheet
-       ? <Lyrics2 dangerouslySetInnerHTML={{__html: pomSheet}}/>
-       : <Lyrics2 dangerouslySetInnerHTML={{__html: displayedLyrics}}/>
-        
-        
-    // : <></>
+        : 
 
-
-
+        <Lyrics2 dangerouslySetInnerHTML={{__html: formatted2}}/>
+      
     }
+    
+       
+    {/* //    : pomSheet
+    //    ? <Lyrics2 dangerouslySetInnerHTML={{__html: pomSheet}}/>
+    //    : <Lyrics2 dangerouslySetInnerHTML={{__html: displayedLyrics}}/>
+        
+        
+    // : <></> */}
+
+
+
+    
+   
     </Lyrics2Wrapper>
+    
    </>
    
   )
@@ -799,4 +892,4 @@ const ModalHeader = styled.div`
   justify-content: space-between;`
 
 
-export default POM
+export default POM2
