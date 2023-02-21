@@ -10,6 +10,7 @@ import FocusLock from "react-focus-lock";
 import { useParams } from "react-router-dom";
 import { MusicContext } from "./MusicContext";
 import { useNavigate } from "react-router-dom";
+import { SpotifyContext } from "./SpotifyContext";
 
 const HomePage = () => {
 
@@ -27,12 +28,14 @@ const HomePage = () => {
         featured,
     } = useContext(MusicContext)
 
-    console.log(featured)
-
-
+    const {
+        handleSpotifyLogin,
+        useAccessToken,
+    } = useContext(SpotifyContext)
 
     const [thisUser, setThisUser] = useState(null)
     const [profileData, setProfileData] = useState(null)
+
 
 
     // profile page
@@ -171,7 +174,7 @@ const HomePage = () => {
             {
                 !currentUser? <h1>LOADING CIRCLE....</h1>
                 :
-                <ProfileInfo profileID={profileID} profileData={profileData} params={params} />
+                <ProfileInfo useAccessToken={useAccessToken} handleSpotifyLogin={handleSpotifyLogin} profileID={profileID} profileData={profileData} params={params} />
             }
             {/* <YoutubePlayer videoId="m1a_GqJf02M"/>  */}
             </Content>

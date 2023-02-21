@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
 import { set } from 'date-fns';
 
-const ProfileInfo = ({profileID, profileData, params}) => {
+const ProfileInfo = ({ handleAuthorizationCode, handleSpotifyLogin,profileID, profileData, params}) => {
 
     const tags = ["musician", "bass", "guitar", "piano", "drums", 
                 "songwriter", "producer", "poet", "fan", "educator", 
@@ -251,6 +251,14 @@ const [pictureSrc, setPictureSrc] = useState(null)
             ev.preventDefault();
             setEditPicture(!editPicture)
     }
+
+    const handleSpotifyAuth = () => {
+        handleSpotifyLogin();
+        setTimeout(() => {
+            handleAuthorizationCode();
+        }, 2000)
+    }
+
     return (
         <Wrapper>
             {
@@ -361,6 +369,9 @@ const [pictureSrc, setPictureSrc] = useState(null)
 
                 </Contributions>
                 <AccountStatus>Account Status: {profile.role}</AccountStatus>
+                <SpotifyLogin onClick={handleSpotifyAuth}>
+                    Spotify Login
+                </SpotifyLogin>
             </MiddleContent>
             <BottomContent>
                 {
@@ -418,6 +429,9 @@ const [pictureSrc, setPictureSrc] = useState(null)
         </Wrapper>
     )
 }
+
+const SpotifyLogin = styled.button`
+`
 
 const CancelPicture = styled.button`
 position: absolute;

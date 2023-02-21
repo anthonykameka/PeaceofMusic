@@ -6,6 +6,7 @@ import { CurrentUserProvider } from './components/CurrentUserContext';
 import {ModalProvider} from "styled-react-modal"
 import { MusicProvider } from './components/MusicContext';
 import { PeaceProvider } from './components/PeaceContext';
+import { SpotifyProvider } from './components/SpotifyContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -16,13 +17,15 @@ root.render(
         redirectUri={"http://localhost:3000/home"}
       >
         <CurrentUserProvider>
-          <ModalProvider>
-            <MusicProvider>
-            <PeaceProvider>
-            <App />
-            </PeaceProvider>
-            </MusicProvider>
-          </ModalProvider>
+          <SpotifyProvider>
+            <ModalProvider>
+              <MusicProvider>
+              <PeaceProvider>
+              <App />
+              </PeaceProvider>
+              </MusicProvider>
+            </ModalProvider>
+          </SpotifyProvider>
         </CurrentUserProvider>
       </Auth0Provider>
   /* </React.StrictMode> */
