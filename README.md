@@ -2,11 +2,22 @@
 Concordia Bootcamp Final Project
 
 ## A social network for music education through ear training. Features are still in progress.
-## This project uses the Genius API for song metadata. It also uses Tonal.js for Music theory. Further, Auth0 is used for login. Finally, diff.js is used to help with paragraph comparasion in the edit/review feature.
+## This project uses:
+ - Genius API
+ - Spotify API
+ - React.js
+ - Node.js
+ - Express
+ - Diff.js (review process)
+ - Auth0 to login
+ - tonaljs for chord information
+ - MONGODB for all data
+ - Styled Components
 ## WIP FEATURES 
 - Spotify Api - users can control spotify through the app, useful while transcribing without changing window.
 - Users can save their transcription to the server and determine viewability.
 - If transcription is TOP voted for the song, it will be used as the model in a game feature. (users will be able to check their chords vs the model)
+- port to Typescript
 
  ## LANDING PAGE
 ![pom1](https://user-images.githubusercontent.com/89666837/220718937-aed6d308-5909-4c00-8334-4335ef14dbbc.png)
