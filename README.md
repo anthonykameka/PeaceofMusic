@@ -3,8 +3,10 @@ Concordia Bootcamp Final Project
 
 ## A social network for music lovers and players. Features are still in progress.
 ## This project uses the Genius API for song metadata. It also uses Tonal.js for Music theory. Further, Auth0 is used for login. Finally, diff.js is used to help with paragraph comparasion in the edit/review feature.
-## WIP FEATURES - SPOTIFY WEB API SO USER CAN USE WHILE TRANSCRIBING. 
-## SAVING PEACE OF MUSICS AND THE TOP RATED POM TO BE THE "MAIN PEACE" THIS CAN BE USED TO GAMIFY THE EAR TRAINING EXPERIENCE. 
+## WIP FEATURES 
+- Spotify Api - users can control spotify through the app, useful while transcribing without changing window.
+- Users can save their transcription to the server and determine viewability.
+- If transcription is TOP voted for the song, it will be used as the model in a game feature. (users will be able to check their chords vs the model)
 
  ## LANDING PAGE
 ![pom1](https://user-images.githubusercontent.com/89666837/220718937-aed6d308-5909-4c00-8334-4335ef14dbbc.png)
