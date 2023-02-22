@@ -3,9 +3,20 @@ Concordia Bootcamp Final Project
 
 ## A social network for music lovers and players. Features are still in progress.
 ## This project uses the Genius API for song metadata. It also uses Tonal.js for Music theory. Further, Auth0 is used for login. Finally, diff.js is used to help with paragraph comparasion in the edit/review feature.
-![peacethumbnail](https://user-images.githubusercontent.com/89666837/209187199-a98253d8-ece1-4de8-8a4b-71e5df1c68fc.png)
 
 
+![pom1](https://user-images.githubusercontent.com/89666837/220718937-aed6d308-5909-4c00-8334-4335ef14dbbc.png)
+
+
+![pom2](https://user-images.githubusercontent.com/89666837/220718964-4248ba37-5236-4e9d-9ac5-7e630ac744f3.png)
+![pom3](https://user-images.githubusercontent.com/89666837/220718970-2b177c27-5ae9-437b-b797-dcc0bbc1030d.png)
+![pom4](https://user-images.githubusercontent.com/89666837/220718989-52c2b390-5619-4ddd-8923-618d5d743277.png)
+![pom5](https://user-images.githubusercontent.com/89666837/220719000-b643ecab-93af-44c8-a361-7b6090b46835.png)
+![pom6](https://user-images.githubusercontent.com/89666837/220719047-5ae8bc5a-6bd6-4304-a2b2-b28dc7faeec8.png)
+![pom7](https://user-images.githubusercontent.com/89666837/220719058-b622cd75-12b3-4580-95a1-c9757e6aafdd.png)
+![pom8](https://user-images.githubusercontent.com/89666837/220719073-930f13be-4cdc-4b03-bd79-b75a8936dc46.png)
+![pom9](https://user-images.githubusercontent.com/89666837/220719080-76a15903-2140-4d5a-a8cc-19f0ccd6b30e.png)
+![pom10](https://user-images.githubusercontent.com/89666837/220719086-c5840973-4bb8-4d5d-8887-d34cfe1f8b2d.png)
 
 In BOTH the client and server directories: 
 
