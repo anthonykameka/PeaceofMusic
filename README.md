@@ -1,5 +1,8 @@
 # PeaceofMusic
-Concordia Bootcamp Final Project
+
+V2 - Coming soon
+
+![image](https://user-images.githubusercontent.com/89666837/221988231-001bee52-30e4-4b9b-8584-cdf0935efefc.png)
 
 ## A social network for music education through ear training. Features are still in progress.
 ## This project uses:
