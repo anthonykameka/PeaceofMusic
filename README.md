@@ -1,6 +1,10 @@
 # PeaceofMusic
 
-V2 - Coming soon
+V2 - Coming soon - 
+Using TailwindCSS to redesign site. 
+connecting to AWS and hosting
+Typescript implementation
+Spotify API / Controller.
 
 ![image](https://user-images.githubusercontent.com/89666837/221988231-001bee52-30e4-4b9b-8584-cdf0935efefc.png)
 
