@@ -1,6 +1,6 @@
 # PeaceofMusic
 
-V2 - Coming soon - 
+V2 - Features coming:  
 - Using TailwindCSS to redesign site. 
 - connecting to AWS and hosting
 - Typescript implementation
@@ -22,11 +22,6 @@ V2 - Coming soon -
  - tonaljs for chord information
  - MONGODB for all data
  - Styled Components
-## WIP FEATURES 
-- Spotify Api - users can control spotify through the app, useful while transcribing without changing window.
-- Users can save their transcription to the server and determine viewability.
-- If transcription is TOP voted for the song, it will be used as the model in a game feature. (users will be able to check their chords vs the model)
-- port to Typescript
 
  ## LANDING PAGE
 ![pom1](https://user-images.githubusercontent.com/89666837/220718937-aed6d308-5909-4c00-8334-4335ef14dbbc.png)
